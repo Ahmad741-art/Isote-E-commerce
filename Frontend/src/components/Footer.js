@@ -45,7 +45,7 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        <p>&copy; 2024 Isoté. All rights reserved.</p>
+        <p>&copy; 2026 Isoté. All rights reserved.</p>
         <div className="social-links">
           <a href="#" aria-label="Instagram">Instagram</a>
           <a href="#" aria-label="Facebook">Facebook</a>
