@@ -1,117 +1,136 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useParams, useSearchParams, Link } from 'react-router-dom';
+import ProductCard from '../../components/ProductCard/ProductCard';
+import Filters from '../../components/Filters/Filters';
+import Loader from '../../components/Loader/Loader';
 import './Shop.css';
 
 const Shop = () => {
+  const { gender } = useParams();
+  const [searchParams] = useSearchParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('all');
-  const [sortBy, setSortBy] = useState('newest');
+  const [filters, setFilters] = useState({
+    category: searchParams.get('category') || '',
+    gender: gender || searchParams.get('gender') || '',
+    minPrice: searchParams.get('minPrice') || '',
+    maxPrice: searchParams.get('maxPrice') || '',
+    sort: searchParams.get('sort') || 'newest',
+  });
+
+  useEffect(() => {
+    if (gender) {
+      setFilters(prev => ({ ...prev, gender }));
+    }
+  }, [gender]);
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [filters]);
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/products');
+      setLoading(true);
+      const queryParams = new URLSearchParams();
+      
+      if (filters.category) queryParams.append('category', filters.category);
+      if (filters.gender) queryParams.append('gender', filters.gender);
+      if (filters.minPrice) queryParams.append('minPrice', filters.minPrice);
+      if (filters.maxPrice) queryParams.append('maxPrice', filters.maxPrice);
+      if (filters.sort) queryParams.append('sort', filters.sort);
+
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/products?${queryParams}`
+      );
       const data = await response.json();
-      setProducts(data);
-      setLoading(false);
+
+      if (data.success) {
+        setProducts(data.data);
+      }
     } catch (error) {
       console.error('Error fetching products:', error);
+    } finally {
       setLoading(false);
-      // Fallback to mock data if API fails
-      setProducts(getMockProducts());
     }
   };
 
-  const getMockProducts = () => {
-    return [
-      { _id: '1', name: 'Cashmere Sweater', price: 450, category: 'women', images: [] },
-      { _id: '2', name: 'Silk Blouse', price: 380, category: 'women', images: [] },
-      { _id: '3', name: 'Wool Coat', price: 890, category: 'men', images: [] },
-      { _id: '4', name: 'Leather Bag', price: 650, category: 'accessories', images: [] },
-      { _id: '5', name: 'Linen Shirt', price: 320, category: 'men', images: [] },
-      { _id: '6', name: 'Cashmere Scarf', price: 280, category: 'accessories', images: [] },
-    ];
+  const handleFilterChange = (newFilters) => {
+    setFilters(newFilters);
   };
 
-  const filteredProducts = products.filter(product => {
-    if (filter === 'all') return true;
-    return product.category === filter;
-  });
+  const handleClearFilters = () => {
+    setFilters({
+      category: '',
+      gender: gender || '',
+      minPrice: '',
+      maxPrice: '',
+      sort: 'newest',
+    });
+  };
 
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if (sortBy === 'price-low') return a.price - b.price;
-    if (sortBy === 'price-high') return b.price - a.price;
-    return 0; // newest
-  });
+  const getPageTitle = () => {
+    if (gender === 'Women') return "Women's Collection";
+    if (gender === 'Men') return "Men's Collection";
+    return 'All Products';
+  };
 
-  if (loading) {
-    return <div className="shop-loading">Loading collection...</div>;
-  }
+  const getPageDescription = () => {
+    if (gender === 'Women') return 'Discover timeless pieces for the modern woman';
+    if (gender === 'Men') return 'Elevate your wardrobe with refined essentials';
+    return 'Browse our complete collection of luxury fashion';
+  };
 
   return (
-    <div className="shop">
-      <div className="shop-header">
-        <h1>All Products</h1>
-        <p>{sortedProducts.length} items</p>
-      </div>
-
-      <div className="shop-controls">
-        <div className="filter-buttons">
-          <button 
-            className={filter === 'all' ? 'active' : ''} 
-            onClick={() => setFilter('all')}
-          >
-            All
-          </button>
-          <button 
-            className={filter === 'women' ? 'active' : ''} 
-            onClick={() => setFilter('women')}
-          >
-            Women
-          </button>
-          <button 
-            className={filter === 'men' ? 'active' : ''} 
-            onClick={() => setFilter('men')}
-          >
-            Men
-          </button>
-          <button 
-            className={filter === 'accessories' ? 'active' : ''} 
-            onClick={() => setFilter('accessories')}
-          >
-            Accessories
-          </button>
-        </div>
-
-        <div className="sort-dropdown">
-          <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-            <option value="newest">Newest</option>
-            <option value="price-low">Price: Low to High</option>
-            <option value="price-high">Price: High to Low</option>
-          </select>
+    <div className="shop-page">
+      <div className="shop-hero">
+        <div className="container">
+          <h1 className="shop-title">{getPageTitle()}</h1>
+          <p className="shop-subtitle">{getPageDescription()}</p>
         </div>
       </div>
 
-      <div className="product-grid">
-        {sortedProducts.map(product => (
-          <Link to={`/product/${product._id}`} key={product._id} className="product-card">
-            <div className="product-image">
-              {product.images && product.images[0] ? (
-                <img src={product.images[0]} alt={product.name} />
-              ) : (
-                <div className="placeholder-image"></div>
-              )}
+      <div className="container">
+        <div className="shop-layout">
+          <aside className="shop-sidebar">
+            <Filters
+              filters={filters}
+              onFilterChange={handleFilterChange}
+              onClearFilters={handleClearFilters}
+            />
+          </aside>
+
+          <main className="shop-main">
+            <div className="shop-toolbar">
+              <p className="results-count">
+                {products.length} {products.length === 1 ? 'product' : 'products'}
+              </p>
             </div>
-            <div className="product-info">
-              <h3>{product.name}</h3>
-              <p className="price">${product.price}</p>
-            </div>
-          </Link>
-        ))}
+
+            {loading ? (
+              <div className="shop-loading">
+                <Loader />
+              </div>
+            ) : products.length > 0 ? (
+              <div className="products-grid">
+                {products.map((product) => (
+                  <ProductCard key={product._id} product={product} />
+                ))}
+              </div>
+            ) : (
+              <div className="no-products">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <circle cx="11" cy="11" r="8" strokeWidth="2"/>
+                  <path d="m21 21-4.35-4.35" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+                <h2>No products found</h2>
+                <p>Try adjusting your filters or browse all products</p>
+                <Link to="/shop" className="btn btn-outline" onClick={handleClearFilters}>
+                  View All Products
+                </Link>
+              </div>
+            )}
+          </main>
+        </div>
       </div>
     </div>
   );

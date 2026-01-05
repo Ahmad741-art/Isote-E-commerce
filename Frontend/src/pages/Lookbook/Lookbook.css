@@ -1,0 +1,257 @@
+.lookbook-page {
+  background-color: var(--color-cream);
+}
+
+.lookbook-hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url('https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1600') center/cover;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--color-white);
+  margin-bottom: 6rem;
+}
+
+.lookbook-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 400;
+  letter-spacing: 2px;
+  margin: 0 0 1rem 0;
+}
+
+.lookbook-hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  letter-spacing: 1px;
+  margin: 0;
+  opacity: 0.95;
+}
+
+.lookbook-collection {
+  margin-bottom: 8rem;
+}
+
+.collection-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 4rem;
+}
+
+.collection-title {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin: 0 0 1rem 0;
+}
+
+.collection-description {
+  font-size: 1.125rem;
+  color: var(--color-grey);
+  font-style: italic;
+  margin: 0;
+}
+
+.collection-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.gallery-item {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: var(--color-white);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.08);
+}
+
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 60%);
+  display: flex;
+  align-items: flex-end;
+  padding: 2rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+  opacity: 1;
+}
+
+.image-caption {
+  color: var(--color-white);
+  font-size: 0.9375rem;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background: none;
+  border: none;
+  color: var(--color-white);
+  font-size: 3rem;
+  cursor: pointer;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  z-index: 10000;
+}
+
+.lightbox-close:hover {
+  transform: scale(1.1);
+}
+
+.lightbox-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  animation: scaleIn 0.4s ease;
+}
+
+.lightbox-content img {
+  max-width: 100%;
+  max-height: calc(90vh - 4rem);
+  object-fit: contain;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-caption {
+  color: var(--color-white);
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  text-align: center;
+  margin: 0;
+}
+
+.lookbook-cta {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  text-align: center;
+  padding: 6rem 2rem;
+}
+
+.lookbook-cta h2 {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin: 0 0 1rem 0;
+}
+
+.lookbook-cta p {
+  font-size: 1.125rem;
+  margin: 0 0 2.5rem 0;
+  opacity: 0.9;
+}
+
+.lookbook-cta .btn {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  border-color: var(--color-white);
+}
+
+.lookbook-cta .btn:hover {
+  background-color: transparent;
+  color: var(--color-white);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 1024px) {
+  .collection-gallery {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .lookbook-collection {
+    margin-bottom: 6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .lookbook-hero {
+    min-height: 40vh;
+    margin-bottom: 4rem;
+  }
+
+  .collection-title {
+    font-size: 2rem;
+  }
+
+  .collection-gallery {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .lookbook-collection {
+    margin-bottom: 4rem;
+  }
+
+  .lookbook-cta {
+    padding: 4rem 1.5rem;
+  }
+
+  .lookbook-cta h2 {
+    font-size: 2rem;
+  }
+
+  .lightbox-close {
+    top: 1rem;
+    right: 1rem;
+  }
+}

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { productsAPI } from '../../services/api';
 import ProductCard from '../../components/ProductCard/ProductCard';
+import Newsletter from '../../components/Newsletter/Newsletter';
+import Loader from '../../components/Loader/Loader';
 import './Homepage.css';
 
 const Homepage = () => {
@@ -14,8 +15,12 @@ const Homepage = () => {
 
   const fetchFeaturedProducts = async () => {
     try {
-      const { data } = await productsAPI.getFeatured();
-      setFeaturedProducts(data.data);
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/products/featured`);
+      const data = await response.json();
+      
+      if (data.success) {
+        setFeaturedProducts(data.data);
+      }
     } catch (error) {
       console.error('Error fetching featured products:', error);
     } finally {
@@ -49,7 +54,7 @@ const Homepage = () => {
             <Link to="/shop/Women" className="category-card">
               <div className="category-image">
                 <img
-                  src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d"
+                  src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800"
                   alt="Women's Collection"
                 />
               </div>
@@ -58,7 +63,7 @@ const Homepage = () => {
             <Link to="/shop/Men" className="category-card">
               <div className="category-image">
                 <img
-                  src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2"
+                  src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=800"
                   alt="Men's Collection"
                 />
               </div>
@@ -71,14 +76,23 @@ const Homepage = () => {
       {/* Featured Products */}
       <section className="featured-section section">
         <div className="container">
-          <h2 className="section-title">Featured</h2>
+          <h2 className="section-title">Featured Collection</h2>
           {loading ? (
-            <div className="loading">Loading...</div>
-          ) : (
+            <Loader />
+          ) : featuredProducts.length > 0 ? (
             <div className="grid grid-4">
               {featuredProducts.slice(0, 4).map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))}
+            </div>
+          ) : (
+            <p className="no-products">No featured products available at the moment.</p>
+          )}
+          {featuredProducts.length > 4 && (
+            <div className="view-all">
+              <Link to="/shop" className="btn btn-outline">
+                View All Products
+              </Link>
             </div>
           )}
         </div>
@@ -100,6 +114,9 @@ const Homepage = () => {
           </div>
         </div>
       </section>
+
+      {/* Newsletter */}
+      <Newsletter />
     </div>
   );
 };
