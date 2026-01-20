@@ -229,6 +229,26 @@ const products = [
   },
 ];
 
+function slugify(name) {
+  if (!name) return null;
+  return name
+    .toString()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
+function skuify(name) {
+  if (!name) return `SKU-${Date.now()}`;
+  // convert name to uppercase slug-like SKU: remove non-alnum, replace spaces with '-', limit length
+  return name
+    .toString()
+    .toUpperCase()
+    .replace(/[^A-Z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+    .slice(0, 40);
+}
+
 const seedData = async () => {
   try {
     await connectDB();
@@ -237,18 +257,49 @@ const seedData = async () => {
     await Product.deleteMany();
     console.log('✓ Products cleared');
 
-    // Insert sample products
-    await Product.insertMany(products);
-    console.log(`✓ ${products.length} products seeded`);
+    // Prepare products: generate unique slug and unique sku, set status/isActive
+    const usedSlugs = new Set();
+    const usedSkus = new Set();
+    const preparedProducts = products.map((p, idx) => {
+      const baseSlug = slugify(p.name) || `product-${Date.now()}-${idx}`;
+      let uniqueSlug = baseSlug;
+      let sCounter = 1;
+      while (usedSlugs.has(uniqueSlug)) {
+        uniqueSlug = `${baseSlug}-${sCounter++}`;
+      }
+      usedSlugs.add(uniqueSlug);
 
-    // Create admin user if doesn't exist
-    const adminExists = await User.findOne({ email: process.env.ADMIN_EMAIL });
+      const baseSku = p.sku ? p.sku : skuify(p.name) || `SKU-${Date.now()}-${idx}`;
+      let uniqueSku = baseSku;
+      let k = 1;
+      while (usedSkus.has(uniqueSku)) {
+        uniqueSku = `${baseSku}-${k++}`;
+      }
+      usedSkus.add(uniqueSku);
+
+      return {
+        ...p,
+        slug: p.slug || uniqueSlug,
+        sku: p.sku || uniqueSku,
+        status: p.status || 'active',
+        isActive: typeof p.isActive === 'boolean' ? p.isActive : true,
+      };
+    });
+
+    // Insert sample products
+    await Product.insertMany(preparedProducts);
+    console.log(`✓ ${preparedProducts.length} products seeded`);
+
+    // Create admin user if it doesn't exist
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@isote.com';
+    const adminPassword = process.env.ADMIN_PASSWORD || 'Admin123!';
+    const adminExists = await User.findOne({ email: adminEmail });
     if (!adminExists) {
       await User.create({
         firstName: 'Admin',
         lastName: 'User',
-        email: process.env.ADMIN_EMAIL || 'admin@isote.com',
-        password: process.env.ADMIN_PASSWORD || 'Admin123!',
+        email: adminEmail,
+        password: adminPassword,
         role: 'admin',
       });
       console.log('✓ Admin user created');
@@ -264,4 +315,8 @@ const seedData = async () => {
   }
 };
 
-seedData();
+if (require.main === module) {
+  seedData();
+}
+
+module.exports = seedData;
