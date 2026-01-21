@@ -81,8 +81,9 @@ Thumbs.db
 EOF
       ;;
     *.md)
+      title=$(basename "$file" .md | tr '[:lower:]' '[:upper:]')
       cat > "$file" <<EOF
-# $(basename "$file" .md | tr '[:lower:]' '[:upper:]')
+# $title
 
 TODO: Add documentation here.
 EOF
@@ -145,7 +146,7 @@ for dir in . Backend Frontend scripts .github docs; do
     ! -path "*/node_modules/*" \
     ! -path "*/dist/*" \
     ! -path "*/build/*" \
-    ! -path "*/.bak" \
+    ! -path "*.bak" \
     -print0 2>/dev/null || true)
 done
 
