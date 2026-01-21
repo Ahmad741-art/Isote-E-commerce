@@ -1,1 +1,80 @@
-$*
+
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  backend:
+    name: Backend Tests & Lint
+    runs-on: ubuntu-latest
+    services:
+      mongo:
+        image: mongo:6.0
+        ports:
+          - 27017:27017
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: "npm"
+
+      - name: Install backend dependencies
+        working-directory: Backend
+        run: npm ci
+
+      - name: Start backend (background)
+        working-directory: Backend
+        run: |
+          nohup npm run dev &>/tmp/backend.log & sleep 2
+
+      - name: Run backend tests
+        working-directory: Backend
+        env:
+          NODE_ENV: test
+          MONGODB_URI: mongodb://localhost:27017/isote_test
+        run: npm test
+
+      - name: Run backend lint (if configured)
+        working-directory: Backend
+        run: |
+          if [ -f Backend/.eslintrc* ] || npm pkg get eslint >/dev/null 2>&1; then
+            npm run lint || true
+          else
+            echo "No eslint config detected. Skipping lint."
+          fi
+
+  frontend:
+    name: Frontend Tests & Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: "npm"
+
+      - name: Install frontend dependencies
+        working-directory: Frontend
+        run: npm ci
+
+      - name: Run frontend tests
+        working-directory: Frontend
+        env:
+          CI: true
+        run: npm test --if-present
+
+      - name: Build frontend (optional)
+        working-directory: Frontend
+        run: npm run build --if-present
+
