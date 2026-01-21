@@ -37,6 +37,14 @@ find . -type f \
     
     # Determine file type and write appropriate content
     case "$file" in
+      *.jsx)
+        echo "// Placeholder - TODO: implement" > "$file"
+        echo "  Filled with JSX placeholder"
+        ;;
+      *.css)
+        echo "/* Placeholder - TODO: add styles */" > "$file"
+        echo "  Filled with CSS placeholder"
+        ;;
       *.js)
         echo "// Placeholder - TODO: implement" > "$file"
         echo "  Filled with JS placeholder"
@@ -101,6 +109,23 @@ build/
 .env.local
 EOF
         echo "  Filled with .gitignore template"
+        ;;
+      *.png|*.jpg|*.jpeg|*.gif|*.svg|*.ico)
+        # For binary files, just skip or remove them
+        echo "  Skipping binary image file (should be replaced with actual image)"
+        ;;
+      *.html)
+        echo "<!-- Placeholder - TODO: implement -->" > "$file"
+        echo "  Filled with HTML placeholder"
+        ;;
+      *.sh)
+        cat > "$file" <<'EOF'
+#!/usr/bin/env bash
+# Placeholder script - TODO: implement
+echo "Script not implemented yet"
+EOF
+        chmod +x "$file"
+        echo "  Filled with shell script placeholder"
         ;;
       *)
         echo "# Placeholder file" > "$file"
