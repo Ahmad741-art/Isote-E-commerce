@@ -35,7 +35,7 @@ write_file() {
     return
   fi
   mkdir -p "$(dirname "$path")"
-  cat > "$path" <<'EOF'
+  cat > "$path" <<EOF
 $*
 EOF
   echo "Wrote $path"
