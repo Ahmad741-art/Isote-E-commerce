@@ -116,7 +116,7 @@ const Home = () => {
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}>
-              ⚔️ LEGENDARY COLLECTION 2024 ⚔️
+              ⚔️ EXCLUSIVE COLLECTION 2024 ⚔️
             </span>
             <Shield size={24} color="var(--accent)" />
           </div>
@@ -142,7 +142,7 @@ const Home = () => {
               WebkitTextFillColor: 'transparent',
               position: 'relative'
             }}>
-              LEGEND
+              STYLE
             </span>
             <Sword size={80} style={{
               position: 'absolute',
@@ -165,7 +165,7 @@ const Home = () => {
             animation: 'fadeIn 1.4s ease 0.4s backwards',
             fontWeight: 500
           }}>
-            Gear crafted by master artisans. Where warriors meet style. Every piece tells a story of conquest.
+            Gear crafted by master artisans. Premium quality meets bold design. Every piece tells your story.
           </p>
 
           {/* CTA Buttons */}
@@ -182,7 +182,7 @@ const Home = () => {
               boxShadow: 'var(--shadow-fire)'
             }}>
               <Flame size={24} />
-              BEGIN QUEST
+              SHOP NOW
               <Sword size={24} />
             </Link>
             <Link to="/shop?category=new" className="btn btn-outline" style={{
@@ -225,9 +225,9 @@ const Home = () => {
             gap: '56px'
           }}>
             {[
-              { icon: Truck, title: 'GLOBAL CONQUEST', desc: 'Free legendary shipping on orders over $100', emoji: '🚀', color: 'var(--accent)' },
-              { icon: Award, title: 'MASTER CRAFTED', desc: 'Hand-forged quality worthy of champions', emoji: '🏆', color: 'var(--accent-red)' },
-              { icon: Star, title: 'ELITE ACCESS', desc: 'First to claim limited legendary drops', emoji: '⚡', color: 'var(--accent-blue)' }
+              { icon: Truck, title: 'GLOBAL DELIVERY', desc: 'Free shipping on orders over $100', emoji: '🚀', color: 'var(--accent)' },
+              { icon: Award, title: 'PREMIUM QUALITY', desc: 'Hand-crafted quality worthy of excellence', emoji: '🏆', color: 'var(--accent-red)' },
+              { icon: Star, title: 'EXCLUSIVE ACCESS', desc: 'First access to limited edition drops', emoji: '⚡', color: 'var(--accent-blue)' }
             ].map((feature, idx) => {
               const Icon = feature.icon;
               return (
@@ -294,7 +294,7 @@ const Home = () => {
             }}>
               CHOOSE YOUR
               <br />
-              <span className="epic-text">BATTLEFIELD</span>
+              <span className="epic-text">CATEGORY</span>
             </h2>
             <p style={{
               fontSize: '22px',
@@ -302,7 +302,7 @@ const Home = () => {
               fontWeight: 600,
               letterSpacing: '1px'
             }}>
-              Select your domain of conquest
+              Select your collection
             </p>
           </div>
 
@@ -312,9 +312,9 @@ const Home = () => {
             gap: '48px'
           }}>
             {[
-              { title: '👑 QUEENS REALM', emoji: '💎', image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800', link: '/shop?category=women', color: 'var(--accent)' },
-              { title: '⚔️ WARRIORS DEN', emoji: '🛡️', image: 'https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=800', link: '/shop?category=men', color: 'var(--accent-red)' },
-              { title: '🔥 ARMORY', emoji: '⚡', image: 'https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?w=800', link: '/shop?category=accessories', color: 'var(--accent-blue)' }
+              { title: '👗 WOMEN', emoji: '💎', image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800', link: '/shop?category=women', color: 'var(--accent)' },
+              { title: '👔 MEN', emoji: '🛡️', image: 'https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=800', link: '/shop?category=men', color: 'var(--accent-red)' },
+              { title: '💎 ACCESSORIES', emoji: '⚡', image: 'https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?w=800', link: '/shop?category=accessories', color: 'var(--accent-blue)' }
             ].map((category, idx) => (
               <Link
                 key={idx}
@@ -385,7 +385,7 @@ const Home = () => {
                     color: 'white',
                     borderColor: 'white'
                   }}>
-                    ENTER REALM
+                    ENTER NOW
                     <ArrowRight size={22} />
                   </div>
                 </div>
@@ -418,7 +418,7 @@ const Home = () => {
                 letterSpacing: '4px',
                 textShadow: '3px 3px 10px rgba(0, 0, 0, 0.8)'
               }}>
-                <span className="epic-text">LEGENDARY</span>
+                <span className="epic-text">FEATURED</span>
                 <br />
                 COLLECTION
               </h2>
@@ -428,11 +428,11 @@ const Home = () => {
                 marginTop: '16px',
                 fontWeight: 600
               }}>
-                Forged for champions ⚔️
+                Handpicked for you ⚔️
               </p>
             </div>
             <Link to="/shop" className="btn btn-outline forge-glow">
-              VIEW ALL LOOT
+              VIEW ALL
               <Flame size={22} />
             </Link>
           </div>
@@ -490,7 +490,7 @@ const Home = () => {
             fontWeight: 900,
             letterSpacing: '4px'
           }}>
-            JOIN THE LEGION
+            JOIN OUR COMMUNITY
           </h2>
           <p style={{
             fontSize: '24px',
@@ -501,7 +501,7 @@ const Home = () => {
             lineHeight: 1.8,
             fontWeight: 600
           }}>
-            Subscribe for exclusive battle rewards, early access to legendary drops, and warriors-only benefits.
+            Subscribe for exclusive deals, early access to new collections, and member-only benefits.
           </p>
           <form style={{
             display: 'flex',
@@ -512,7 +512,7 @@ const Home = () => {
           }}>
             <input
               type="email"
-              placeholder="Enter your battle email ⚔️"
+              placeholder="Enter your email ⚔️"
               className="input"
               style={{
                 flex: 1,
@@ -533,7 +533,7 @@ const Home = () => {
               border: '3px solid var(--accent)'
             }}>
               <Flame size={22} />
-              ENLIST NOW
+              SUBSCRIBE
             </button>
           </form>
         </div>

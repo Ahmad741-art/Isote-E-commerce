@@ -65,7 +65,7 @@ const Navbar = () => {
           position: 'relative'
         }}>
           <Sword size={18} />
-          <span>⚔️ LEGENDARY COLLECTION | FREE DELIVERY ON CONQUESTS OVER $100 ⚔️</span>
+          <span>⚔️ EXCLUSIVE COLLECTION | FREE DELIVERY ON ORDERS OVER $100 ⚔️</span>
           <Shield size={18} />
         </div>
       </div>
@@ -106,7 +106,7 @@ const Navbar = () => {
           }}
           >
             <Shield size={40} style={{ color: 'var(--accent)' }} />
-            LUXE
+            ISOTÉ
             <Sword size={36} style={{ color: 'var(--accent)', transform: 'rotate(-45deg)' }} />
           </Link>
 
@@ -118,10 +118,10 @@ const Navbar = () => {
             justifyContent: 'center'
           }}>
             {[
-              { to: '/shop?category=women', label: 'QUEENS', icon: '👑' },
-              { to: '/shop?category=men', label: 'WARRIORS', icon: '⚔️' },
-              { to: '/shop?category=accessories', label: 'ARMORY', icon: '🛡️' },
-              { to: '/shop', label: 'CONQUEST', special: true, icon: '🔥' }
+              { to: '/shop?category=women', label: 'WOMEN', icon: '👗' },
+              { to: '/shop?category=men', label: 'MEN', icon: '👔' },
+              { to: '/shop?category=accessories', label: 'ACCESSORIES', icon: '💎' },
+              { to: '/shop', label: 'SALE', special: true, icon: '🔥' }
             ].map((link) => (
               <Link
                 key={link.to}
