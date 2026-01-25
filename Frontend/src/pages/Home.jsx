@@ -14,10 +14,18 @@ const Home = () => {
 
   const fetchFeaturedProducts = async () => {
     try {
+      console.log('Fetching featured products...');
       const response = await productsAPI.getAll({ limit: 8, featured: true });
-      setFeaturedProducts(response.data.products || []);
+      console.log('Featured products response:', response.data);
+      
+      // Handle both response.data.products and response.data.data
+      const productsData = response.data.products || response.data.data || response.data || [];
+      setFeaturedProducts(productsData);
+      
+      console.log('Featured products loaded:', productsData.length);
     } catch (error) {
       console.error('Failed to fetch products:', error);
+      setFeaturedProducts([]);
     } finally {
       setLoading(false);
     }

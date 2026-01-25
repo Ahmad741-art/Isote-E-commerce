@@ -83,7 +83,7 @@ const Footer = () => (
         marginBottom: '32px'
       }}>
         <div>
-          <h3 style={{ fontFamily: 'var(--font-display)', marginBottom: '16px' }}>LUXE</h3>
+          <h3 style={{ fontFamily: 'var(--font-display)', marginBottom: '16px' }}>ISOTÉ</h3>
           <p style={{ color: '#999', fontSize: '14px', lineHeight: '1.8' }}>
             Premium fashion for the modern individual. Curated collections that define elegance.
           </p>
@@ -100,10 +100,10 @@ const Footer = () => (
         <div>
           <h4 style={{ marginBottom: '16px', fontSize: '14px', fontWeight: 600 }}>SUPPORT</h4>
           <ul style={{ listStyle: 'none', fontSize: '14px' }}>
-            <li style={{ marginBottom: '8px' }}><a href="#" style={{ color: '#999' }}>Contact Us</a></li>
-            <li style={{ marginBottom: '8px' }}><a href="#" style={{ color: '#999' }}>Shipping Info</a></li>
-            <li style={{ marginBottom: '8px' }}><a href="#" style={{ color: '#999' }}>Returns</a></li>
-            <li style={{ marginBottom: '8px' }}><a href="#" style={{ color: '#999' }}>FAQ</a></li>
+            <li style={{ marginBottom: '8px' }}><Link to="/contact" style={{ color: '#999' }}>Contact Us</Link></li>
+            <li style={{ marginBottom: '8px' }}><Link to="/shipping" style={{ color: '#999' }}>Shipping Info</Link></li>
+            <li style={{ marginBottom: '8px' }}><Link to="/returns" style={{ color: '#999' }}>Returns</Link></li>
+            <li style={{ marginBottom: '8px' }}><Link to="/faq" style={{ color: '#999' }}>FAQ</Link></li>
           </ul>
         </div>
         <div>
@@ -143,7 +143,7 @@ const Footer = () => (
         color: '#999',
         fontSize: '13px'
       }}>
-        <p>&copy; 2024 LUXE. All rights reserved.</p>
+        <p>&copy; 2026 Isoté. All rights reserved.</p>
       </div>
     </div>
   </footer>

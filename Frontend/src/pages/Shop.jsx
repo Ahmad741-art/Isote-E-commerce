@@ -36,11 +36,21 @@ const Shop = () => {
         ...filters
       };
 
+      console.log('Fetching products with params:', params);
       const response = await productsAPI.getAll(params);
-      setProducts(response.data.products || []);
-      setTotalPages(response.data.totalPages || 1);
+      console.log('Products response:', response.data);
+      
+      // Handle both response.data.products and response.data.data
+      const productsData = response.data.products || response.data.data || response.data || [];
+      const totalPagesData = response.data.totalPages || response.data.pages || 1;
+      
+      setProducts(productsData);
+      setTotalPages(totalPagesData);
+      
+      console.log('Products loaded:', productsData.length);
     } catch (error) {
       console.error('Failed to fetch products:', error);
+      setProducts([]);
     } finally {
       setLoading(false);
     }
