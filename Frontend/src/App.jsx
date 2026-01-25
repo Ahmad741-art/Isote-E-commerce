@@ -16,6 +16,12 @@ import AdminDashboard from './pages/Admin/AdminDashboard';
 import AdminProductForm from './pages/Admin/AdminProductForm';
 import AdminRoute from './components/AdminRoute';
 
+// Import support pages
+const Contact = React.lazy(() => import('./pages/Support/Contact'));
+const FAQ = React.lazy(() => import('./pages/Support/FAQ'));
+const Shipping = React.lazy(() => import('./pages/Support/Shipping'));
+const Returns = React.lazy(() => import('./pages/Support/Returns'));
+
 function App() {
   return (
     <Router>
@@ -24,41 +30,47 @@ function App() {
           <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <Navbar />
             <main style={{ flex: 1 }}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/shop" element={<Shop />} />
-                <Route path="/product/:id" element={<ProductPage />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/checkout" element={<Checkout />} />
-                <Route path="/wishlist" element={<Wishlist />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/account" element={<Account />} />
-                <Route
-                  path="/admin"
-                  element={
-                    <AdminRoute>
-                      <AdminDashboard />
-                    </AdminRoute>
-                  }
-                />
-                <Route
-                  path="/admin/products/new"
-                  element={
-                    <AdminRoute>
-                      <AdminProductForm />
-                    </AdminRoute>
-                  }
-                />
-                <Route
-                  path="/admin/products/edit/:id"
-                  element={
-                    <AdminRoute>
-                      <AdminProductForm />
-                    </AdminRoute>
-                  }
-                />
-              </Routes>
+              <React.Suspense fallback={<div className="loading"><div className="spinner" /></div>}>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/shop" element={<Shop />} />
+                  <Route path="/product/:id" element={<ProductPage />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/checkout" element={<Checkout />} />
+                  <Route path="/wishlist" element={<Wishlist />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/account" element={<Account />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/faq" element={<FAQ />} />
+                  <Route path="/shipping" element={<Shipping />} />
+                  <Route path="/returns" element={<Returns />} />
+                  <Route
+                    path="/admin"
+                    element={
+                      <AdminRoute>
+                        <AdminDashboard />
+                      </AdminRoute>
+                    }
+                  />
+                  <Route
+                    path="/admin/products/new"
+                    element={
+                      <AdminRoute>
+                        <AdminProductForm />
+                      </AdminRoute>
+                    }
+                  />
+                  <Route
+                    path="/admin/products/edit/:id"
+                    element={
+                      <AdminRoute>
+                        <AdminProductForm />
+                      </AdminRoute>
+                    }
+                  />
+                </Routes>
+              </React.Suspense>
             </main>
             <Footer />
           </div>
