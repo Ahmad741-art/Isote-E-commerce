@@ -15,12 +15,10 @@ import Account from './pages/Account/Account';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import AdminProductForm from './pages/Admin/AdminProductForm';
 import AdminRoute from './components/AdminRoute';
-
-// Import support pages
-const Contact = React.lazy(() => import('./pages/Support/Contact'));
-const FAQ = React.lazy(() => import('./pages/Support/FAQ'));
-const Shipping = React.lazy(() => import('./pages/Support/Shipping'));
-const Returns = React.lazy(() => import('./pages/Support/Returns'));
+import Contact from './pages/Contact';
+import FAQ from './pages/FAQ';
+import Shipping from './pages/Shipping';
+import Returns from './pages/Returns';
 
 function App() {
   return (
