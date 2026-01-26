@@ -15,10 +15,11 @@ import Account from './pages/Account/Account';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import AdminProductForm from './pages/Admin/AdminProductForm';
 import AdminRoute from './components/AdminRoute';
-import Contact from './pages/Contact';
-import FAQ from './pages/FAQ';
-import Shipping from './pages/Shipping';
-import Returns from './pages/Returns';
+import Contact from './support/Contact';
+import FAQ from './support/FAQ';
+import Shipping from './support/Shipping';
+import Returns from './support/Returns';
+import { Link } from 'react-router-dom';
 
 function App() {
   return (

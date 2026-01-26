@@ -70,8 +70,7 @@ const Login = () => {
         <div className="card steel-border" style={{
           padding: '56px 48px',
           background: 'var(--bg-card)',
-          position: 'relative',
-          zIndex: 10
+          position: 'relative'
         }}>
           {/* Logo */}
           <div style={{ textAlign: 'center', marginBottom: '40px' }}>
@@ -104,11 +103,9 @@ const Login = () => {
           <form onSubmit={handleSubmit} style={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '24px',
-            position: 'relative',
-            zIndex: 100
+            gap: '24px'
           }}>
-            <div style={{ position: 'relative', zIndex: 100 }}>
+            <div>
               <label htmlFor="email" style={{
                 display: 'block',
                 fontSize: '13px',
@@ -133,10 +130,7 @@ const Login = () => {
                   autoComplete="email"
                   style={{
                     paddingLeft: '48px',
-                    fontWeight: 600,
-                    position: 'relative',
-                    zIndex: 100,
-                    pointerEvents: 'auto'
+                    fontWeight: 600
                   }}
                 />
                 <Mail
@@ -147,14 +141,13 @@ const Login = () => {
                     top: '50%',
                     transform: 'translateY(-50%)',
                     color: 'var(--accent)',
-                    pointerEvents: 'none',
-                    zIndex: 101
+                    pointerEvents: 'none'
                   }}
                 />
               </div>
             </div>
 
-            <div style={{ position: 'relative', zIndex: 100 }}>
+            <div>
               <div style={{
                 display: 'flex',
                 justifyContent: 'space-between',
@@ -170,14 +163,18 @@ const Login = () => {
                 }}>
                   Password
                 </label>
-                <a href="#" style={{
+                <Link to="/forgot-password" style={{
                   fontSize: '12px',
                   color: 'var(--accent)',
                   fontWeight: 600,
-                  letterSpacing: '0.5px'
+                  letterSpacing: '0.5px',
+                  textDecoration: 'none',
+                  position: 'relative',
+                  zIndex: 1000,
+                  cursor: 'pointer'
                 }}>
                   Forgot?
-                </a>
+                </Link>
               </div>
               <div style={{ position: 'relative' }}>
                 <input
@@ -192,10 +189,7 @@ const Login = () => {
                   autoComplete="current-password"
                   style={{
                     paddingLeft: '48px',
-                    fontWeight: 600,
-                    position: 'relative',
-                    zIndex: 100,
-                    pointerEvents: 'auto'
+                    fontWeight: 600
                   }}
                 />
                 <Lock
@@ -206,8 +200,7 @@ const Login = () => {
                     top: '50%',
                     transform: 'translateY(-50%)',
                     color: 'var(--accent)',
-                    pointerEvents: 'none',
-                    zIndex: 101
+                    pointerEvents: 'none'
                   }}
                 />
               </div>
@@ -221,10 +214,7 @@ const Login = () => {
                 width: '100%',
                 padding: '18px',
                 fontSize: '15px',
-                marginTop: '12px',
-                position: 'relative',
-                zIndex: 100,
-                pointerEvents: 'auto'
+                marginTop: '12px'
               }}
             >
               {loading ? (
@@ -254,7 +244,10 @@ const Login = () => {
             <Link to="/register" style={{
               color: 'var(--accent)',
               fontWeight: 700,
-              textDecoration: 'underline'
+              textDecoration: 'underline',
+              position: 'relative',
+              zIndex: 1000,
+              cursor: 'pointer'
             }}>
               Create Account
             </Link>

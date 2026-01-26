@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Upload, X } from 'lucide-react';
+import { ArrowLeft, Upload, X, Plus } from 'lucide-react';
 import { productsAPI } from '../../services/api';
 
 const AdminProductForm = () => {
@@ -375,6 +375,7 @@ const AdminProductForm = () => {
                 className="btn btn-primary"
                 disabled={loading}
               >
+                <Plus size={20} />
                 {loading ? 'Saving...' : isEdit ? 'Update Product' : 'Create Product'}
               </button>
             </div>

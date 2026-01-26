@@ -84,8 +84,7 @@ const Register = () => {
         <div className="card steel-border" style={{
           padding: '56px 48px',
           background: 'var(--bg-card)',
-          position: 'relative',
-          zIndex: 10
+          position: 'relative'
         }}>
           <div style={{ textAlign: 'center', marginBottom: '40px' }}>
             <Shield size={64} color="var(--accent)" style={{ margin: '0 auto 24px' }} />
@@ -117,16 +116,12 @@ const Register = () => {
           <form onSubmit={handleSubmit} style={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '24px',
-            position: 'relative',
-            zIndex: 100
+            gap: '24px'
           }}>
             <div style={{
               display: 'grid',
               gridTemplateColumns: '1fr 1fr',
-              gap: '20px',
-              position: 'relative',
-              zIndex: 100
+              gap: '20px'
             }}>
               <div>
                 <label htmlFor="firstName" style={{
@@ -150,12 +145,7 @@ const Register = () => {
                   onChange={handleChange}
                   required
                   autoComplete="given-name"
-                  style={{
-                    fontWeight: 600,
-                    position: 'relative',
-                    zIndex: 100,
-                    pointerEvents: 'auto'
-                  }}
+                  style={{ fontWeight: 600 }}
                 />
               </div>
 
@@ -181,17 +171,12 @@ const Register = () => {
                   onChange={handleChange}
                   required
                   autoComplete="family-name"
-                  style={{
-                    fontWeight: 600,
-                    position: 'relative',
-                    zIndex: 100,
-                    pointerEvents: 'auto'
-                  }}
+                  style={{ fontWeight: 600 }}
                 />
               </div>
             </div>
 
-            <div style={{ position: 'relative', zIndex: 100 }}>
+            <div>
               <label htmlFor="email" style={{
                 display: 'block',
                 fontSize: '13px',
@@ -214,13 +199,7 @@ const Register = () => {
                   onChange={handleChange}
                   required
                   autoComplete="email"
-                  style={{
-                    paddingLeft: '48px',
-                    fontWeight: 600,
-                    position: 'relative',
-                    zIndex: 100,
-                    pointerEvents: 'auto'
-                  }}
+                  style={{ paddingLeft: '48px', fontWeight: 600 }}
                 />
                 <Mail
                   size={20}
@@ -230,14 +209,13 @@ const Register = () => {
                     top: '50%',
                     transform: 'translateY(-50%)',
                     color: 'var(--accent)',
-                    pointerEvents: 'none',
-                    zIndex: 101
+                    pointerEvents: 'none'
                   }}
                 />
               </div>
             </div>
 
-            <div style={{ position: 'relative', zIndex: 100 }}>
+            <div>
               <label htmlFor="password" style={{
                 display: 'block',
                 fontSize: '13px',
@@ -260,13 +238,7 @@ const Register = () => {
                   onChange={handleChange}
                   required
                   autoComplete="new-password"
-                  style={{
-                    paddingLeft: '48px',
-                    fontWeight: 600,
-                    position: 'relative',
-                    zIndex: 100,
-                    pointerEvents: 'auto'
-                  }}
+                  style={{ paddingLeft: '48px', fontWeight: 600 }}
                 />
                 <Lock
                   size={20}
@@ -276,14 +248,13 @@ const Register = () => {
                     top: '50%',
                     transform: 'translateY(-50%)',
                     color: 'var(--accent)',
-                    pointerEvents: 'none',
-                    zIndex: 101
+                    pointerEvents: 'none'
                   }}
                 />
               </div>
             </div>
 
-            <div style={{ position: 'relative', zIndex: 100 }}>
+            <div>
               <label htmlFor="confirmPassword" style={{
                 display: 'block',
                 fontSize: '13px',
@@ -306,13 +277,7 @@ const Register = () => {
                   onChange={handleChange}
                   required
                   autoComplete="new-password"
-                  style={{
-                    paddingLeft: '48px',
-                    fontWeight: 600,
-                    position: 'relative',
-                    zIndex: 100,
-                    pointerEvents: 'auto'
-                  }}
+                  style={{ paddingLeft: '48px', fontWeight: 600 }}
                 />
                 <Lock
                   size={20}
@@ -322,8 +287,7 @@ const Register = () => {
                     top: '50%',
                     transform: 'translateY(-50%)',
                     color: 'var(--accent)',
-                    pointerEvents: 'none',
-                    zIndex: 101
+                    pointerEvents: 'none'
                   }}
                 />
               </div>
@@ -337,10 +301,7 @@ const Register = () => {
                 width: '100%',
                 padding: '18px',
                 fontSize: '15px',
-                marginTop: '12px',
-                position: 'relative',
-                zIndex: 100,
-                pointerEvents: 'auto'
+                marginTop: '12px'
               }}
             >
               {loading ? (
@@ -370,7 +331,10 @@ const Register = () => {
             <Link to="/login" style={{
               color: 'var(--accent)',
               fontWeight: 700,
-              textDecoration: 'underline'
+              textDecoration: 'underline',
+              position: 'relative',
+              zIndex: 1000,
+              cursor: 'pointer'
             }}>
               Sign In
             </Link>

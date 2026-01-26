@@ -4,11 +4,37 @@ import { RotateCcw, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 const Returns = () => {
   return (
     <div style={{
-      minHeight: '80vh',
+      minHeight: '100vh',
       padding: '80px 24px',
-      background: 'linear-gradient(135deg, #0f0f1e 0%, #16213e 100%)'
+      background: 'linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #1a1a2e 100%)',
+      position: 'relative',
+      overflow: 'hidden'
     }}>
-      <div className="container" style={{ maxWidth: '1000px' }}>
+      {/* Animated Background Effects */}
+      <div style={{
+        position: 'absolute',
+        top: '15%',
+        left: '12%',
+        width: '400px',
+        height: '400px',
+        background: 'radial-gradient(circle, rgba(139, 0, 0, 0.18) 0%, transparent 70%)',
+        borderRadius: '50%',
+        filter: 'blur(80px)',
+        animation: 'battleFloat 11s ease-in-out infinite'
+      }} />
+      <div style={{
+        position: 'absolute',
+        bottom: '20%',
+        right: '15%',
+        width: '500px',
+        height: '500px',
+        background: 'radial-gradient(circle, rgba(201, 169, 97, 0.15) 0%, transparent 70%)',
+        borderRadius: '50%',
+        filter: 'blur(80px)',
+        animation: 'battleFloat 13s ease-in-out infinite reverse'
+      }} />
+
+      <div className="container" style={{ maxWidth: '1000px', position: 'relative', zIndex: 1 }}>
         <h1 style={{
           fontFamily: 'var(--font-display)',
           fontSize: 'clamp(36px, 6vw, 64px)',
@@ -193,7 +219,7 @@ const Returns = () => {
           </div>
         </div>
 
-        <div className="card" style={{ padding: '48px' }}>
+        <div className="card" style={{ padding: '48px', marginBottom: '32px' }}>
           <h2 style={{
             fontSize: '28px',
             marginBottom: '32px',
@@ -223,7 +249,6 @@ const Returns = () => {
         </div>
 
         <div className="card" style={{
-          marginTop: '32px',
           padding: '32px',
           background: 'rgba(201, 169, 97, 0.1)',
           border: '2px solid var(--accent)'

@@ -4,11 +4,37 @@ import { Truck, Package, Clock, Globe } from 'lucide-react';
 const Shipping = () => {
   return (
     <div style={{
-      minHeight: '80vh',
+      minHeight: '100vh',
       padding: '80px 24px',
-      background: 'linear-gradient(135deg, #0f0f1e 0%, #16213e 100%)'
+      background: 'linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #1a1a2e 100%)',
+      position: 'relative',
+      overflow: 'hidden'
     }}>
-      <div className="container" style={{ maxWidth: '1000px' }}>
+      {/* Animated Background Effects */}
+      <div style={{
+        position: 'absolute',
+        top: '25%',
+        right: '8%',
+        width: '550px',
+        height: '550px',
+        background: 'radial-gradient(circle, rgba(44, 95, 119, 0.18) 0%, transparent 70%)',
+        borderRadius: '50%',
+        filter: 'blur(80px)',
+        animation: 'battleFloat 14s ease-in-out infinite'
+      }} />
+      <div style={{
+        position: 'absolute',
+        bottom: '10%',
+        left: '10%',
+        width: '450px',
+        height: '450px',
+        background: 'radial-gradient(circle, rgba(201, 169, 97, 0.14) 0%, transparent 70%)',
+        borderRadius: '50%',
+        filter: 'blur(80px)',
+        animation: 'battleFloat 10s ease-in-out infinite reverse'
+      }} />
+
+      <div className="container" style={{ maxWidth: '1000px', position: 'relative', zIndex: 1 }}>
         <h1 style={{
           fontFamily: 'var(--font-display)',
           fontSize: 'clamp(36px, 6vw, 64px)',
