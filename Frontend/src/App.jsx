@@ -11,6 +11,7 @@ import Checkout from './pages/Checkout';
 import Wishlist from './pages/Wishlist';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
+import ForgotPassword from './pages/Auth/ForgotPassword';
 import Account from './pages/Account/Account';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import AdminProductForm from './pages/Admin/AdminProductForm';
@@ -39,6 +40,7 @@ function App() {
                   <Route path="/wishlist" element={<Wishlist />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
+                  <Route path="/forgot-password" element={<ForgotPassword />} />
                   <Route path="/account" element={<Account />} />
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/faq" element={<FAQ />} />
