@@ -7,8 +7,16 @@ import { ordersAPI } from '../services/api';
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const { cart, getCartTotal, clearCart } = useCart();
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!isAuthenticated) {
+      alert('Please login to proceed with checkout');
+      navigate('/login');
+    }
+  }, [isAuthenticated, navigate]);
   const [loading, setLoading] = useState(false);
   const [validating, setValidating] = useState(false);
   const [validationError, setValidationError] = useState('');
