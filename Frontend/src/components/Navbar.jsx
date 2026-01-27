@@ -156,8 +156,9 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Action Icons */}
+          {/* Action Icons - ALWAYS VISIBLE */}
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            {/* Search Button */}
             <button
               className="btn-icon"
               onClick={() => setIsSearchOpen(!isSearchOpen)}
@@ -170,159 +171,181 @@ const Navbar = () => {
               <Search size={20} />
             </button>
 
+            {/* Wishlist Button - Always Visible */}
+            <Link 
+              to={user ? "/wishlist" : "/login"} 
+              className="btn-icon forge-glow" 
+              aria-label="Wishlist"
+              onClick={(e) => {
+                if (!user) {
+                  e.preventDefault();
+                  alert('Please login to view your wishlist');
+                  navigate('/login');
+                }
+              }}
+            >
+              <Heart size={20} />
+            </Link>
+
+            {/* Cart Button - Always Visible */}
+            <Link 
+              to="/cart" 
+              style={{ position: 'relative' }}
+              onClick={(e) => {
+                if (!user) {
+                  e.preventDefault();
+                  alert('Please login to view your cart');
+                  navigate('/login');
+                }
+              }}
+            >
+              <button className="btn-icon forge-glow">
+                <ShoppingBag size={20} />
+              </button>
+              {getCartCount() > 0 && (
+                <span style={{
+                  position: 'absolute',
+                  top: '-10px',
+                  right: '-10px',
+                  background: 'var(--gradient-2)',
+                  color: 'white',
+                  fontSize: '11px',
+                  fontWeight: 900,
+                  minWidth: '26px',
+                  height: '26px',
+                  borderRadius: '4px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: 'var(--shadow-fire)',
+                  border: '2px solid var(--accent-red)',
+                  animation: 'forge 2s infinite'
+                }}>
+                  {getCartCount()}
+                </span>
+              )}
+            </Link>
+
+            {/* User Menu or Login Button */}
             {user ? (
-              <div style={{ position: 'relative', display: 'flex', gap: '12px' }}>
-                <Link to="/wishlist" className="btn-icon forge-glow" aria-label="Wishlist">
-                  <Heart size={20} />
-                </Link>
-
-                <Link to="/cart" style={{ position: 'relative' }}>
-                  <button className="btn-icon forge-glow">
-                    <ShoppingBag size={20} />
-                  </button>
-                  {getCartCount() > 0 && (
-                    <span style={{
-                      position: 'absolute',
-                      top: '-10px',
-                      right: '-10px',
-                      background: 'var(--gradient-2)',
-                      color: 'white',
-                      fontSize: '11px',
-                      fontWeight: 900,
-                      minWidth: '26px',
-                      height: '26px',
-                      borderRadius: '4px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: 'var(--shadow-fire)',
-                      border: '2px solid var(--accent-red)',
-                      animation: 'forge 2s infinite'
-                    }}>
-                      {getCartCount()}
-                    </span>
-                  )}
-                </Link>
-
-                <div className="user-menu" style={{ position: 'relative' }}>
-                  <button className="btn-icon forge-glow" aria-label="Account">
-                    <User size={20} />
-                  </button>
-                  <div className="dropdown steel-border" style={{
-                    position: 'absolute',
-                    top: 'calc(100% + 16px)',
-                    right: 0,
-                    background: 'var(--bg-card)',
-                    backdropFilter: 'blur(20px)',
-                    boxShadow: 'var(--shadow-lg), 0 0 40px rgba(201, 169, 97, 0.3)',
-                    borderRadius: '8px',
-                    minWidth: '280px',
-                    opacity: 0,
-                    visibility: 'hidden',
-                    transform: 'translateY(-10px)',
-                    transition: 'all 0.4s ease',
-                    overflow: 'hidden'
+              <div className="user-menu" style={{ position: 'relative' }}>
+                <button className="btn-icon forge-glow" aria-label="Account">
+                  <User size={20} />
+                </button>
+                <div className="dropdown steel-border" style={{
+                  position: 'absolute',
+                  top: 'calc(100% + 16px)',
+                  right: 0,
+                  background: 'var(--bg-card)',
+                  backdropFilter: 'blur(20px)',
+                  boxShadow: 'var(--shadow-lg), 0 0 40px rgba(201, 169, 97, 0.3)',
+                  borderRadius: '8px',
+                  minWidth: '280px',
+                  opacity: 0,
+                  visibility: 'hidden',
+                  transform: 'translateY(-10px)',
+                  transition: 'all 0.4s ease',
+                  overflow: 'hidden'
+                }}>
+                  <div style={{
+                    padding: '24px',
+                    background: 'var(--gradient-1)',
+                    color: 'var(--text-dark)',
+                    position: 'relative',
+                    borderBottom: '3px solid var(--accent-red)'
                   }}>
-                    <div style={{
-                      padding: '24px',
-                      background: 'var(--gradient-1)',
-                      color: 'var(--text-dark)',
-                      position: 'relative',
-                      borderBottom: '3px solid var(--accent-red)'
-                    }}>
-                      <Shield size={24} style={{ position: 'absolute', top: '12px', right: '12px', opacity: 0.3 }} />
-                      <p style={{ fontWeight: 900, marginBottom: '6px', fontSize: '18px', letterSpacing: '1px' }}>
-                        {user?.firstName} {user?.lastName}
-                      </p>
-                      <p style={{ fontSize: '12px', opacity: 0.8, fontWeight: 600 }}>
-                        {user?.email}
-                      </p>
-                    </div>
-                    <Link to="/account" style={{
+                    <Shield size={24} style={{ position: 'absolute', top: '12px', right: '12px', opacity: 0.3 }} />
+                    <p style={{ fontWeight: 900, marginBottom: '6px', fontSize: '18px', letterSpacing: '1px' }}>
+                      {user?.firstName} {user?.lastName}
+                    </p>
+                    <p style={{ fontSize: '12px', opacity: 0.8, fontWeight: 600 }}>
+                      {user?.email}
+                    </p>
+                  </div>
+                  <Link to="/account" style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    padding: '18px 24px',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    borderBottom: '2px solid var(--border)',
+                    transition: 'var(--transition)',
+                    letterSpacing: '0.5px'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(201, 169, 97, 0.1)';
+                    e.currentTarget.style.paddingLeft = '32px';
+                    e.currentTarget.style.borderLeftColor = 'var(--accent)';
+                    e.currentTarget.style.borderLeftWidth = '4px';
+                    e.currentTarget.style.borderLeftStyle = 'solid';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.paddingLeft = '24px';
+                    e.currentTarget.style.borderLeft = 'none';
+                  }}
+                  >
+                    <User size={16} /> MY PROFILE
+                  </Link>
+                  {isAdmin && (
+                    <Link to="/admin" style={{
                       display: 'flex',
                       alignItems: 'center',
                       gap: '12px',
                       padding: '18px 24px',
                       fontSize: '14px',
-                      fontWeight: 600,
+                      fontWeight: 700,
                       borderBottom: '2px solid var(--border)',
+                      background: 'rgba(139, 0, 0, 0.15)',
+                      color: 'var(--accent)',
                       transition: 'var(--transition)',
-                      letterSpacing: '0.5px'
+                      letterSpacing: '1px'
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'rgba(201, 169, 97, 0.1)';
+                      e.currentTarget.style.background = 'rgba(139, 0, 0, 0.25)';
                       e.currentTarget.style.paddingLeft = '32px';
-                      e.currentTarget.style.borderLeftColor = 'var(--accent)';
+                      e.currentTarget.style.borderLeftColor = 'var(--accent-red)';
                       e.currentTarget.style.borderLeftWidth = '4px';
                       e.currentTarget.style.borderLeftStyle = 'solid';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'transparent';
+                      e.currentTarget.style.background = 'rgba(139, 0, 0, 0.15)';
                       e.currentTarget.style.paddingLeft = '24px';
                       e.currentTarget.style.borderLeft = 'none';
                     }}
                     >
-                      <User size={16} /> MY PROFILE
+                      <Shield size={16} /> COMMAND CENTER
                     </Link>
-                    {isAdmin && (
-                      <Link to="/admin" style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '12px',
-                        padding: '18px 24px',
-                        fontSize: '14px',
-                        fontWeight: 700,
-                        borderBottom: '2px solid var(--border)',
-                        background: 'rgba(139, 0, 0, 0.15)',
-                        color: 'var(--accent)',
-                        transition: 'var(--transition)',
-                        letterSpacing: '1px'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = 'rgba(139, 0, 0, 0.25)';
-                        e.currentTarget.style.paddingLeft = '32px';
-                        e.currentTarget.style.borderLeftColor = 'var(--accent-red)';
-                        e.currentTarget.style.borderLeftWidth = '4px';
-                        e.currentTarget.style.borderLeftStyle = 'solid';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = 'rgba(139, 0, 0, 0.15)';
-                        e.currentTarget.style.paddingLeft = '24px';
-                        e.currentTarget.style.borderLeft = 'none';
-                      }}
-                      >
-                        <Shield size={16} /> COMMAND CENTER
-                      </Link>
-                    )}
-                    <button onClick={handleLogout} style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      width: '100%',
-                      padding: '18px 24px',
-                      fontSize: '14px',
-                      fontWeight: 600,
-                      textAlign: 'left',
-                      background: 'transparent',
-                      color: 'var(--text-primary)',
-                      transition: 'var(--transition)',
-                      letterSpacing: '0.5px'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'rgba(255, 107, 107, 0.15)';
-                      e.currentTarget.style.color = '#ff6b6b';
-                      e.currentTarget.style.paddingLeft = '32px';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'transparent';
-                      e.currentTarget.style.color = 'var(--text-primary)';
-                      e.currentTarget.style.paddingLeft = '24px';
-                    }}
-                    >
-                      <LogOut size={16} />
-                      RETREAT
-                    </button>
-                  </div>
+                  )}
+                  <button onClick={handleLogout} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    width: '100%',
+                    padding: '18px 24px',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    textAlign: 'left',
+                    background: 'transparent',
+                    color: 'var(--text-primary)',
+                    transition: 'var(--transition)',
+                    letterSpacing: '0.5px'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 107, 107, 0.15)';
+                    e.currentTarget.style.color = '#ff6b6b';
+                    e.currentTarget.style.paddingLeft = '32px';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.color = 'var(--text-primary)';
+                    e.currentTarget.style.paddingLeft = '24px';
+                  }}
+                  >
+                    <LogOut size={16} />
+                    RETREAT
+                  </button>
                 </div>
               </div>
             ) : (
