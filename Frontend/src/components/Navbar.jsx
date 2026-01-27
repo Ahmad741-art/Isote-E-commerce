@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, ShoppingBag, Heart, User, Menu, X, LogOut, Sparkles, Leaf } from 'lucide-react';
+import { Search, ShoppingBag, Heart, User, Menu, X, LogOut, Sparkles } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 
@@ -30,146 +30,166 @@ const Navbar = () => {
     <nav style={{
       position: 'sticky',
       top: 0,
-      background: 'linear-gradient(180deg, rgba(26, 35, 50, 0.97) 0%, rgba(45, 62, 80, 0.95) 100%)',
+      background: 'linear-gradient(180deg, rgba(26, 35, 50, 0.98) 0%, rgba(45, 62, 80, 0.96) 100%)',
       backdropFilter: 'blur(20px)',
-      borderBottom: '1px solid rgba(212, 165, 116, 0.2)',
-      boxShadow: '0 4px 30px rgba(0, 0, 0, 0.6)',
+      borderBottom: '1px solid rgba(212, 165, 116, 0.15)',
+      boxShadow: '0 4px 24px rgba(0, 0, 0, 0.5)',
       zIndex: 1000
     }}>
-      {/* Elegant banner */}
+      {/* Elegant Top Banner */}
       <div style={{
-        background: 'var(--gradient-sunset)',
-        color: 'white',
+        background: 'linear-gradient(90deg, rgba(255, 107, 90, 0.15) 0%, rgba(90, 141, 142, 0.15) 50%, rgba(212, 165, 116, 0.15) 100%)',
+        color: 'var(--text-primary)',
         textAlign: 'center',
-        padding: '10px',
-        fontSize: '12px',
-        fontWeight: 600,
-        letterSpacing: '2px',
+        padding: '8px',
+        fontSize: '11px',
+        fontWeight: 500,
+        letterSpacing: '0.15em',
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        borderBottom: '1px solid rgba(212, 165, 116, 0.2)'
       }}>
         <div style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: '10px',
-          position: 'relative'
+          gap: '8px'
         }}>
-          <Leaf size={16} />
-          <span>✨ CURATED COLLECTIONS | FREE DELIVERY OVER $100 ✨</span>
-          <Sparkles size={16} />
+          <span style={{ opacity: 0.7 }}>✦</span>
+          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: '12px' }}>
+            Complimentary delivery on orders above $100
+          </span>
+          <span style={{ opacity: 0.7 }}>✦</span>
         </div>
       </div>
 
-      {/* Main Navbar */}
+      {/* Main Navigation */}
       <div className="container">
         <div style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '20px 0',
-          gap: '40px'
+          padding: '22px 0',
+          gap: '48px'
         }}>
-          {/* Elegant Logo */}
+          {/* Logo - Elegant Script */}
           <Link to="/" style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: '42px',
-            fontWeight: 700,
-            letterSpacing: '3px',
-            background: 'var(--gradient-sunset)',
+            fontFamily: "'Cormorant Garamond', 'Playfair Display', serif",
+            fontSize: '52px',
+            fontWeight: 300,
+            letterSpacing: '0.08em',
+            background: 'linear-gradient(135deg, #ff8c75 0%, #d4a574 50%, #8ca89d 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
-            filter: 'drop-shadow(0 0 15px rgba(255, 107, 90, 0.4))',
-            transition: 'var(--transition)',
+            filter: 'drop-shadow(0 2px 8px rgba(255, 107, 90, 0.3))',
+            transition: 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
             position: 'relative',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '10px'
+            fontStyle: 'italic'
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.03)';
-            e.currentTarget.style.filter = 'drop-shadow(0 0 25px rgba(255, 107, 90, 0.6))';
+            e.currentTarget.style.transform = 'scale(1.02)';
+            e.currentTarget.style.filter = 'drop-shadow(0 4px 16px rgba(255, 107, 90, 0.5))';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.filter = 'drop-shadow(0 0 15px rgba(255, 107, 90, 0.4))';
+            e.currentTarget.style.filter = 'drop-shadow(0 2px 8px rgba(255, 107, 90, 0.3))';
           }}
           >
-            <Leaf size={32} style={{ color: 'var(--accent-sage)' }} />
-            ISOTÉ
+            Isoté
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - Refined Categories */}
           <div style={{
             display: 'flex',
-            gap: '40px',
+            gap: '48px',
             flex: 1,
-            justifyContent: 'center'
+            justifyContent: 'center',
+            alignItems: 'center'
           }}>
             {[
-              { to: '/shop?category=women', label: 'WOMEN', icon: '🌸' },
-              { to: '/shop?category=men', label: 'MEN', icon: '🍃' },
-              { to: '/shop?category=accessories', label: 'ACCESSORIES', icon: '✨' },
-              { to: '/shop', label: 'COLLECTION', special: true, icon: '🌿' }
-            ].map((link) => (
+              { to: '/shop?featured=new', label: 'New Arrivals' },
+              { to: '/shop?featured=popular', label: 'Most Popular' },
+              { to: '/shop?category=accessories', label: 'Accessories' },
+              { to: '/shop', label: 'Collection', special: true }
+            ].map((link, idx) => (
               <Link
                 key={link.to}
                 to={link.to}
                 style={{
-                  fontSize: '12px',
-                  fontWeight: 600,
-                  letterSpacing: '1.5px',
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: '15px',
+                  fontWeight: 400,
+                  letterSpacing: '0.05em',
                   color: link.special ? 'var(--accent-coral)' : 'var(--text-primary)',
                   position: 'relative',
-                  padding: '10px 16px',
-                  transition: 'var(--transition)',
-                  border: '1px solid transparent',
-                  borderRadius: '2px'
+                  padding: '8px 0',
+                  transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
+                  textDecoration: 'none',
+                  display: 'inline-block'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = link.special ? 'var(--accent-coral)' : 'var(--accent-teal)';
-                  e.currentTarget.style.background = link.special 
-                    ? 'rgba(255, 107, 90, 0.1)' 
-                    : 'rgba(90, 141, 142, 0.1)';
+                  e.currentTarget.style.color = link.special ? 'var(--accent-coral-light)' : 'var(--accent-gold)';
                   e.currentTarget.style.transform = 'translateY(-1px)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'transparent';
-                  e.currentTarget.style.background = 'transparent';
+                  e.currentTarget.style.color = link.special ? 'var(--accent-coral)' : 'var(--text-primary)';
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
-                <span style={{ marginRight: '6px' }}>{link.icon}</span>
                 {link.label}
+                <span style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '1px',
+                  background: link.special ? 'var(--accent-coral)' : 'var(--accent-gold)',
+                  transform: 'scaleX(0)',
+                  transformOrigin: 'right',
+                  transition: 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.transform = 'scaleX(1)';
+                  e.target.style.transformOrigin = 'left';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.transform = 'scaleX(0)';
+                  e.target.style.transformOrigin = 'right';
+                }}
+                />
               </Link>
             ))}
           </div>
 
           {/* Action Icons */}
-          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-            {/* Search Button */}
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            {/* Search */}
             <button
               className="btn-icon"
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               aria-label="Search"
               style={{
-                background: isSearchOpen ? 'var(--gradient-sunset)' : 'var(--bg-card)',
-                color: isSearchOpen ? 'white' : 'var(--accent-coral)',
-                border: `1px solid ${isSearchOpen ? 'var(--accent-coral)' : 'var(--border)'}`
+                background: isSearchOpen ? 'rgba(255, 107, 90, 0.15)' : 'transparent',
+                color: isSearchOpen ? 'var(--accent-coral)' : 'var(--text-primary)',
+                border: `1px solid ${isSearchOpen ? 'var(--accent-coral)' : 'transparent'}`
               }}
             >
               <Search size={18} />
             </button>
 
-            {/* Wishlist Button */}
+            {/* Wishlist */}
             <Link 
               to={user ? "/wishlist" : "/login"} 
-              className="btn-icon soft-glow" 
+              className="btn-icon" 
               aria-label="Wishlist"
+              style={{
+                background: 'transparent',
+                color: 'var(--text-primary)',
+                border: '1px solid transparent'
+              }}
               onClick={(e) => {
                 if (!user) {
                   e.preventDefault();
-                  alert('Please login to view your wishlist');
                   navigate('/login');
                 }
               }}
@@ -177,38 +197,41 @@ const Navbar = () => {
               <Heart size={18} />
             </Link>
 
-            {/* Cart Button */}
+            {/* Cart */}
             <Link 
               to="/cart" 
               style={{ position: 'relative' }}
               onClick={(e) => {
                 if (!user) {
                   e.preventDefault();
-                  alert('Please login to view your cart');
                   navigate('/login');
                 }
               }}
             >
-              <button className="btn-icon soft-glow">
+              <button className="btn-icon" style={{
+                background: 'transparent',
+                color: 'var(--text-primary)',
+                border: '1px solid transparent'
+              }}>
                 <ShoppingBag size={18} />
               </button>
               {getCartCount() > 0 && (
                 <span style={{
                   position: 'absolute',
-                  top: '-8px',
-                  right: '-8px',
+                  top: '-6px',
+                  right: '-6px',
                   background: 'var(--gradient-sunset)',
                   color: 'white',
                   fontSize: '10px',
                   fontWeight: 700,
-                  minWidth: '22px',
-                  height: '22px',
+                  minWidth: '18px',
+                  height: '18px',
                   borderRadius: '50%',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  boxShadow: 'var(--shadow-coral)',
-                  border: '2px solid var(--bg-card)'
+                  boxShadow: '0 2px 8px rgba(255, 107, 90, 0.4)',
+                  border: '1px solid var(--bg-card)'
                 }}>
                   {getCartCount()}
                 </span>
@@ -218,100 +241,113 @@ const Navbar = () => {
             {/* User Menu */}
             {user ? (
               <div className="user-menu" style={{ position: 'relative' }}>
-                <button className="btn-icon soft-glow" aria-label="Account">
+                <button className="btn-icon" aria-label="Account" style={{
+                  background: 'transparent',
+                  color: 'var(--text-primary)',
+                  border: '1px solid transparent'
+                }}>
                   <User size={18} />
                 </button>
-                <div className="dropdown organic-border" style={{
+                <div className="dropdown" style={{
                   position: 'absolute',
-                  top: 'calc(100% + 14px)',
+                  top: 'calc(100% + 12px)',
                   right: 0,
-                  background: 'var(--bg-card)',
+                  background: 'rgba(42, 58, 74, 0.98)',
                   backdropFilter: 'blur(20px)',
-                  boxShadow: 'var(--shadow-lg), 0 0 30px rgba(255, 107, 90, 0.2)',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.6)',
                   borderRadius: '4px',
-                  minWidth: '260px',
+                  minWidth: '240px',
                   opacity: 0,
                   visibility: 'hidden',
                   transform: 'translateY(-8px)',
-                  transition: 'all 0.4s ease',
-                  overflow: 'hidden'
+                  transition: 'all 0.3s cubic-bezier(0.23, 1, 0.32, 1)',
+                  overflow: 'hidden',
+                  border: '1px solid rgba(212, 165, 116, 0.2)'
                 }}>
                   <div style={{
                     padding: '20px',
-                    background: 'var(--gradient-3)',
-                    color: 'white',
-                    position: 'relative',
-                    borderBottom: '1px solid rgba(212, 165, 116, 0.3)'
+                    background: 'linear-gradient(135deg, rgba(255, 107, 90, 0.1) 0%, rgba(90, 141, 142, 0.1) 100%)',
+                    borderBottom: '1px solid rgba(212, 165, 116, 0.2)'
                   }}>
-                    <Leaf size={20} style={{ position: 'absolute', top: '10px', right: '10px', opacity: 0.4 }} />
-                    <p style={{ fontWeight: 700, marginBottom: '5px', fontSize: '16px', letterSpacing: '0.5px' }}>
+                    <p style={{ 
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontWeight: 500, 
+                      marginBottom: '4px', 
+                      fontSize: '16px', 
+                      letterSpacing: '0.03em' 
+                    }}>
                       {user?.firstName} {user?.lastName}
                     </p>
-                    <p style={{ fontSize: '12px', opacity: 0.9 }}>
+                    <p style={{ fontSize: '12px', opacity: 0.7, letterSpacing: '0.02em' }}>
                       {user?.email}
                     </p>
                   </div>
                   <Link to="/account" style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '10px',
+                    gap: '12px',
                     padding: '16px 20px',
                     fontSize: '13px',
-                    fontWeight: 600,
-                    borderBottom: '1px solid var(--border)',
-                    transition: 'var(--transition)',
-                    letterSpacing: '0.5px'
+                    fontWeight: 500,
+                    borderBottom: '1px solid rgba(212, 165, 116, 0.1)',
+                    transition: 'all 0.3s ease',
+                    letterSpacing: '0.03em',
+                    fontFamily: "'Cormorant Garamond', serif"
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 107, 90, 0.1)';
+                    e.currentTarget.style.background = 'rgba(255, 107, 90, 0.08)';
                     e.currentTarget.style.paddingLeft = '28px';
+                    e.currentTarget.style.color = 'var(--accent-coral)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = 'transparent';
                     e.currentTarget.style.paddingLeft = '20px';
+                    e.currentTarget.style.color = 'inherit';
                   }}
                   >
-                    <User size={14} /> MY PROFILE
+                    <User size={14} /> My Account
                   </Link>
                   {isAdmin && (
                     <Link to="/admin" style={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '10px',
+                      gap: '12px',
                       padding: '16px 20px',
                       fontSize: '13px',
-                      fontWeight: 700,
-                      borderBottom: '1px solid var(--border)',
-                      background: 'rgba(90, 141, 142, 0.12)',
+                      fontWeight: 600,
+                      borderBottom: '1px solid rgba(212, 165, 116, 0.1)',
+                      background: 'rgba(90, 141, 142, 0.1)',
                       color: 'var(--accent-teal)',
-                      transition: 'var(--transition)',
-                      letterSpacing: '0.8px'
+                      transition: 'all 0.3s ease',
+                      letterSpacing: '0.05em',
+                      fontFamily: "'Cormorant Garamond', serif"
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.background = 'rgba(90, 141, 142, 0.2)';
                       e.currentTarget.style.paddingLeft = '28px';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'rgba(90, 141, 142, 0.12)';
+                      e.currentTarget.style.background = 'rgba(90, 141, 142, 0.1)';
                       e.currentTarget.style.paddingLeft = '20px';
                     }}
                     >
-                      <Sparkles size={14} /> ADMIN PANEL
+                      <Sparkles size={14} /> Admin Panel
                     </Link>
                   )}
                   <button onClick={handleLogout} style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '10px',
+                    gap: '12px',
                     width: '100%',
                     padding: '16px 20px',
                     fontSize: '13px',
-                    fontWeight: 600,
+                    fontWeight: 500,
                     textAlign: 'left',
                     background: 'transparent',
                     color: 'var(--text-primary)',
-                    transition: 'var(--transition)',
-                    letterSpacing: '0.5px'
+                    transition: 'all 0.3s ease',
+                    letterSpacing: '0.03em',
+                    fontFamily: "'Cormorant Garamond', serif"
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = 'rgba(255, 107, 90, 0.12)';
@@ -325,14 +361,20 @@ const Navbar = () => {
                   }}
                   >
                     <LogOut size={14} />
-                    SIGN OUT
+                    Sign Out
                   </button>
                 </div>
               </div>
             ) : (
-              <Link to="/login" className="btn btn-primary" style={{ padding: '12px 32px' }}>
-                <User size={16} />
-                SIGN IN
+              <Link to="/login" className="btn btn-outline" style={{ 
+                padding: '10px 28px',
+                fontSize: '12px',
+                fontFamily: "'Cormorant Garamond', serif",
+                letterSpacing: '0.08em',
+                borderColor: 'var(--accent-gold)',
+                color: 'var(--accent-gold)'
+              }}>
+                Sign In
               </Link>
             )}
           </div>
@@ -341,44 +383,41 @@ const Navbar = () => {
         {/* Elegant Search Bar */}
         {isSearchOpen && (
           <div style={{
-            padding: '0 0 24px 0',
+            padding: '0 0 28px 0',
             animation: 'fadeIn 0.4s ease'
           }}>
             <form onSubmit={handleSearch} style={{
               display: 'flex',
-              gap: '14px',
-              maxWidth: '700px',
-              margin: '0 auto',
-              position: 'relative'
+              gap: '16px',
+              maxWidth: '600px',
+              margin: '0 auto'
             }}>
               <div style={{ position: 'relative', flex: 1 }}>
                 <input
                   type="text"
                   className="input"
-                  placeholder="Search for timeless pieces... 🌸"
+                  placeholder="Search our collection..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   autoFocus
                   style={{
-                    background: 'var(--bg-card)',
-                    border: '2px solid var(--accent-gold)',
-                    boxShadow: '0 0 20px rgba(212, 165, 116, 0.2)',
+                    background: 'rgba(42, 58, 74, 0.6)',
+                    border: '1px solid rgba(212, 165, 116, 0.3)',
+                    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)',
                     fontSize: '14px',
-                    fontWeight: 500
+                    fontWeight: 400,
+                    fontFamily: "'Cormorant Garamond', serif",
+                    letterSpacing: '0.02em'
                   }}
                 />
-                <Sparkles size={20} style={{
-                  position: 'absolute',
-                  right: '16px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  color: 'var(--accent-gold)',
-                  animation: 'gentleFloat 3s infinite'
-                }} />
               </div>
-              <button type="submit" className="btn btn-accent" style={{ padding: '14px 36px' }}>
-                <Search size={18} />
-                SEARCH
+              <button type="submit" className="btn btn-primary" style={{ 
+                padding: '12px 32px',
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: '13px',
+                letterSpacing: '0.05em'
+              }}>
+                Search
               </button>
             </form>
           </div>
@@ -386,7 +425,9 @@ const Navbar = () => {
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+        
+        @media (max-width: 968px) {
           nav > div > div > div:nth-child(2) {
             display: none;
           }
