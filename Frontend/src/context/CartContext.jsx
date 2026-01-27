@@ -15,7 +15,7 @@ export const useCart = () => {
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -23,7 +23,13 @@ export const CartProvider = ({ children }) => {
     } else {
       const localCart = localStorage.getItem('cart');
       if (localCart) {
-        setCart(JSON.parse(localCart));
+        try {
+          setCart(JSON.parse(localCart));
+        } catch (error) {
+          console.error('Failed to parse local cart:', error);
+          localStorage.removeItem('cart');
+          setCart([]);
+        }
       }
     }
   }, [isAuthenticated]);
@@ -35,6 +41,10 @@ export const CartProvider = ({ children }) => {
       setCart(response.data.items || []);
     } catch (error) {
       console.error('Failed to fetch cart:', error);
+      // If cart endpoint doesn't exist, initialize empty cart
+      if (error.response?.status === 404) {
+        setCart([]);
+      }
     } finally {
       setLoading(false);
     }
@@ -43,35 +53,47 @@ export const CartProvider = ({ children }) => {
   const addToCart = async (product, quantity = 1, size = null) => {
     try {
       if (isAuthenticated) {
-        const response = await cartAPI.addItem({
-          productId: product._id,
-          quantity,
-          size,
-        });
-        setCart(response.data.items);
-      } else {
-        const existingItem = cart.find(
-          (item) => item.product._id === product._id && item.size === size
-        );
-
-        let newCart;
-        if (existingItem) {
-          newCart = cart.map((item) =>
-            item.product._id === product._id && item.size === size
-              ? { ...item, quantity: item.quantity + quantity }
-              : item
-          );
-        } else {
-          newCart = [...cart, { product, quantity, size, _id: Date.now().toString() }];
+        // Try to add to backend cart
+        try {
+          const response = await cartAPI.addItem({
+            productId: product._id,
+            quantity,
+            size,
+          });
+          setCart(response.data.items || []);
+        } catch (error) {
+          // If backend cart API fails, fall back to local storage
+          console.warn('Backend cart failed, using local storage:', error);
+          addToLocalCart(product, quantity, size);
         }
-
-        setCart(newCart);
-        localStorage.setItem('cart', JSON.stringify(newCart));
+      } else {
+        // User not authenticated, use local storage
+        addToLocalCart(product, quantity, size);
       }
     } catch (error) {
       console.error('Failed to add to cart:', error);
       throw error;
     }
+  };
+
+  const addToLocalCart = (product, quantity, size) => {
+    const existingItem = cart.find(
+      (item) => item.product._id === product._id && item.size === size
+    );
+
+    let newCart;
+    if (existingItem) {
+      newCart = cart.map((item) =>
+        item.product._id === product._id && item.size === size
+          ? { ...item, quantity: item.quantity + quantity }
+          : item
+      );
+    } else {
+      newCart = [...cart, { product, quantity, size, _id: Date.now().toString() }];
+    }
+
+    setCart(newCart);
+    localStorage.setItem('cart', JSON.stringify(newCart));
   };
 
   const updateQuantity = async (itemId, quantity) => {
@@ -81,14 +103,15 @@ export const CartProvider = ({ children }) => {
       }
 
       if (isAuthenticated) {
-        const response = await cartAPI.updateItem(itemId, { quantity });
-        setCart(response.data.items);
+        try {
+          const response = await cartAPI.updateItem(itemId, { quantity });
+          setCart(response.data.items || []);
+        } catch (error) {
+          console.warn('Backend update failed, using local storage:', error);
+          updateLocalQuantity(itemId, quantity);
+        }
       } else {
-        const newCart = cart.map((item) =>
-          item._id === itemId ? { ...item, quantity } : item
-        );
-        setCart(newCart);
-        localStorage.setItem('cart', JSON.stringify(newCart));
+        updateLocalQuantity(itemId, quantity);
       }
     } catch (error) {
       console.error('Failed to update cart:', error);
@@ -96,15 +119,26 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const updateLocalQuantity = (itemId, quantity) => {
+    const newCart = cart.map((item) =>
+      item._id === itemId ? { ...item, quantity } : item
+    );
+    setCart(newCart);
+    localStorage.setItem('cart', JSON.stringify(newCart));
+  };
+
   const removeFromCart = async (itemId) => {
     try {
       if (isAuthenticated) {
-        const response = await cartAPI.removeItem(itemId);
-        setCart(response.data.items);
+        try {
+          const response = await cartAPI.removeItem(itemId);
+          setCart(response.data.items || []);
+        } catch (error) {
+          console.warn('Backend remove failed, using local storage:', error);
+          removeFromLocalCart(itemId);
+        }
       } else {
-        const newCart = cart.filter((item) => item._id !== itemId);
-        setCart(newCart);
-        localStorage.setItem('cart', JSON.stringify(newCart));
+        removeFromLocalCart(itemId);
       }
     } catch (error) {
       console.error('Failed to remove from cart:', error);
@@ -112,13 +146,22 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const removeFromLocalCart = (itemId) => {
+    const newCart = cart.filter((item) => item._id !== itemId);
+    setCart(newCart);
+    localStorage.setItem('cart', JSON.stringify(newCart));
+  };
+
   const clearCart = async () => {
     try {
       if (isAuthenticated) {
-        await cartAPI.clearCart();
-      } else {
-        localStorage.removeItem('cart');
+        try {
+          await cartAPI.clearCart();
+        } catch (error) {
+          console.warn('Backend clear failed:', error);
+        }
       }
+      localStorage.removeItem('cart');
       setCart([]);
     } catch (error) {
       console.error('Failed to clear cart:', error);

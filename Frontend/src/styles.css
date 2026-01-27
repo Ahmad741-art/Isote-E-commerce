@@ -1,35 +1,86 @@
 :root {
-  /* Japanese-inspired color palette from your images */
+  /* Japanese-inspired color palette - refined from your images */
   --primary: #2d3e50;
   --secondary: #1a2332;
+  
+  /* Sunset/Coral tones from Mt. Fuji image */
   --accent-coral: #ff6b5a;
+  --accent-coral-light: #ff8c75;
+  --accent-coral-dark: #e85545;
+  
+  /* Ocean/Teal tones from nature imagery */
   --accent-teal: #5a8d8e;
+  --accent-teal-light: #7aa5a6;
+  --accent-teal-dark: #4a7578;
+  
+  /* Gold/Warm tones - Japanese aesthetic */
   --accent-gold: #d4a574;
+  --accent-gold-light: #e4b88a;
+  --accent-gold-dark: #c49564;
+  
+  /* Natural greens from foliage */
   --accent-sage: #8ca89d;
+  --accent-jade: #6b8e7d;
+  
+  /* Neutral tones - Japanese minimalism */
   --text-primary: #f5f5f0;
   --text-secondary: #b8b8aa;
+  --text-muted: #8a8a7a;
   --text-dark: #1a2332;
+  
+  /* Background layers */
   --bg-primary: #1a2332;
   --bg-secondary: #2d3e50;
   --bg-card: #2a3a4a;
-  --border: #3d4d5d;
+  --bg-overlay: rgba(26, 35, 50, 0.95);
   
-  /* Gradients inspired by your images */
-  --gradient-1: linear-gradient(135deg, #ff6b5a 0%, #d4a574 100%);
-  --gradient-2: linear-gradient(135deg, #5a8d8e 0%, #2d3e50 100%);
-  --gradient-3: linear-gradient(135deg, #d4a574 0%, #8ca89d 100%);
+  /* Borders - subtle and refined */
+  --border: #3d4d5d;
+  --border-light: #4d5d6d;
+  --border-accent: rgba(212, 165, 116, 0.3);
+  
+  /* Gradients - inspired by your images */
   --gradient-sunset: linear-gradient(135deg, #ff6b5a 0%, #ff8c75 50%, #d4a574 100%);
   --gradient-ocean: linear-gradient(135deg, #2d3e50 0%, #5a8d8e 100%);
+  --gradient-nature: linear-gradient(135deg, #d4a574 0%, #8ca89d 100%);
+  --gradient-dawn: linear-gradient(180deg, #ff6b5a 0%, #d4a574 50%, #5a8d8e 100%);
+  --gradient-overlay: linear-gradient(180deg, rgba(26, 35, 50, 0) 0%, rgba(26, 35, 50, 0.8) 100%);
   
-  --font-primary: 'Inter', sans-serif;
-  --font-display: 'Playfair Display', serif;
+  /* Typography - Japanese aesthetic */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Playfair Display', 'Noto Serif JP', serif;
   
-  --transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-  --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 8px 36px rgba(0, 0, 0, 0.6);
-  --shadow-coral: 0 0 30px rgba(255, 107, 90, 0.4);
-  --shadow-teal: 0 0 30px rgba(90, 141, 142, 0.4);
+  /* Transitions - smooth and natural */
+  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  --transition-slow: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  
+  /* Shadows - soft and layered like Japanese paper lanterns */
+  --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.15);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 8px 28px rgba(0, 0, 0, 0.45);
+  --shadow-xl: 0 12px 40px rgba(0, 0, 0, 0.55);
+  
+  /* Glow effects - soft and natural */
+  --glow-coral: 0 0 20px rgba(255, 107, 90, 0.3);
+  --glow-teal: 0 0 20px rgba(90, 141, 142, 0.3);
+  --glow-gold: 0 0 20px rgba(212, 165, 116, 0.3);
+  
+  /* Spacing scale - harmonious proportions */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  
+  /* Border radius - minimal, clean */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
 }
 
 * {
@@ -38,21 +89,61 @@
   box-sizing: border-box;
 }
 
-/* Gentle floating animation inspired by your images */
-@keyframes gentleFloat {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-12px) rotate(2deg); }
+/* Elegant floating animation - like cherry blossoms */
+@keyframes sakuraFloat {
+  0%, 100% { 
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+    opacity: 0.6;
+  }
+  25% { 
+    transform: translateY(-8px) translateX(4px) rotate(2deg);
+    opacity: 0.8;
+  }
+  50% { 
+    transform: translateY(-12px) translateX(-2px) rotate(-1deg);
+    opacity: 1;
+  }
+  75% { 
+    transform: translateY(-6px) translateX(3px) rotate(1deg);
+    opacity: 0.8;
+  }
 }
 
+/* Gentle wave animation - like water ripples */
+@keyframes waveFlow {
+  0%, 100% { 
+    transform: translateX(0) scale(1);
+    opacity: 0.4;
+  }
+  50% { 
+    transform: translateX(20px) scale(1.05);
+    opacity: 0.6;
+  }
+}
+
+/* Soft glow pulse - like lantern light */
+@keyframes lanternGlow {
+  0%, 100% { 
+    opacity: 0.3;
+    filter: blur(50px);
+  }
+  50% { 
+    opacity: 0.6;
+    filter: blur(70px);
+  }
+}
+
+/* Shimmer effect - refined and subtle */
 @keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(200%) skewX(-15deg); }
 }
 
+/* Fade in animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(15px);
   }
   to {
     opacity: 1;
@@ -60,23 +151,36 @@
   }
 }
 
-@keyframes sunsetGlow {
-  0%, 100% { opacity: 0.4; filter: blur(60px); }
-  50% { opacity: 0.7; filter: blur(80px); }
+/* Scale in animation */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: var(--font-primary);
   color: var(--text-primary);
   background: var(--bg-primary);
-  line-height: 1.6;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   position: relative;
+  font-weight: 400;
+  letter-spacing: 0.01em;
 }
 
-/* Organic background pattern inspired by your nature imagery */
+/* Organic background - layered like Japanese paper */
 body::before {
   content: '';
   position: fixed;
@@ -85,15 +189,15 @@ body::before {
   width: 100%;
   height: 100%;
   background: 
-    radial-gradient(ellipse at 15% 25%, rgba(255, 107, 90, 0.12) 0%, transparent 45%),
-    radial-gradient(ellipse at 85% 75%, rgba(90, 141, 142, 0.15) 0%, transparent 45%),
-    radial-gradient(ellipse at 50% 50%, rgba(212, 165, 116, 0.08) 0%, transparent 50%);
+    radial-gradient(ellipse at 20% 30%, rgba(255, 107, 90, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(90, 141, 142, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(212, 165, 116, 0.06) 0%, transparent 60%);
   pointer-events: none;
   z-index: 0;
-  animation: sunsetGlow 20s ease-in-out infinite;
+  animation: lanternGlow 25s ease-in-out infinite;
 }
 
-/* Subtle texture overlay */
+/* Subtle texture - like washi paper */
 body::after {
   content: '';
   position: fixed;
@@ -104,21 +208,15 @@ body::after {
   background-image: 
     repeating-linear-gradient(
       0deg,
-      rgba(255, 255, 255, 0.02) 0px,
+      rgba(255, 255, 255, 0.015) 0px,
       transparent 1px,
       transparent 2px,
-      rgba(255, 255, 255, 0.02) 3px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.02) 0px,
-      transparent 1px,
-      transparent 2px,
-      rgba(255, 255, 255, 0.02) 3px
+      rgba(255, 255, 255, 0.015) 3px
     );
   pointer-events: none;
   z-index: 1;
-  opacity: 0.3;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
 }
 
 #root {
@@ -129,38 +227,36 @@ body::after {
   z-index: 2;
 }
 
-/* Floating decorative elements */
-#root::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: 
-    radial-gradient(2px 2px at 20% 30%, rgba(255, 107, 90, 0.2), transparent),
-    radial-gradient(1px 1px at 60% 70%, rgba(90, 141, 142, 0.2), transparent),
-    radial-gradient(1px 1px at 50% 50%, rgba(212, 165, 116, 0.2), transparent),
-    radial-gradient(2px 2px at 80% 10%, rgba(140, 168, 157, 0.2), transparent);
-  background-size: 300% 300%;
-  background-position: 0% 0%;
-  animation: gentleFloat 40s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 0;
-}
-
+/* Typography - refined Japanese aesthetic */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: 0.03em;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
   color: var(--text-primary);
+  margin-bottom: var(--space-md);
+}
+
+h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); }
+h2 { font-size: clamp(2rem, 5vw, 3.5rem); }
+h3 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+h4 { font-size: clamp(1.25rem, 3vw, 2rem); }
+h5 { font-size: clamp(1.1rem, 2.5vw, 1.5rem); }
+h6 { font-size: clamp(1rem, 2vw, 1.25rem); }
+
+p {
+  margin-bottom: var(--space-md);
+  line-height: 1.8;
 }
 
 a {
   text-decoration: none;
   color: inherit;
-  transition: var(--transition);
+  transition: var(--transition-fast);
+}
+
+a:hover {
+  opacity: 0.8;
 }
 
 button {
@@ -168,40 +264,51 @@ button {
   cursor: pointer;
   border: none;
   transition: var(--transition);
+  letter-spacing: 0.02em;
 }
 
 input, textarea, select {
   font-family: var(--font-primary);
+  letter-spacing: 0.01em;
 }
 
 img {
   max-width: 100%;
   display: block;
+  height: auto;
 }
 
+/* Container - balanced spacing */
 .container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 var(--space-xl);
 }
 
-/* Button styles with Japanese aesthetic */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--space-lg);
+  }
+}
+
+/* Buttons - refined Japanese aesthetic */
 .btn {
-  padding: 16px 40px;
-  font-size: 13px;
+  padding: var(--space-lg) var(--space-2xl);
+  font-size: 0.8125rem;
   font-weight: 600;
-  letter-spacing: 1.5px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   transition: var(--transition);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: var(--space-sm);
   position: relative;
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  border: 2px solid transparent;
+  border: 1px solid transparent;
+  white-space: nowrap;
 }
 
 .btn::before {
@@ -209,122 +316,135 @@ img {
   position: absolute;
   top: 0;
   left: -100%;
-  width: 100%;
+  width: 50%;
   height: 100%;
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0.2),
     transparent
   );
-  transition: left 0.7s ease;
+  transition: left 0.8s ease;
+  transform: skewX(-15deg);
 }
 
 .btn:hover::before {
-  left: 100%;
+  left: 150%;
+}
+
+.btn:active {
+  transform: scale(0.98);
 }
 
 .btn-primary {
   background: var(--gradient-sunset);
   color: white;
   border-color: var(--accent-coral);
-  box-shadow: var(--shadow-coral);
+  box-shadow: var(--shadow-md), var(--glow-coral);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(255, 107, 90, 0.5);
+  box-shadow: var(--shadow-lg), 0 8px 24px rgba(255, 107, 90, 0.4);
 }
 
 .btn-accent {
   background: var(--gradient-ocean);
   color: white;
   border-color: var(--accent-teal);
-  box-shadow: var(--shadow-teal);
+  box-shadow: var(--shadow-md), var(--glow-teal);
 }
 
 .btn-accent:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(90, 141, 142, 0.5);
+  box-shadow: var(--shadow-lg), 0 8px 24px rgba(90, 141, 142, 0.4);
 }
 
 .btn-outline {
   background: transparent;
   color: var(--accent-gold);
-  border: 2px solid var(--accent-gold);
+  border: 1px solid var(--accent-gold);
   backdrop-filter: blur(10px);
 }
 
 .btn-outline:hover {
   background: var(--accent-gold);
-  color: var(--text-dark);
-  box-shadow: 0 4px 20px rgba(212, 165, 116, 0.4);
+  color: white;
+  box-shadow: var(--shadow-md), var(--glow-gold);
 }
 
 .btn-icon {
-  padding: 12px;
-  border-radius: 2px;
+  padding: var(--space-md);
+  border-radius: var(--radius-sm);
   background: var(--bg-card);
   color: var(--accent-coral);
-  border: 2px solid var(--border);
+  border: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-icon:hover {
-  background: var(--gradient-1);
+  background: var(--gradient-sunset);
   border-color: var(--accent-coral);
   color: white;
   transform: scale(1.05);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-md), var(--glow-coral);
 }
 
+/* Input fields - clean and refined */
 .input {
   width: 100%;
-  padding: 14px 18px;
-  border: 2px solid var(--border);
-  border-radius: 2px;
-  font-size: 14px;
+  padding: var(--space-lg) var(--space-xl);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
   transition: var(--transition);
   background: var(--bg-card);
   color: var(--text-primary);
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .input:focus {
   outline: none;
   border-color: var(--accent-coral);
   background: var(--bg-secondary);
-  box-shadow: 0 0 0 3px rgba(255, 107, 90, 0.15), inset 0 2px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0 3px rgba(255, 107, 90, 0.1), inset 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .input::placeholder {
-  color: var(--text-secondary);
+  color: var(--text-muted);
 }
 
+/* Badges - elegant indicators */
 .badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 5px 14px;
-  font-size: 11px;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 1px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  border-radius: 2px;
-  background: var(--gradient-3);
+  border-radius: var(--radius-sm);
+  background: var(--gradient-nature);
   color: white;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid rgba(212, 165, 116, 0.3);
+  box-shadow: var(--shadow-xs);
+  border: 1px solid rgba(212, 165, 116, 0.2);
 }
 
 .badge-accent {
-  background: var(--gradient-1);
-  border-color: rgba(255, 107, 90, 0.3);
+  background: var(--gradient-sunset);
+  border-color: rgba(255, 107, 90, 0.2);
 }
 
+/* Cards - layered like Japanese architecture */
 .card {
   background: var(--bg-card);
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-md);
   transition: var(--transition);
@@ -338,75 +458,84 @@ img {
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
+  height: 1px;
   background: var(--gradient-sunset);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.5s ease;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .card:hover {
-  border-color: var(--accent-coral);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg), 0 0 30px rgba(255, 107, 90, 0.2);
+  border-color: var(--border-accent);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg), 0 0 20px rgba(255, 107, 90, 0.15);
 }
 
 .card:hover::before {
   transform: scaleX(1);
 }
 
+/* Divider - subtle and refined */
 .divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
-  margin: 28px 0;
-  opacity: 0.5;
+  background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
+  margin: var(--space-2xl) 0;
+  opacity: 0.6;
 }
 
+/* Loading states */
 .loading {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 80px;
+  padding: var(--space-3xl);
+  min-height: 200px;
 }
 
 .spinner {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border: 3px solid var(--border);
   border-top-color: var(--accent-coral);
   border-right-color: var(--accent-teal);
   border-radius: 50%;
-  animation: spin 1s linear infinite;
-  box-shadow: 0 0 20px rgba(255, 107, 90, 0.2);
+  animation: spin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+  box-shadow: 0 0 15px rgba(255, 107, 90, 0.2);
 }
 
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
+/* Messages - elegant notifications */
 .error-message {
-  padding: 18px 26px;
-  background: linear-gradient(135deg, rgba(255, 107, 90, 0.15) 0%, rgba(255, 107, 90, 0.08) 100%);
-  border: 2px solid var(--accent-coral);
-  color: #ff8c75;
-  border-radius: 4px;
-  font-size: 14px;
+  padding: var(--space-lg) var(--space-xl);
+  background: linear-gradient(135deg, rgba(255, 107, 90, 0.12) 0%, rgba(255, 107, 90, 0.06) 100%);
+  border: 1px solid var(--accent-coral);
+  border-left: 3px solid var(--accent-coral);
+  color: var(--accent-coral-light);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
   box-shadow: var(--shadow-sm);
+  line-height: 1.6;
 }
 
 .success-message {
-  padding: 18px 26px;
-  background: linear-gradient(135deg, rgba(90, 141, 142, 0.15) 0%, rgba(90, 141, 142, 0.08) 100%);
-  border: 2px solid var(--accent-teal);
-  color: var(--accent-sage);
-  border-radius: 4px;
-  font-size: 14px;
+  padding: var(--space-lg) var(--space-xl);
+  background: linear-gradient(135deg, rgba(90, 141, 142, 0.12) 0%, rgba(90, 141, 142, 0.06) 100%);
+  border: 1px solid var(--accent-teal);
+  border-left: 3px solid var(--accent-teal);
+  color: var(--accent-teal-light);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
   box-shadow: var(--shadow-sm);
+  line-height: 1.6;
 }
 
+/* Grid layouts - harmonious proportions */
 .grid {
   display: grid;
-  gap: 28px;
+  gap: var(--space-2xl);
 }
 
 .grid-2 {
@@ -422,28 +551,33 @@ img {
 }
 
 @media (max-width: 768px) {
-  .container {
-    padding: 0 16px;
+  .grid {
+    gap: var(--space-lg);
   }
   
   .grid-2, .grid-3, .grid-4 {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 18px;
   }
   
   .btn {
-    padding: 13px 28px;
-    font-size: 12px;
+    padding: var(--space-md) var(--space-xl);
+    font-size: 0.75rem;
   }
 }
 
+/* Animations */
 .fade-in {
-  animation: fadeIn 0.7s ease-in;
+  animation: fadeIn 0.6s ease-out;
 }
 
-/* Elegant section styling */
+.scale-in {
+  animation: scaleIn 0.5s ease-out;
+}
+
+/* Section styling - elegant spacing */
 section {
   position: relative;
+  padding: var(--space-3xl) 0;
 }
 
 section::before {
@@ -452,20 +586,20 @@ section::before {
   top: 0;
   left: 0;
   right: 0;
-  height: 250px;
+  height: 200px;
   background: linear-gradient(90deg, 
     transparent 0%, 
-    rgba(255, 107, 90, 0.08) 25%, 
-    rgba(90, 141, 142, 0.08) 50%, 
-    rgba(212, 165, 116, 0.08) 75%, 
+    rgba(255, 107, 90, 0.06) 25%, 
+    rgba(90, 141, 142, 0.06) 50%, 
+    rgba(212, 165, 116, 0.06) 75%, 
     transparent 100%);
-  opacity: 0.6;
-  filter: blur(40px);
-  animation: gentleFloat 18s ease-in-out infinite;
+  opacity: 0.7;
+  filter: blur(30px);
+  animation: waveFlow 20s ease-in-out infinite;
   pointer-events: none;
 }
 
-/* Nature-inspired text styling */
+/* Utility classes */
 .nature-text {
   background: var(--gradient-sunset);
   -webkit-background-clip: text;
@@ -474,12 +608,29 @@ section::before {
 }
 
 .elegant-float {
-  animation: gentleFloat 5s ease-in-out infinite;
+  animation: sakuraFloat 6s ease-in-out infinite;
 }
 
-/* Scrollbar styling with Japanese aesthetic */
+.soft-glow::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: var(--gradient-sunset);
+  border-radius: inherit;
+  opacity: 0;
+  z-index: -1;
+  filter: blur(10px);
+  transition: var(--transition);
+  pointer-events: none;
+}
+
+.soft-glow:hover::after {
+  opacity: 0.3;
+}
+
+/* Scrollbar - minimal and elegant */
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -488,7 +639,7 @@ section::before {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--gradient-3);
+  background: var(--gradient-nature);
   border-radius: 0;
   border: 2px solid var(--bg-primary);
 }
@@ -497,56 +648,29 @@ section::before {
   background: var(--gradient-sunset);
 }
 
-/* Special hover effects for cards with images */
-.image-card {
-  position: relative;
-  overflow: hidden;
+/* Selection color */
+::selection {
+  background: var(--accent-coral);
+  color: white;
 }
 
-.image-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 107, 90, 0.1) 0%,
-    transparent 50%,
-    rgba(90, 141, 142, 0.1) 100%
-  );
-  opacity: 0;
-  transition: var(--transition);
+::-moz-selection {
+  background: var(--accent-coral);
+  color: white;
 }
 
-.image-card:hover::after {
-  opacity: 1;
+/* Focus visible for accessibility */
+:focus-visible {
+  outline: 2px solid var(--accent-coral);
+  outline-offset: 2px;
 }
 
-/* Organic border effect */
-.organic-border {
-  position: relative;
-  border: 2px solid transparent;
-  background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
-              var(--gradient-3) border-box;
-  border-radius: 4px;
-}
-
-/* Soft glow effect */
-.soft-glow {
-  position: relative;
-}
-
-.soft-glow::after {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  background: var(--gradient-sunset);
-  border-radius: inherit;
-  opacity: 0;
-  z-index: -1;
-  filter: blur(12px);
-  transition: var(--transition);
-}
-
-.soft-glow:hover::after {
-  opacity: 0.4;
+/* Print styles */
+@media print {
+  body::before,
+  body::after,
+  .btn,
+  nav {
+    display: none;
+  }
 }
