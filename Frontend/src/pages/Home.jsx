@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sword, Shield, Flame, Award, Truck, Star } from 'lucide-react';
+import { ArrowRight, Sparkles, Leaf, Heart, Star, Truck, Award } from 'lucide-react';
 import { productsAPI } from '../services/api';
 import ProductCard from '../components/ProductCard';
 
@@ -18,7 +18,6 @@ const Home = () => {
       const response = await productsAPI.getAll({ limit: 8, featured: true });
       console.log('Featured products response:', response.data);
       
-      // Handle both response.data.products and response.data.data
       const productsData = response.data.products || response.data.data || response.data || [];
       setFeaturedProducts(productsData);
       
@@ -33,68 +32,56 @@ const Home = () => {
 
   return (
     <div style={{ background: 'var(--bg-primary)', position: 'relative', overflow: 'hidden' }}>
-      {/* Floating Battle Elements */}
-      {[...Array(15)].map((_, i) => (
+      {/* Floating decorative elements */}
+      {[...Array(12)].map((_, i) => (
         <div key={i} style={{
           position: 'absolute',
           top: `${Math.random() * 100}%`,
           left: `${Math.random() * 100}%`,
-          fontSize: `${15 + Math.random() * 25}px`,
-          animation: `battleFloat ${8 + Math.random() * 12}s ease-in-out infinite`,
+          fontSize: `${12 + Math.random() * 20}px`,
+          animation: `gentleFloat ${10 + Math.random() * 15}s ease-in-out infinite`,
           animationDelay: `${Math.random() * 5}s`,
-          opacity: 0.15,
+          opacity: 0.12,
           pointerEvents: 'none',
           zIndex: 0
         }}>
-          {['⚔️', '🛡️', '👑', '🔥', '⚡'][Math.floor(Math.random() * 5)]}
+          {['🌸', '🍃', '✨', '🌿', '🌺'][Math.floor(Math.random() * 5)]}
         </div>
       ))}
 
-      {/* Hero Section - Epic Battle */}
+      {/* Hero Section */}
       <section style={{
         position: 'relative',
-        minHeight: '100vh',
+        minHeight: '95vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
-        background: 'linear-gradient(180deg, #0f0f1e 0%, #16213e 50%, #1a1a2e 100%)',
+        background: 'linear-gradient(180deg, #1a2332 0%, #2d3e50 50%, #2a3a4a 100%)',
         paddingTop: '40px'
       }}>
-        {/* Forge Fire Effects */}
+        {/* Organic gradient effects */}
         <div style={{
           position: 'absolute',
           bottom: '0',
-          left: '10%',
-          width: '400px',
-          height: '400px',
-          background: 'radial-gradient(ellipse, rgba(139, 0, 0, 0.4) 0%, transparent 70%)',
-          borderRadius: '50%',
-          filter: 'blur(60px)',
-          animation: 'dragonBreath 4s ease-in-out infinite'
-        }} />
-        <div style={{
-          position: 'absolute',
-          top: '20%',
-          right: '15%',
-          width: '500px',
-          height: '300px',
-          background: 'radial-gradient(ellipse, rgba(201, 169, 97, 0.3) 0%, transparent 70%)',
+          left: '8%',
+          width: '450px',
+          height: '450px',
+          background: 'radial-gradient(ellipse, rgba(255, 107, 90, 0.25) 0%, transparent 65%)',
           borderRadius: '50%',
           filter: 'blur(70px)',
-          animation: 'dragonBreath 6s ease-in-out infinite reverse'
+          animation: 'sunsetGlow 5s ease-in-out infinite'
         }} />
-
-        {/* Grid Pattern Overlay */}
         <div style={{
           position: 'absolute',
-          inset: 0,
-          backgroundImage: `
-            linear-gradient(rgba(201, 169, 97, 0.05) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(201, 169, 97, 0.05) 1px, transparent 1px)
-          `,
-          backgroundSize: '80px 80px',
-          opacity: 0.3
+          top: '15%',
+          right: '12%',
+          width: '500px',
+          height: '350px',
+          background: 'radial-gradient(ellipse, rgba(90, 141, 142, 0.2) 0%, transparent 65%)',
+          borderRadius: '50%',
+          filter: 'blur(70px)',
+          animation: 'sunsetGlow 7s ease-in-out infinite reverse'
         }} />
 
         <div className="container" style={{
@@ -102,173 +89,171 @@ const Home = () => {
           zIndex: 2,
           textAlign: 'center'
         }}>
-          {/* Battle Badge */}
-          <div className="steel-border" style={{
+          {/* Elegant badge */}
+          <div className="organic-border" style={{
             display: 'inline-flex',
             alignItems: 'center',
-            gap: '16px',
-            padding: '18px 40px',
-            background: 'rgba(22, 33, 62, 0.8)',
-            borderRadius: '6px',
-            marginBottom: '48px',
-            animation: 'fadeIn 1s ease, battleFloat 4s ease-in-out infinite',
-            boxShadow: 'var(--shadow-md), 0 0 30px rgba(201, 169, 97, 0.2)'
+            gap: '14px',
+            padding: '16px 36px',
+            background: 'rgba(42, 58, 74, 0.7)',
+            borderRadius: '4px',
+            marginBottom: '40px',
+            animation: 'fadeIn 1s ease, gentleFloat 5s ease-in-out infinite',
+            boxShadow: 'var(--shadow-md)'
           }}>
-            <Flame size={24} color="var(--accent-red)" style={{ animation: 'forge 2s infinite' }} />
+            <Sparkles size={20} color="var(--accent-gold)" style={{ animation: 'gentleFloat 3s infinite' }} />
             <span style={{
-              fontSize: '14px',
-              fontWeight: 900,
-              letterSpacing: '3px',
+              fontSize: '12px',
+              fontWeight: 700,
+              letterSpacing: '2.5px',
               textTransform: 'uppercase',
-              background: 'var(--gradient-1)',
+              background: 'var(--gradient-3)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}>
-              ⚔️ EXCLUSIVE COLLECTION 2024 ⚔️
+              ✨ CURATED ELEGANCE 2024 ✨
             </span>
-            <Shield size={24} color="var(--accent)" />
+            <Leaf size={20} color="var(--accent-sage)" />
           </div>
 
-          {/* Epic Title */}
+          {/* Hero title */}
           <h1 style={{
             fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(52px, 14vw, 140px)',
-            fontWeight: 900,
-            letterSpacing: '6px',
-            marginBottom: '40px',
-            lineHeight: 0.95,
+            fontSize: 'clamp(48px, 12vw, 120px)',
+            fontWeight: 700,
+            letterSpacing: '4px',
+            marginBottom: '36px',
+            lineHeight: 1,
             color: 'var(--text-primary)',
-            textShadow: '4px 4px 12px rgba(0, 0, 0, 0.9), 0 0 40px rgba(201, 169, 97, 0.3)',
+            textShadow: '3px 3px 10px rgba(0, 0, 0, 0.8)',
             animation: 'fadeIn 1.2s ease 0.2s backwards',
             position: 'relative'
           }}>
-            FORGE YOUR
+            TIMELESS
             <br />
             <span style={{
-              background: 'var(--gradient-epic)',
+              background: 'var(--gradient-sunset)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               position: 'relative'
             }}>
-              STYLE
+              ELEGANCE
             </span>
-            <Sword size={80} style={{
+            <Leaf size={70} style={{
               position: 'absolute',
-              top: '-40px',
-              right: '5%',
-              color: 'var(--accent)',
-              transform: 'rotate(-45deg)',
-              opacity: 0.7,
-              animation: 'battleFloat 6s ease-in-out infinite'
+              top: '-30px',
+              right: '8%',
+              color: 'var(--accent-sage)',
+              opacity: 0.6,
+              animation: 'gentleFloat 7s ease-in-out infinite'
             }} />
           </h1>
 
           <p style={{
-            fontSize: 'clamp(18px, 3.5vw, 28px)',
+            fontSize: 'clamp(16px, 3vw, 24px)',
             color: 'var(--text-secondary)',
-            marginBottom: '64px',
-            maxWidth: '850px',
-            margin: '0 auto 64px',
-            lineHeight: 1.7,
+            marginBottom: '56px',
+            maxWidth: '800px',
+            margin: '0 auto 56px',
+            lineHeight: 1.8,
             animation: 'fadeIn 1.4s ease 0.4s backwards',
-            fontWeight: 500
+            fontWeight: 400
           }}>
-            Gear crafted by master artisans. Premium quality meets bold design. Every piece tells your story.
+            Curated collections inspired by nature's beauty. Each piece crafted with intention and grace.
           </p>
 
           {/* CTA Buttons */}
           <div style={{
             display: 'flex',
-            gap: '28px',
+            gap: '24px',
             justifyContent: 'center',
             flexWrap: 'wrap',
             animation: 'fadeIn 1.6s ease 0.6s backwards'
           }}>
-            <Link to="/shop" className="btn btn-accent forge-glow" style={{
-              fontSize: '16px',
-              padding: '24px 60px',
-              boxShadow: 'var(--shadow-fire)'
+            <Link to="/shop" className="btn btn-primary soft-glow" style={{
+              fontSize: '14px',
+              padding: '20px 52px',
+              boxShadow: 'var(--shadow-coral)'
             }}>
-              <Flame size={24} />
-              SHOP NOW
-              <Sword size={24} />
+              <Sparkles size={20} />
+              EXPLORE COLLECTION
             </Link>
             <Link to="/shop?category=new" className="btn btn-outline" style={{
-              fontSize: '16px',
-              padding: '24px 60px'
+              fontSize: '14px',
+              padding: '20px 52px'
             }}>
               NEW ARRIVALS
-              <ArrowRight size={24} />
+              <ArrowRight size={20} />
             </Link>
           </div>
 
-          {/* Scroll Battle Indicator */}
+          {/* Scroll indicator */}
           <div style={{
-            marginTop: '100px',
-            animation: 'battleFloat 3s infinite'
+            marginTop: '90px',
+            animation: 'gentleFloat 3s infinite'
           }}>
             <div style={{
-              width: '4px',
-              height: '60px',
-              background: 'var(--gradient-1)',
+              width: '2px',
+              height: '50px',
+              background: 'var(--gradient-3)',
               margin: '0 auto',
-              boxShadow: '0 0 20px rgba(201, 169, 97, 0.6)'
+              boxShadow: '0 0 15px rgba(212, 165, 116, 0.5)'
             }} />
           </div>
         </div>
       </section>
 
-      {/* Battle Stats Section */}
+      {/* Features Section */}
       <section style={{
-        padding: '140px 0',
-        background: 'linear-gradient(180deg, #16213e 0%, #1a1a2e 100%)',
+        padding: '120px 0',
+        background: 'linear-gradient(180deg, #2d3e50 0%, #2a3a4a 100%)',
         position: 'relative',
-        borderTop: '3px solid var(--accent)',
-        borderBottom: '3px solid var(--accent)'
+        borderTop: '1px solid rgba(212, 165, 116, 0.2)',
+        borderBottom: '1px solid rgba(212, 165, 116, 0.2)'
       }}>
         <div className="container">
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '56px'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '48px'
           }}>
             {[
-              { icon: Truck, title: 'GLOBAL DELIVERY', desc: 'Free shipping on orders over $100', emoji: '🚀', color: 'var(--accent)' },
-              { icon: Award, title: 'PREMIUM QUALITY', desc: 'Hand-crafted quality worthy of excellence', emoji: '🏆', color: 'var(--accent-red)' },
-              { icon: Star, title: 'EXCLUSIVE ACCESS', desc: 'First access to limited edition drops', emoji: '⚡', color: 'var(--accent-blue)' }
+              { icon: Truck, title: 'COMPLIMENTARY SHIPPING', desc: 'Free delivery on orders over $100', emoji: '🌸', color: 'var(--accent-coral)' },
+              { icon: Award, title: 'ARTISAN QUALITY', desc: 'Each piece carefully crafted with attention to detail', emoji: '✨', color: 'var(--accent-gold)' },
+              { icon: Star, title: 'CURATED SELECTIONS', desc: 'Exclusive pieces chosen for their timeless appeal', emoji: '🌿', color: 'var(--accent-teal)' }
             ].map((feature, idx) => {
               const Icon = feature.icon;
               return (
-                <div key={idx} className="card steel-border battle-ready" style={{
-                  padding: '56px 40px',
+                <div key={idx} className="card elegant-float" style={{
+                  padding: '48px 36px',
                   textAlign: 'center',
-                  background: 'linear-gradient(135deg, rgba(26, 26, 46, 0.9) 0%, rgba(22, 33, 62, 0.9) 100%)',
+                  background: 'linear-gradient(135deg, rgba(42, 58, 74, 0.9) 0%, rgba(45, 62, 80, 0.9) 100%)',
                   animationDelay: `${idx * 0.2}s`,
-                  borderWidth: '3px'
+                  borderWidth: '2px'
                 }}>
                   <div style={{
-                    fontSize: '80px',
-                    marginBottom: '32px',
-                    animation: 'battleFloat 4s ease-in-out infinite',
+                    fontSize: '70px',
+                    marginBottom: '28px',
+                    animation: 'gentleFloat 5s ease-in-out infinite',
                     animationDelay: `${idx * 0.4}s`,
-                    filter: 'drop-shadow(0 0 20px rgba(201, 169, 97, 0.4))'
+                    filter: 'drop-shadow(0 0 15px rgba(212, 165, 116, 0.3))'
                   }}>
                     {feature.emoji}
                   </div>
                   <h3 style={{
-                    fontSize: '22px',
-                    fontWeight: 900,
-                    marginBottom: '20px',
+                    fontSize: '18px',
+                    fontWeight: 700,
+                    marginBottom: '18px',
                     color: feature.color,
-                    letterSpacing: '2px',
-                    textShadow: '2px 2px 8px rgba(0, 0, 0, 0.8)'
+                    letterSpacing: '1.5px',
+                    textShadow: '1px 1px 4px rgba(0, 0, 0, 0.6)'
                   }}>
                     {feature.title}
                   </h3>
                   <p style={{
-                    fontSize: '16px',
+                    fontSize: '15px',
                     color: 'var(--text-secondary)',
-                    lineHeight: 1.8
+                    lineHeight: 1.7
                   }}>
                     {feature.desc}
                   </p>
@@ -279,62 +264,62 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Kingdoms Section */}
+      {/* Categories Section */}
       <section style={{
-        padding: '140px 0',
-        background: 'linear-gradient(180deg, #1a1a2e 0%, #0f0f1e 100%)',
+        padding: '120px 0',
+        background: 'linear-gradient(180deg, #2a3a4a 0%, #1a2332 100%)',
         position: 'relative'
       }}>
         <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '96px' }}>
-            <div style={{ display: 'inline-flex', gap: '20px', marginBottom: '32px' }}>
-              <Shield size={42} color="var(--accent)" className="battle-ready" />
-              <Sword size={42} color="var(--accent-red)" className="battle-ready" style={{ animationDelay: '0.5s' }} />
-              <Flame size={42} color="var(--accent)" className="battle-ready" style={{ animationDelay: '1s' }} />
+          <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+            <div style={{ display: 'inline-flex', gap: '16px', marginBottom: '28px' }}>
+              <Leaf size={36} color="var(--accent-sage)" className="elegant-float" />
+              <Sparkles size={36} color="var(--accent-gold)" className="elegant-float" style={{ animationDelay: '0.5s' }} />
+              <Heart size={36} color="var(--accent-coral)" className="elegant-float" style={{ animationDelay: '1s' }} />
             </div>
             <h2 style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(44px, 8vw, 88px)',
-              marginBottom: '24px',
+              fontSize: 'clamp(38px, 7vw, 76px)',
+              marginBottom: '20px',
               color: 'var(--text-primary)',
-              letterSpacing: '4px',
-              textShadow: '3px 3px 10px rgba(0, 0, 0, 0.8)'
+              letterSpacing: '3px',
+              textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)'
             }}>
-              CHOOSE YOUR
+              DISCOVER YOUR
               <br />
-              <span className="epic-text">CATEGORY</span>
+              <span className="nature-text">COLLECTION</span>
             </h2>
             <p style={{
-              fontSize: '22px',
+              fontSize: '19px',
               color: 'var(--text-secondary)',
-              fontWeight: 600,
-              letterSpacing: '1px'
+              fontWeight: 500,
+              letterSpacing: '0.5px'
             }}>
-              Select your collection
+              Curated with intention
             </p>
           </div>
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
-            gap: '48px'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
+            gap: '40px'
           }}>
             {[
-              { title: '👗 WOMEN', emoji: '💎', image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800', link: '/shop?category=women', color: 'var(--accent)' },
-              { title: '👔 MEN', emoji: '🛡️', image: 'https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=800', link: '/shop?category=men', color: 'var(--accent-red)' },
-              { title: '💎 ACCESSORIES', emoji: '⚡', image: 'https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?w=800', link: '/shop?category=accessories', color: 'var(--accent-blue)' }
+              { title: '🌸 WOMEN', emoji: '✨', image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800', link: '/shop?category=women', gradient: 'var(--gradient-sunset)' },
+              { title: '🍃 MEN', emoji: '🌿', image: 'https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=800', link: '/shop?category=men', gradient: 'var(--gradient-ocean)' },
+              { title: '✨ ACCESSORIES', emoji: '💫', image: 'https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?w=800', link: '/shop?category=accessories', gradient: 'var(--gradient-3)' }
             ].map((category, idx) => (
               <Link
                 key={idx}
                 to={category.link}
-                className="card forge-glow"
+                className="card soft-glow image-card"
                 style={{
                   position: 'relative',
-                  height: '600px',
+                  height: '520px',
                   overflow: 'hidden',
-                  borderRadius: '12px',
-                  border: `4px solid ${category.color}`,
-                  boxShadow: `0 0 40px ${category.color}40`
+                  borderRadius: '6px',
+                  border: '2px solid rgba(212, 165, 116, 0.3)',
+                  boxShadow: '0 0 30px rgba(0, 0, 0, 0.4)'
                 }}
               >
                 <img
@@ -346,55 +331,55 @@ const Home = () => {
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
-                    transition: 'transform 1s ease',
-                    filter: 'brightness(0.6)'
+                    transition: 'transform 1.2s ease',
+                    filter: 'brightness(0.7)'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.transform = 'scale(1.15)';
-                    e.target.style.filter = 'brightness(0.8)';
+                    e.target.style.transform = 'scale(1.1)';
+                    e.target.style.filter = 'brightness(0.85)';
                   }}
                   onMouseLeave={(e) => {
                     e.target.style.transform = 'scale(1)';
-                    e.target.style.filter = 'brightness(0.6)';
+                    e.target.style.filter = 'brightness(0.7)';
                   }}
                 />
                 <div style={{
                   position: 'absolute',
                   inset: 0,
-                  background: `linear-gradient(to top, ${category.color}dd 0%, transparent 70%)`,
+                  background: `linear-gradient(to top, ${category.gradient}dd 0%, transparent 65%)`,
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'flex-end',
-                  padding: '56px'
+                  padding: '48px'
                 }}>
                   <div style={{
-                    fontSize: '100px',
-                    marginBottom: '24px',
-                    animation: 'battleFloat 4s ease-in-out infinite',
-                    filter: 'drop-shadow(0 0 30px rgba(0, 0, 0, 0.8))'
+                    fontSize: '90px',
+                    marginBottom: '20px',
+                    animation: 'gentleFloat 5s ease-in-out infinite',
+                    filter: 'drop-shadow(0 0 20px rgba(0, 0, 0, 0.8))'
                   }}>
                     {category.emoji}
                   </div>
                   <h3 style={{
                     fontFamily: 'var(--font-display)',
-                    fontSize: '52px',
+                    fontSize: '44px',
                     color: 'white',
-                    fontWeight: 900,
-                    marginBottom: '20px',
-                    textShadow: '4px 4px 12px rgba(0,0,0,0.9)',
-                    letterSpacing: '3px'
+                    fontWeight: 700,
+                    marginBottom: '18px',
+                    textShadow: '3px 3px 10px rgba(0,0,0,0.9)',
+                    letterSpacing: '2px'
                   }}>
                     {category.title}
                   </h3>
                   <div className="btn btn-outline" style={{
                     width: 'fit-content',
-                    background: 'rgba(0, 0, 0, 0.6)',
+                    background: 'rgba(0, 0, 0, 0.5)',
                     backdropFilter: 'blur(10px)',
                     color: 'white',
                     borderColor: 'white'
                   }}>
-                    ENTER NOW
-                    <ArrowRight size={22} />
+                    EXPLORE
+                    <ArrowRight size={20} />
                   </div>
                 </div>
               </Link>
@@ -403,45 +388,45 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Featured Legendary Items */}
+      {/* Featured Collection */}
       <section style={{
-        padding: '140px 0',
-        background: 'linear-gradient(180deg, #0f0f1e 0%, #16213e 100%)',
+        padding: '120px 0',
+        background: 'linear-gradient(180deg, #1a2332 0%, #2d3e50 100%)',
         position: 'relative',
-        borderTop: '3px solid var(--accent)'
+        borderTop: '1px solid rgba(212, 165, 116, 0.2)'
       }}>
         <div className="container">
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginBottom: '88px',
+            marginBottom: '76px',
             flexWrap: 'wrap',
-            gap: '32px'
+            gap: '28px'
           }}>
             <div>
               <h2 style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(44px, 8vw, 88px)',
-                letterSpacing: '4px',
-                textShadow: '3px 3px 10px rgba(0, 0, 0, 0.8)'
+                fontSize: 'clamp(38px, 7vw, 76px)',
+                letterSpacing: '3px',
+                textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)'
               }}>
-                <span className="epic-text">FEATURED</span>
+                <span className="nature-text">FEATURED</span>
                 <br />
                 COLLECTION
               </h2>
               <p style={{
-                fontSize: '22px',
+                fontSize: '19px',
                 color: 'var(--text-secondary)',
-                marginTop: '16px',
-                fontWeight: 600
+                marginTop: '14px',
+                fontWeight: 500
               }}>
-                Handpicked for you ⚔️
+                Handpicked for you 🌸
               </p>
             </div>
-            <Link to="/shop" className="btn btn-outline forge-glow">
+            <Link to="/shop" className="btn btn-outline soft-glow">
               VIEW ALL
-              <Flame size={22} />
+              <Sparkles size={20} />
             </Link>
           </div>
 
@@ -459,24 +444,24 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Battle Call Section */}
+      {/* Newsletter Section */}
       <section style={{
-        padding: '140px 0',
-        background: 'var(--gradient-2)',
+        padding: '120px 0',
+        background: 'var(--gradient-sunset)',
         position: 'relative',
         overflow: 'hidden',
-        borderTop: '4px solid var(--accent-gold)',
-        borderBottom: '4px solid var(--accent-gold)'
+        borderTop: '2px solid rgba(255, 255, 255, 0.2)',
+        borderBottom: '2px solid rgba(255, 255, 255, 0.2)'
       }}>
-        {/* Battle Effects */}
-        {[...Array(20)].map((_, i) => (
-          <Sword key={i} size={40} style={{
+        {/* Decorative elements */}
+        {[...Array(15)].map((_, i) => (
+          <Leaf key={i} size={35} style={{
             position: 'absolute',
             top: `${Math.random() * 100}%`,
             left: `${Math.random() * 100}%`,
-            color: 'rgba(255, 255, 255, 0.1)',
+            color: 'rgba(255, 255, 255, 0.08)',
             transform: `rotate(${Math.random() * 360}deg)`,
-            animation: `battleFloat ${10 + Math.random() * 10}s ease-in-out infinite`,
+            animation: `gentleFloat ${12 + Math.random() * 10}s ease-in-out infinite`,
             animationDelay: `${Math.random() * 5}s`
           }} />
         ))}
@@ -484,63 +469,64 @@ const Home = () => {
         <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
           <div style={{
             display: 'inline-block',
-            animation: 'battleFloat 5s ease-in-out infinite'
+            animation: 'gentleFloat 6s ease-in-out infinite'
           }}>
-            <Shield size={96} color="var(--accent-gold)" style={{ filter: 'drop-shadow(0 0 40px rgba(201, 169, 97, 1))' }} />
+            <Sparkles size={84} color="white" style={{ filter: 'drop-shadow(0 0 30px rgba(255, 255, 255, 0.8))' }} />
           </div>
           <h2 style={{
             fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(40px, 7vw, 80px)',
-            marginBottom: '28px',
-            marginTop: '48px',
+            fontSize: 'clamp(36px, 6vw, 68px)',
+            marginBottom: '24px',
+            marginTop: '40px',
             color: 'white',
-            textShadow: '4px 4px 16px rgba(0, 0, 0, 0.9)',
-            fontWeight: 900,
-            letterSpacing: '4px'
+            textShadow: '3px 3px 12px rgba(0, 0, 0, 0.8)',
+            fontWeight: 700,
+            letterSpacing: '3px'
           }}>
-            JOIN OUR COMMUNITY
+            JOIN OUR CIRCLE
           </h2>
           <p style={{
-            fontSize: '24px',
+            fontSize: '21px',
             color: 'rgba(255, 255, 255, 0.95)',
-            marginBottom: '56px',
-            maxWidth: '750px',
-            margin: '0 auto 56px',
+            marginBottom: '48px',
+            maxWidth: '700px',
+            margin: '0 auto 48px',
             lineHeight: 1.8,
-            fontWeight: 600
+            fontWeight: 500
           }}>
-            Subscribe for exclusive deals, early access to new collections, and member-only benefits.
+            Subscribe for exclusive offers, early access to new collections, and curated style inspiration.
           </p>
           <form style={{
             display: 'flex',
-            maxWidth: '750px',
+            maxWidth: '700px',
             margin: '0 auto',
-            gap: '24px',
+            gap: '20px',
             flexWrap: 'wrap'
           }}>
             <input
               type="email"
-              placeholder="Enter your email ⚔️"
+              placeholder="Enter your email ✨"
               className="input"
               style={{
                 flex: 1,
-                minWidth: '320px',
-                background: 'rgba(0, 0, 0, 0.6)',
-                border: '3px solid var(--accent)',
+                minWidth: '300px',
+                background: 'rgba(255, 255, 255, 0.15)',
+                border: '2px solid rgba(255, 255, 255, 0.3)',
                 color: 'white',
-                fontSize: '16px',
-                fontWeight: 600
+                fontSize: '15px',
+                fontWeight: 500,
+                backdropFilter: 'blur(10px)'
               }}
             />
             <button className="btn" style={{
-              padding: '20px 56px',
-              background: 'var(--gradient-1)',
-              color: 'var(--text-dark)',
-              fontSize: '16px',
-              fontWeight: 900,
-              border: '3px solid var(--accent)'
+              padding: '18px 48px',
+              background: 'white',
+              color: 'var(--accent-coral)',
+              fontSize: '15px',
+              fontWeight: 700,
+              border: '2px solid white'
             }}>
-              <Flame size={22} />
+              <Leaf size={20} />
               SUBSCRIBE
             </button>
           </form>

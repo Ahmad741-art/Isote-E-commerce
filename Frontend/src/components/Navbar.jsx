@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, ShoppingBag, Heart, User, Menu, X, LogOut, Sword, Shield, Flame } from 'lucide-react';
+import { Search, ShoppingBag, Heart, User, Menu, X, LogOut, Sparkles, Leaf } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 
@@ -30,43 +30,34 @@ const Navbar = () => {
     <nav style={{
       position: 'sticky',
       top: 0,
-      background: 'linear-gradient(180deg, rgba(22, 33, 62, 0.98) 0%, rgba(15, 15, 30, 0.98) 100%)',
+      background: 'linear-gradient(180deg, rgba(26, 35, 50, 0.97) 0%, rgba(45, 62, 80, 0.95) 100%)',
       backdropFilter: 'blur(20px)',
-      borderBottom: '3px solid var(--accent)',
-      boxShadow: '0 4px 30px rgba(0, 0, 0, 0.8), inset 0 -1px 0 rgba(201, 169, 97, 0.3)',
+      borderBottom: '1px solid rgba(212, 165, 116, 0.2)',
+      boxShadow: '0 4px 30px rgba(0, 0, 0, 0.6)',
       zIndex: 1000
     }}>
-      {/* Battle Banner */}
+      {/* Elegant banner */}
       <div style={{
-        background: 'var(--gradient-2)',
+        background: 'var(--gradient-sunset)',
         color: 'white',
         textAlign: 'center',
-        padding: '12px',
+        padding: '10px',
         fontSize: '12px',
-        fontWeight: 700,
-        letterSpacing: '2.5px',
+        fontWeight: 600,
+        letterSpacing: '2px',
         position: 'relative',
-        overflow: 'hidden',
-        borderBottom: '2px solid var(--accent)'
+        overflow: 'hidden'
       }}>
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          background: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.1) 10px, rgba(0,0,0,0.1) 20px)'
-        }} />
         <div style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: '12px',
+          gap: '10px',
           position: 'relative'
         }}>
-          <Sword size={18} />
-          <span>⚔️ EXCLUSIVE COLLECTION | FREE DELIVERY ON ORDERS OVER $100 ⚔️</span>
-          <Shield size={18} />
+          <Leaf size={16} />
+          <span>✨ CURATED COLLECTIONS | FREE DELIVERY OVER $100 ✨</span>
+          <Sparkles size={16} />
         </div>
       </div>
 
@@ -76,105 +67,104 @@ const Navbar = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '24px 0',
+          padding: '20px 0',
           gap: '40px'
         }}>
-          {/* Epic Logo */}
+          {/* Elegant Logo */}
           <Link to="/" style={{
             fontFamily: 'var(--font-display)',
-            fontSize: '48px',
-            fontWeight: 900,
-            letterSpacing: '4px',
-            background: 'var(--gradient-1)',
+            fontSize: '42px',
+            fontWeight: 700,
+            letterSpacing: '3px',
+            background: 'var(--gradient-sunset)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
-            filter: 'drop-shadow(0 0 20px rgba(201, 169, 97, 0.6))',
+            filter: 'drop-shadow(0 0 15px rgba(255, 107, 90, 0.4))',
             transition: 'var(--transition)',
             position: 'relative',
             display: 'inline-flex',
             alignItems: 'center',
-            gap: '12px',
-            textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
+            gap: '10px'
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.05)';
-            e.currentTarget.style.filter = 'drop-shadow(0 0 30px rgba(201, 169, 97, 1))';
+            e.currentTarget.style.transform = 'scale(1.03)';
+            e.currentTarget.style.filter = 'drop-shadow(0 0 25px rgba(255, 107, 90, 0.6))';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.filter = 'drop-shadow(0 0 20px rgba(201, 169, 97, 0.6))';
+            e.currentTarget.style.filter = 'drop-shadow(0 0 15px rgba(255, 107, 90, 0.4))';
           }}
           >
-            <Shield size={40} style={{ color: 'var(--accent)' }} />
+            <Leaf size={32} style={{ color: 'var(--accent-sage)' }} />
             ISOTÉ
-            <Sword size={36} style={{ color: 'var(--accent)', transform: 'rotate(-45deg)' }} />
           </Link>
 
           {/* Desktop Navigation */}
           <div style={{
             display: 'flex',
-            gap: '48px',
+            gap: '40px',
             flex: 1,
             justifyContent: 'center'
           }}>
             {[
-              { to: '/shop?category=women', label: 'WOMEN', icon: '👗' },
-              { to: '/shop?category=men', label: 'MEN', icon: '👔' },
-              { to: '/shop?category=accessories', label: 'ACCESSORIES', icon: '💎' },
-              { to: '/shop', label: 'SALE', special: true, icon: '🔥' }
+              { to: '/shop?category=women', label: 'WOMEN', icon: '🌸' },
+              { to: '/shop?category=men', label: 'MEN', icon: '🍃' },
+              { to: '/shop?category=accessories', label: 'ACCESSORIES', icon: '✨' },
+              { to: '/shop', label: 'COLLECTION', special: true, icon: '🌿' }
             ].map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
                 style={{
-                  fontSize: '13px',
-                  fontWeight: 700,
-                  letterSpacing: '2px',
-                  color: link.special ? 'var(--accent)' : 'var(--text-primary)',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  letterSpacing: '1.5px',
+                  color: link.special ? 'var(--accent-coral)' : 'var(--text-primary)',
                   position: 'relative',
-                  padding: '12px 20px',
+                  padding: '10px 16px',
                   transition: 'var(--transition)',
-                  border: '2px solid transparent',
-                  borderRadius: '4px'
+                  border: '1px solid transparent',
+                  borderRadius: '2px'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--accent)';
-                  e.currentTarget.style.background = 'rgba(201, 169, 97, 0.1)';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 0 20px rgba(201, 169, 97, 0.3)';
+                  e.currentTarget.style.borderColor = link.special ? 'var(--accent-coral)' : 'var(--accent-teal)';
+                  e.currentTarget.style.background = link.special 
+                    ? 'rgba(255, 107, 90, 0.1)' 
+                    : 'rgba(90, 141, 142, 0.1)';
+                  e.currentTarget.style.transform = 'translateY(-1px)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.borderColor = 'transparent';
                   e.currentTarget.style.background = 'transparent';
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
                 }}
               >
-                <span style={{ marginRight: '8px' }}>{link.icon}</span>
+                <span style={{ marginRight: '6px' }}>{link.icon}</span>
                 {link.label}
               </Link>
             ))}
           </div>
 
-          {/* Action Icons - ALWAYS VISIBLE */}
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          {/* Action Icons */}
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             {/* Search Button */}
             <button
               className="btn-icon"
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               aria-label="Search"
               style={{
-                background: isSearchOpen ? 'var(--gradient-1)' : 'var(--bg-card)',
-                color: isSearchOpen ? 'var(--text-dark)' : 'var(--accent)'
+                background: isSearchOpen ? 'var(--gradient-sunset)' : 'var(--bg-card)',
+                color: isSearchOpen ? 'white' : 'var(--accent-coral)',
+                border: `1px solid ${isSearchOpen ? 'var(--accent-coral)' : 'var(--border)'}`
               }}
             >
-              <Search size={20} />
+              <Search size={18} />
             </button>
 
-            {/* Wishlist Button - Always Visible */}
+            {/* Wishlist Button */}
             <Link 
               to={user ? "/wishlist" : "/login"} 
-              className="btn-icon forge-glow" 
+              className="btn-icon soft-glow" 
               aria-label="Wishlist"
               onClick={(e) => {
                 if (!user) {
@@ -184,10 +174,10 @@ const Navbar = () => {
                 }
               }}
             >
-              <Heart size={20} />
+              <Heart size={18} />
             </Link>
 
-            {/* Cart Button - Always Visible */}
+            {/* Cart Button */}
             <Link 
               to="/cart" 
               style={{ position: 'relative' }}
@@ -199,132 +189,123 @@ const Navbar = () => {
                 }
               }}
             >
-              <button className="btn-icon forge-glow">
-                <ShoppingBag size={20} />
+              <button className="btn-icon soft-glow">
+                <ShoppingBag size={18} />
               </button>
               {getCartCount() > 0 && (
                 <span style={{
                   position: 'absolute',
-                  top: '-10px',
-                  right: '-10px',
-                  background: 'var(--gradient-2)',
+                  top: '-8px',
+                  right: '-8px',
+                  background: 'var(--gradient-sunset)',
                   color: 'white',
-                  fontSize: '11px',
-                  fontWeight: 900,
-                  minWidth: '26px',
-                  height: '26px',
-                  borderRadius: '4px',
+                  fontSize: '10px',
+                  fontWeight: 700,
+                  minWidth: '22px',
+                  height: '22px',
+                  borderRadius: '50%',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  boxShadow: 'var(--shadow-fire)',
-                  border: '2px solid var(--accent-red)',
-                  animation: 'forge 2s infinite'
+                  boxShadow: 'var(--shadow-coral)',
+                  border: '2px solid var(--bg-card)'
                 }}>
                   {getCartCount()}
                 </span>
               )}
             </Link>
 
-            {/* User Menu or Login Button */}
+            {/* User Menu */}
             {user ? (
               <div className="user-menu" style={{ position: 'relative' }}>
-                <button className="btn-icon forge-glow" aria-label="Account">
-                  <User size={20} />
+                <button className="btn-icon soft-glow" aria-label="Account">
+                  <User size={18} />
                 </button>
-                <div className="dropdown steel-border" style={{
+                <div className="dropdown organic-border" style={{
                   position: 'absolute',
-                  top: 'calc(100% + 16px)',
+                  top: 'calc(100% + 14px)',
                   right: 0,
                   background: 'var(--bg-card)',
                   backdropFilter: 'blur(20px)',
-                  boxShadow: 'var(--shadow-lg), 0 0 40px rgba(201, 169, 97, 0.3)',
-                  borderRadius: '8px',
-                  minWidth: '280px',
+                  boxShadow: 'var(--shadow-lg), 0 0 30px rgba(255, 107, 90, 0.2)',
+                  borderRadius: '4px',
+                  minWidth: '260px',
                   opacity: 0,
                   visibility: 'hidden',
-                  transform: 'translateY(-10px)',
+                  transform: 'translateY(-8px)',
                   transition: 'all 0.4s ease',
                   overflow: 'hidden'
                 }}>
                   <div style={{
-                    padding: '24px',
-                    background: 'var(--gradient-1)',
-                    color: 'var(--text-dark)',
+                    padding: '20px',
+                    background: 'var(--gradient-3)',
+                    color: 'white',
                     position: 'relative',
-                    borderBottom: '3px solid var(--accent-red)'
+                    borderBottom: '1px solid rgba(212, 165, 116, 0.3)'
                   }}>
-                    <Shield size={24} style={{ position: 'absolute', top: '12px', right: '12px', opacity: 0.3 }} />
-                    <p style={{ fontWeight: 900, marginBottom: '6px', fontSize: '18px', letterSpacing: '1px' }}>
+                    <Leaf size={20} style={{ position: 'absolute', top: '10px', right: '10px', opacity: 0.4 }} />
+                    <p style={{ fontWeight: 700, marginBottom: '5px', fontSize: '16px', letterSpacing: '0.5px' }}>
                       {user?.firstName} {user?.lastName}
                     </p>
-                    <p style={{ fontSize: '12px', opacity: 0.8, fontWeight: 600 }}>
+                    <p style={{ fontSize: '12px', opacity: 0.9 }}>
                       {user?.email}
                     </p>
                   </div>
                   <Link to="/account" style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '12px',
-                    padding: '18px 24px',
-                    fontSize: '14px',
+                    gap: '10px',
+                    padding: '16px 20px',
+                    fontSize: '13px',
                     fontWeight: 600,
-                    borderBottom: '2px solid var(--border)',
+                    borderBottom: '1px solid var(--border)',
                     transition: 'var(--transition)',
                     letterSpacing: '0.5px'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(201, 169, 97, 0.1)';
-                    e.currentTarget.style.paddingLeft = '32px';
-                    e.currentTarget.style.borderLeftColor = 'var(--accent)';
-                    e.currentTarget.style.borderLeftWidth = '4px';
-                    e.currentTarget.style.borderLeftStyle = 'solid';
+                    e.currentTarget.style.background = 'rgba(255, 107, 90, 0.1)';
+                    e.currentTarget.style.paddingLeft = '28px';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = 'transparent';
-                    e.currentTarget.style.paddingLeft = '24px';
-                    e.currentTarget.style.borderLeft = 'none';
+                    e.currentTarget.style.paddingLeft = '20px';
                   }}
                   >
-                    <User size={16} /> MY PROFILE
+                    <User size={14} /> MY PROFILE
                   </Link>
                   {isAdmin && (
                     <Link to="/admin" style={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '12px',
-                      padding: '18px 24px',
-                      fontSize: '14px',
+                      gap: '10px',
+                      padding: '16px 20px',
+                      fontSize: '13px',
                       fontWeight: 700,
-                      borderBottom: '2px solid var(--border)',
-                      background: 'rgba(139, 0, 0, 0.15)',
-                      color: 'var(--accent)',
+                      borderBottom: '1px solid var(--border)',
+                      background: 'rgba(90, 141, 142, 0.12)',
+                      color: 'var(--accent-teal)',
                       transition: 'var(--transition)',
-                      letterSpacing: '1px'
+                      letterSpacing: '0.8px'
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'rgba(139, 0, 0, 0.25)';
-                      e.currentTarget.style.paddingLeft = '32px';
-                      e.currentTarget.style.borderLeftColor = 'var(--accent-red)';
-                      e.currentTarget.style.borderLeftWidth = '4px';
-                      e.currentTarget.style.borderLeftStyle = 'solid';
+                      e.currentTarget.style.background = 'rgba(90, 141, 142, 0.2)';
+                      e.currentTarget.style.paddingLeft = '28px';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'rgba(139, 0, 0, 0.15)';
-                      e.currentTarget.style.paddingLeft = '24px';
-                      e.currentTarget.style.borderLeft = 'none';
+                      e.currentTarget.style.background = 'rgba(90, 141, 142, 0.12)';
+                      e.currentTarget.style.paddingLeft = '20px';
                     }}
                     >
-                      <Shield size={16} /> COMMAND CENTER
+                      <Sparkles size={14} /> ADMIN PANEL
                     </Link>
                   )}
                   <button onClick={handleLogout} style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '12px',
+                    gap: '10px',
                     width: '100%',
-                    padding: '18px 24px',
-                    fontSize: '14px',
+                    padding: '16px 20px',
+                    fontSize: '13px',
                     fontWeight: 600,
                     textAlign: 'left',
                     background: 'transparent',
@@ -333,40 +314,40 @@ const Navbar = () => {
                     letterSpacing: '0.5px'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 107, 107, 0.15)';
-                    e.currentTarget.style.color = '#ff6b6b';
-                    e.currentTarget.style.paddingLeft = '32px';
+                    e.currentTarget.style.background = 'rgba(255, 107, 90, 0.12)';
+                    e.currentTarget.style.color = 'var(--accent-coral)';
+                    e.currentTarget.style.paddingLeft = '28px';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = 'transparent';
                     e.currentTarget.style.color = 'var(--text-primary)';
-                    e.currentTarget.style.paddingLeft = '24px';
+                    e.currentTarget.style.paddingLeft = '20px';
                   }}
                   >
-                    <LogOut size={16} />
-                    RETREAT
+                    <LogOut size={14} />
+                    SIGN OUT
                   </button>
                 </div>
               </div>
             ) : (
-              <Link to="/login" className="btn btn-primary" style={{ padding: '14px 36px' }}>
-                <Shield size={18} />
-                ENTER
+              <Link to="/login" className="btn btn-primary" style={{ padding: '12px 32px' }}>
+                <User size={16} />
+                SIGN IN
               </Link>
             )}
           </div>
         </div>
 
-        {/* Epic Search Bar */}
+        {/* Elegant Search Bar */}
         {isSearchOpen && (
           <div style={{
-            padding: '0 0 28px 0',
-            animation: 'fadeIn 0.5s ease'
+            padding: '0 0 24px 0',
+            animation: 'fadeIn 0.4s ease'
           }}>
             <form onSubmit={handleSearch} style={{
               display: 'flex',
-              gap: '16px',
-              maxWidth: '800px',
+              gap: '14px',
+              maxWidth: '700px',
               margin: '0 auto',
               position: 'relative'
             }}>
@@ -374,30 +355,30 @@ const Navbar = () => {
                 <input
                   type="text"
                   className="input"
-                  placeholder="Search the realm for legendary items... ⚔️"
+                  placeholder="Search for timeless pieces... 🌸"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   autoFocus
                   style={{
                     background: 'var(--bg-card)',
-                    border: '3px solid var(--accent)',
-                    boxShadow: '0 0 30px rgba(201, 169, 97, 0.3), inset 0 2px 8px rgba(0, 0, 0, 0.5)',
-                    fontSize: '15px',
-                    fontWeight: 600
+                    border: '2px solid var(--accent-gold)',
+                    boxShadow: '0 0 20px rgba(212, 165, 116, 0.2)',
+                    fontSize: '14px',
+                    fontWeight: 500
                   }}
                 />
-                <Flame size={22} style={{
+                <Sparkles size={20} style={{
                   position: 'absolute',
-                  right: '20px',
+                  right: '16px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  color: 'var(--accent-red)',
-                  animation: 'forge 2s infinite'
+                  color: 'var(--accent-gold)',
+                  animation: 'gentleFloat 3s infinite'
                 }} />
               </div>
-              <button type="submit" className="btn btn-accent" style={{ padding: '16px 40px' }}>
-                <Search size={20} />
-                QUEST
+              <button type="submit" className="btn btn-accent" style={{ padding: '14px 36px' }}>
+                <Search size={18} />
+                SEARCH
               </button>
             </form>
           </div>
