@@ -26,6 +26,30 @@ const Navbar = () => {
     navigate('/');
   };
 
+  // Navigation items with proper links
+  const navItems = [
+    { 
+      to: '/shop?sort=newest', 
+      label: 'New Arrivals',
+      special: false 
+    },
+    { 
+      to: '/shop?sort=popular', 
+      label: 'Most Popular',
+      special: false 
+    },
+    { 
+      to: '/shop?category=accessories', 
+      label: 'Accessories',
+      special: false 
+    },
+    { 
+      to: '/shop', 
+      label: 'Collection',
+      special: true 
+    }
+  ];
+
   return (
     <nav style={{
       position: 'sticky',
@@ -84,7 +108,8 @@ const Navbar = () => {
             filter: 'drop-shadow(0 2px 8px rgba(255, 107, 90, 0.3))',
             transition: 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
             position: 'relative',
-            fontStyle: 'italic'
+            fontStyle: 'italic',
+            textDecoration: 'none'
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'scale(1.02)';
@@ -98,29 +123,26 @@ const Navbar = () => {
             Isoté
           </Link>
 
-          {/* Desktop Navigation - Refined Categories */}
+          {/* Desktop Navigation - Proper Links */}
           <div style={{
             display: 'flex',
             gap: '48px',
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center'
-          }}>
-            {[
-              { to: '/shop?featured=new', label: 'New Arrivals' },
-              { to: '/shop?featured=popular', label: 'Most Popular' },
-              { to: '/shop?category=accessories', label: 'Accessories' },
-              { to: '/shop', label: 'Collection', special: true }
-            ].map((link, idx) => (
+          }}
+          className="desktop-nav"
+          >
+            {navItems.map((item) => (
               <Link
-                key={link.to}
-                to={link.to}
+                key={item.to}
+                to={item.to}
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
                   fontSize: '15px',
                   fontWeight: 400,
                   letterSpacing: '0.05em',
-                  color: link.special ? 'var(--accent-coral)' : 'var(--text-primary)',
+                  color: item.special ? 'var(--accent-coral)' : 'var(--text-primary)',
                   position: 'relative',
                   padding: '8px 0',
                   transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
@@ -128,34 +150,38 @@ const Navbar = () => {
                   display: 'inline-block'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = link.special ? 'var(--accent-coral-light)' : 'var(--accent-gold)';
+                  e.currentTarget.style.color = item.special ? 'var(--accent-coral-light)' : 'var(--accent-gold)';
                   e.currentTarget.style.transform = 'translateY(-1px)';
+                  const underline = e.currentTarget.querySelector('.nav-underline');
+                  if (underline) {
+                    underline.style.transform = 'scaleX(1)';
+                    underline.style.transformOrigin = 'left';
+                  }
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = link.special ? 'var(--accent-coral)' : 'var(--text-primary)';
+                  e.currentTarget.style.color = item.special ? 'var(--accent-coral)' : 'var(--text-primary)';
                   e.currentTarget.style.transform = 'translateY(0)';
+                  const underline = e.currentTarget.querySelector('.nav-underline');
+                  if (underline) {
+                    underline.style.transform = 'scaleX(0)';
+                    underline.style.transformOrigin = 'right';
+                  }
                 }}
               >
-                {link.label}
-                <span style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '1px',
-                  background: link.special ? 'var(--accent-coral)' : 'var(--accent-gold)',
-                  transform: 'scaleX(0)',
-                  transformOrigin: 'right',
-                  transition: 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.transform = 'scaleX(1)';
-                  e.target.style.transformOrigin = 'left';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.transform = 'scaleX(0)';
-                  e.target.style.transformOrigin = 'right';
-                }}
+                {item.label}
+                <span 
+                  className="nav-underline"
+                  style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '1px',
+                    background: item.special ? 'var(--accent-coral)' : 'var(--accent-gold)',
+                    transform: 'scaleX(0)',
+                    transformOrigin: 'right',
+                    transition: 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)'
+                  }}
                 />
               </Link>
             ))}
@@ -171,7 +197,15 @@ const Navbar = () => {
               style={{
                 background: isSearchOpen ? 'rgba(255, 107, 90, 0.15)' : 'transparent',
                 color: isSearchOpen ? 'var(--accent-coral)' : 'var(--text-primary)',
-                border: `1px solid ${isSearchOpen ? 'var(--accent-coral)' : 'transparent'}`
+                border: `1px solid ${isSearchOpen ? 'var(--accent-coral)' : 'transparent'}`,
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease'
               }}
             >
               <Search size={18} />
@@ -179,19 +213,21 @@ const Navbar = () => {
 
             {/* Wishlist */}
             <Link 
-              to={user ? "/wishlist" : "/login"} 
+              to="/wishlist"
               className="btn-icon" 
               aria-label="Wishlist"
               style={{
                 background: 'transparent',
                 color: 'var(--text-primary)',
-                border: '1px solid transparent'
-              }}
-              onClick={(e) => {
-                if (!user) {
-                  e.preventDefault();
-                  navigate('/login');
-                }
+                border: '1px solid transparent',
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textDecoration: 'none',
+                transition: 'all 0.3s ease'
               }}
             >
               <Heart size={18} />
@@ -200,18 +236,20 @@ const Navbar = () => {
             {/* Cart */}
             <Link 
               to="/cart" 
-              style={{ position: 'relative' }}
-              onClick={(e) => {
-                if (!user) {
-                  e.preventDefault();
-                  navigate('/login');
-                }
-              }}
+              style={{ position: 'relative', textDecoration: 'none' }}
             >
               <button className="btn-icon" style={{
                 background: 'transparent',
                 color: 'var(--text-primary)',
-                border: '1px solid transparent'
+                border: '1px solid transparent',
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease'
               }}>
                 <ShoppingBag size={18} />
               </button>
@@ -244,7 +282,15 @@ const Navbar = () => {
                 <button className="btn-icon" aria-label="Account" style={{
                   background: 'transparent',
                   color: 'var(--text-primary)',
-                  border: '1px solid transparent'
+                  border: '1px solid transparent',
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
                 }}>
                   <User size={18} />
                 </button>
@@ -292,7 +338,9 @@ const Navbar = () => {
                     borderBottom: '1px solid rgba(212, 165, 116, 0.1)',
                     transition: 'all 0.3s ease',
                     letterSpacing: '0.03em',
-                    fontFamily: "'Cormorant Garamond', serif"
+                    fontFamily: "'Cormorant Garamond', serif",
+                    textDecoration: 'none',
+                    color: 'inherit'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = 'rgba(255, 107, 90, 0.08)';
@@ -320,7 +368,8 @@ const Navbar = () => {
                       color: 'var(--accent-teal)',
                       transition: 'all 0.3s ease',
                       letterSpacing: '0.05em',
-                      fontFamily: "'Cormorant Garamond', serif"
+                      fontFamily: "'Cormorant Garamond', serif",
+                      textDecoration: 'none'
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.background = 'rgba(90, 141, 142, 0.2)';
@@ -347,7 +396,9 @@ const Navbar = () => {
                     color: 'var(--text-primary)',
                     transition: 'all 0.3s ease',
                     letterSpacing: '0.03em',
-                    fontFamily: "'Cormorant Garamond', serif"
+                    fontFamily: "'Cormorant Garamond', serif",
+                    border: 'none',
+                    cursor: 'pointer'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = 'rgba(255, 107, 90, 0.12)';
@@ -372,7 +423,8 @@ const Navbar = () => {
                 fontFamily: "'Cormorant Garamond', serif",
                 letterSpacing: '0.08em',
                 borderColor: 'var(--accent-gold)',
-                color: 'var(--accent-gold)'
+                color: 'var(--accent-gold)',
+                textDecoration: 'none'
               }}>
                 Sign In
               </Link>
@@ -407,7 +459,11 @@ const Navbar = () => {
                     fontSize: '14px',
                     fontWeight: 400,
                     fontFamily: "'Cormorant Garamond', serif",
-                    letterSpacing: '0.02em'
+                    letterSpacing: '0.02em',
+                    padding: '14px 16px',
+                    width: '100%',
+                    color: 'var(--text-primary)',
+                    borderRadius: '4px'
                   }}
                 />
               </div>
@@ -428,7 +484,7 @@ const Navbar = () => {
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
         
         @media (max-width: 968px) {
-          nav > div > div > div:nth-child(2) {
+          .desktop-nav {
             display: none;
           }
         }
@@ -437,6 +493,11 @@ const Navbar = () => {
           opacity: 1;
           visibility: visible;
           transform: translateY(0);
+        }
+
+        .btn-icon:hover {
+          background: rgba(212, 165, 116, 0.1) !important;
+          border-color: rgba(212, 165, 116, 0.3) !important;
         }
       `}</style>
     </nav>
