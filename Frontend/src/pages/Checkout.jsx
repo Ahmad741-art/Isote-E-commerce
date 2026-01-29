@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const { user, isAuthenticated } = useAuth();
+  const { user } = useAuth();
   const { cart, getCartTotal, clearCart } = useCart();
   
   const [loading, setLoading] = useState(false);
@@ -34,8 +34,8 @@ const Checkout = () => {
     cardName: '',
   });
 
-  // Don't redirect if cart is empty - just show message
-  if (cart.length === 0) {
+  // Redirect to cart if empty, but DON'T require login
+  if (!cart || cart.length === 0) {
     return (
       <div style={{ 
         minHeight: '80vh',
@@ -84,7 +84,9 @@ const Checkout = () => {
             fontFamily: "'Cormorant Garamond', serif",
             fontSize: '15px',
             padding: '16px 48px',
-            letterSpacing: '0.08em'
+            letterSpacing: '0.08em',
+            textDecoration: 'none',
+            display: 'inline-block'
           }}>
             Continue Shopping
           </Link>
@@ -92,14 +94,6 @@ const Checkout = () => {
       </div>
     );
   }
-
-  // Only redirect to login if not authenticated
-  useEffect(() => {
-    if (!isAuthenticated) {
-      alert('Please sign in to continue with checkout');
-      navigate('/login');
-    }
-  }, [isAuthenticated, navigate]);
 
   const subtotal = getCartTotal();
   const shipping = subtotal >= 100 ? 0 : 9.99;
@@ -141,6 +135,7 @@ const Checkout = () => {
     if (!formData.firstName.trim()) newErrors.firstName = 'First name required';
     if (!formData.lastName.trim()) newErrors.lastName = 'Last name required';
     if (!formData.email.trim()) newErrors.email = 'Email required';
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Invalid email';
     if (!formData.phone.trim()) newErrors.phone = 'Phone required';
     
     // Address validation
@@ -190,7 +185,7 @@ const Checkout = () => {
     setLoading(true);
 
     try {
-      // Simulate payment processing
+      // Simulate payment processing (2 seconds)
       await new Promise(resolve => setTimeout(resolve, 2000));
       
       // Clear cart
@@ -229,7 +224,8 @@ const Checkout = () => {
       
       setTimeout(() => {
         notification.remove();
-        navigate('/account');
+        // If user is logged in, go to account, otherwise go to homepage
+        navigate(user ? '/account' : '/');
       }, 2500);
       
     } catch (error) {
@@ -257,7 +253,8 @@ const Checkout = () => {
           fontSize: '14px',
           color: 'var(--text-secondary)',
           marginBottom: '32px',
-          transition: 'color 0.3s ease'
+          transition: 'color 0.3s ease',
+          textDecoration: 'none'
         }}
         onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent-coral)'}
         onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
@@ -270,12 +267,62 @@ const Checkout = () => {
           fontFamily: "'Cormorant Garamond', serif",
           fontSize: 'clamp(32px, 5vw, 48px)',
           fontWeight: 300,
-          marginBottom: '48px',
+          marginBottom: '16px',
           fontStyle: 'italic',
           letterSpacing: '0.03em'
         }}>
           Checkout
         </h1>
+
+        {/* Guest Checkout Notice */}
+        {!user && (
+          <div style={{
+            padding: '16px 20px',
+            background: 'rgba(90, 141, 142, 0.1)',
+            border: '1px solid rgba(90, 141, 142, 0.3)',
+            borderRadius: '4px',
+            marginBottom: '32px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '16px'
+          }}>
+            <div>
+              <p style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: '15px',
+                color: 'var(--accent-teal)',
+                marginBottom: '4px',
+                fontWeight: 500
+              }}>
+                Checking out as guest
+              </p>
+              <p style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: '13px',
+                color: 'var(--text-secondary)'
+              }}>
+                You can create an account after checkout to track your order
+              </p>
+            </div>
+            <Link 
+              to="/login"
+              className="btn btn-outline"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: '13px',
+                padding: '10px 24px',
+                letterSpacing: '0.05em',
+                textDecoration: 'none',
+                borderColor: 'var(--accent-teal)',
+                color: 'var(--accent-teal)'
+              }}
+            >
+              Sign In Instead
+            </Link>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div style={{
@@ -306,7 +353,8 @@ const Checkout = () => {
                         display: 'block', 
                         fontFamily: "'Cormorant Garamond', serif",
                         fontSize: '14px', 
-                        marginBottom: '8px'
+                        marginBottom: '8px',
+                        color: 'var(--text-primary)'
                       }}>
                         First Name *
                       </label>
@@ -328,7 +376,8 @@ const Checkout = () => {
                         display: 'block', 
                         fontFamily: "'Cormorant Garamond', serif",
                         fontSize: '14px', 
-                        marginBottom: '8px'
+                        marginBottom: '8px',
+                        color: 'var(--text-primary)'
                       }}>
                         Last Name *
                       </label>
@@ -351,7 +400,8 @@ const Checkout = () => {
                       display: 'block', 
                       fontFamily: "'Cormorant Garamond', serif",
                       fontSize: '14px', 
-                      marginBottom: '8px'
+                      marginBottom: '8px',
+                      color: 'var(--text-primary)'
                     }}>
                       Email *
                     </label>
@@ -373,7 +423,8 @@ const Checkout = () => {
                       display: 'block', 
                       fontFamily: "'Cormorant Garamond', serif",
                       fontSize: '14px', 
-                      marginBottom: '8px'
+                      marginBottom: '8px',
+                      color: 'var(--text-primary)'
                     }}>
                       Phone *
                     </label>
@@ -411,7 +462,8 @@ const Checkout = () => {
                       display: 'block', 
                       fontFamily: "'Cormorant Garamond', serif",
                       fontSize: '14px', 
-                      marginBottom: '8px'
+                      marginBottom: '8px',
+                      color: 'var(--text-primary)'
                     }}>
                       Street Address *
                     </label>
@@ -434,7 +486,8 @@ const Checkout = () => {
                       display: 'block', 
                       fontFamily: "'Cormorant Garamond', serif",
                       fontSize: '14px', 
-                      marginBottom: '8px'
+                      marginBottom: '8px',
+                      color: 'var(--text-primary)'
                     }}>
                       Apartment, Suite (Optional)
                     </label>
@@ -454,7 +507,8 @@ const Checkout = () => {
                         display: 'block', 
                         fontFamily: "'Cormorant Garamond', serif",
                         fontSize: '14px', 
-                        marginBottom: '8px'
+                        marginBottom: '8px',
+                        color: 'var(--text-primary)'
                       }}>
                         City *
                       </label>
@@ -476,7 +530,8 @@ const Checkout = () => {
                         display: 'block', 
                         fontFamily: "'Cormorant Garamond', serif",
                         fontSize: '14px', 
-                        marginBottom: '8px'
+                        marginBottom: '8px',
+                        color: 'var(--text-primary)'
                       }}>
                         State *
                       </label>
@@ -499,7 +554,8 @@ const Checkout = () => {
                         display: 'block', 
                         fontFamily: "'Cormorant Garamond', serif",
                         fontSize: '14px', 
-                        marginBottom: '8px'
+                        marginBottom: '8px',
+                        color: 'var(--text-primary)'
                       }}>
                         ZIP *
                       </label>
@@ -563,7 +619,8 @@ const Checkout = () => {
                       display: 'block', 
                       fontFamily: "'Cormorant Garamond', serif",
                       fontSize: '14px', 
-                      marginBottom: '8px'
+                      marginBottom: '8px',
+                      color: 'var(--text-primary)'
                     }}>
                       Card Number *
                     </label>
@@ -591,7 +648,8 @@ const Checkout = () => {
                       display: 'block', 
                       fontFamily: "'Cormorant Garamond', serif",
                       fontSize: '14px', 
-                      marginBottom: '8px'
+                      marginBottom: '8px',
+                      color: 'var(--text-primary)'
                     }}>
                       Cardholder Name *
                     </label>
@@ -616,7 +674,8 @@ const Checkout = () => {
                         display: 'block', 
                         fontFamily: "'Cormorant Garamond', serif",
                         fontSize: '14px', 
-                        marginBottom: '8px'
+                        marginBottom: '8px',
+                        color: 'var(--text-primary)'
                       }}>
                         Expiry Date *
                       </label>
@@ -639,7 +698,8 @@ const Checkout = () => {
                         display: 'block', 
                         fontFamily: "'Cormorant Garamond', serif",
                         fontSize: '14px', 
-                        marginBottom: '8px'
+                        marginBottom: '8px',
+                        color: 'var(--text-primary)'
                       }}>
                         CVV *
                       </label>
