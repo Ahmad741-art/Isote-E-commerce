@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { CreditCard, Lock, CheckCircle, Shield, ArrowLeft } from 'lucide-react';
 import { useCart } from '../context/CartContext';
@@ -13,28 +13,24 @@ const Checkout = () => {
   const [errors, setErrors] = useState({});
   
   const [formData, setFormData] = useState({
-    // Contact Information
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
     email: user?.email || '',
     phone: '',
-    
-    // Shipping Address
     address: '',
     apartment: '',
     city: '',
     state: '',
     zipCode: '',
     country: 'United States',
-    
-    // Payment Information
     cardNumber: '',
     expiryDate: '',
     cvv: '',
     cardName: '',
   });
 
-  // Redirect to cart if empty, but DON'T require login
+  // NO AUTH CHECKS - Anyone can access this page
+  // Only check if cart is empty
   if (!cart || cart.length === 0) {
     return (
       <div style={{ 
@@ -42,7 +38,8 @@ const Checkout = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'var(--bg-primary)'
+        background: 'linear-gradient(180deg, #1a2332 0%, #2d3e50 100%)',
+        padding: '40px 20px'
       }}>
         <div style={{
           textAlign: 'center',
@@ -67,7 +64,8 @@ const Checkout = () => {
             fontSize: '32px',
             fontWeight: 400,
             marginBottom: '16px',
-            fontStyle: 'italic'
+            fontStyle: 'italic',
+            color: 'var(--text-primary)'
           }}>
             Your Cart is Empty
           </h2>
@@ -78,7 +76,7 @@ const Checkout = () => {
             marginBottom: '32px',
             lineHeight: 1.7
           }}>
-            Add some beautiful pieces to your cart before checking out
+            Add items to your cart to proceed with checkout
           </p>
           <Link to="/shop" className="btn btn-primary" style={{
             fontFamily: "'Cormorant Garamond', serif",
@@ -88,7 +86,7 @@ const Checkout = () => {
             textDecoration: 'none',
             display: 'inline-block'
           }}>
-            Continue Shopping
+            Start Shopping
           </Link>
         </div>
       </div>
@@ -103,17 +101,14 @@ const Checkout = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     
-    // Format card number with spaces
     if (name === 'cardNumber') {
       const formatted = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim().substring(0, 19);
       setFormData({ ...formData, [name]: formatted });
     }
-    // Format expiry date
     else if (name === 'expiryDate') {
       const formatted = value.replace(/\D/g, '').replace(/(\d{2})(\d{0,2})/, '$1/$2').substring(0, 5);
       setFormData({ ...formData, [name]: formatted });
     }
-    // Format CVV
     else if (name === 'cvv') {
       const formatted = value.replace(/\D/g, '').substring(0, 3);
       setFormData({ ...formData, [name]: formatted });
@@ -122,7 +117,6 @@ const Checkout = () => {
       setFormData({ ...formData, [name]: value });
     }
     
-    // Clear error for this field
     if (errors[name]) {
       setErrors({ ...errors, [name]: '' });
     }
@@ -131,40 +125,27 @@ const Checkout = () => {
   const validateForm = () => {
     const newErrors = {};
     
-    // Contact validation
-    if (!formData.firstName.trim()) newErrors.firstName = 'First name required';
-    if (!formData.lastName.trim()) newErrors.lastName = 'Last name required';
-    if (!formData.email.trim()) newErrors.email = 'Email required';
+    if (!formData.firstName.trim()) newErrors.firstName = 'Required';
+    if (!formData.lastName.trim()) newErrors.lastName = 'Required';
+    if (!formData.email.trim()) newErrors.email = 'Required';
     else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Invalid email';
-    if (!formData.phone.trim()) newErrors.phone = 'Phone required';
+    if (!formData.phone.trim()) newErrors.phone = 'Required';
+    if (!formData.address.trim()) newErrors.address = 'Required';
+    if (!formData.city.trim()) newErrors.city = 'Required';
+    if (!formData.state.trim()) newErrors.state = 'Required';
+    if (!formData.zipCode.trim()) newErrors.zipCode = 'Required';
     
-    // Address validation
-    if (!formData.address.trim()) newErrors.address = 'Address required';
-    if (!formData.city.trim()) newErrors.city = 'City required';
-    if (!formData.state.trim()) newErrors.state = 'State required';
-    if (!formData.zipCode.trim()) newErrors.zipCode = 'ZIP code required';
-    
-    // Payment validation
     const cardNum = formData.cardNumber.replace(/\s/g, '');
-    if (!cardNum) {
-      newErrors.cardNumber = 'Card number required';
-    } else if (cardNum.length < 16) {
-      newErrors.cardNumber = 'Invalid card number';
-    }
+    if (!cardNum) newErrors.cardNumber = 'Required';
+    else if (cardNum.length < 16) newErrors.cardNumber = 'Invalid';
     
-    if (!formData.expiryDate.trim()) {
-      newErrors.expiryDate = 'Expiry date required';
-    } else if (formData.expiryDate.length < 5) {
-      newErrors.expiryDate = 'Invalid expiry date';
-    }
+    if (!formData.expiryDate.trim()) newErrors.expiryDate = 'Required';
+    else if (formData.expiryDate.length < 5) newErrors.expiryDate = 'Invalid';
     
-    if (!formData.cvv.trim()) {
-      newErrors.cvv = 'CVV required';
-    } else if (formData.cvv.length < 3) {
-      newErrors.cvv = 'Invalid CVV';
-    }
+    if (!formData.cvv.trim()) newErrors.cvv = 'Required';
+    else if (formData.cvv.length < 3) newErrors.cvv = 'Invalid';
     
-    if (!formData.cardName.trim()) newErrors.cardName = 'Cardholder name required';
+    if (!formData.cardName.trim()) newErrors.cardName = 'Required';
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -174,48 +155,40 @@ const Checkout = () => {
     e.preventDefault();
     
     if (!validateForm()) {
-      // Scroll to first error
-      const firstError = document.querySelector('[style*="border-color: var(--accent-coral)"]');
-      if (firstError) {
-        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
 
     setLoading(true);
 
     try {
-      // Simulate payment processing (2 seconds)
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      // Clear cart
       await clearCart();
       
-      // Show success notification
       const notification = document.createElement('div');
       notification.innerHTML = `
         <div style="
           position: fixed;
           top: 24px;
           right: 24px;
-          background: linear-gradient(135deg, rgba(90, 141, 142, 0.98) 0%, rgba(90, 141, 142, 0.95) 100%);
+          background: linear-gradient(135deg, #5a8d8e 0%, #4a7d7e 100%);
           color: white;
-          padding: 24px 32px;
-          border-radius: 4px;
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+          padding: 20px 28px;
+          border-radius: 8px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
           z-index: 10000;
-          animation: slideIn 0.5s ease;
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.2);
+          animation: slideIn 0.4s ease;
           font-family: 'Cormorant Garamond', serif;
+          max-width: 90vw;
         ">
-          <div style="display: flex; align-items: center; gap: 16px; font-size: 16px;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
             <div>
-              <div style="font-weight: 600; margin-bottom: 4px; letter-spacing: 0.03em;">Order Confirmed!</div>
-              <div style="font-size: 14px; opacity: 0.9;">Thank you for your purchase</div>
+              <div style="font-weight: 600; margin-bottom: 2px;">Order Confirmed!</div>
+              <div style="font-size: 13px; opacity: 0.9;">Thank you for your purchase</div>
             </div>
           </div>
         </div>
@@ -224,12 +197,10 @@ const Checkout = () => {
       
       setTimeout(() => {
         notification.remove();
-        // If user is logged in, go to account, otherwise go to homepage
-        navigate(user ? '/account' : '/');
+        navigate('/');
       }, 2500);
       
     } catch (error) {
-      console.error('Payment failed:', error);
       alert('Payment failed. Please try again.');
     } finally {
       setLoading(false);
@@ -238,504 +209,410 @@ const Checkout = () => {
 
   return (
     <div style={{ 
-      padding: '60px 0 100px', 
+      padding: '40px 20px 80px', 
       background: 'linear-gradient(180deg, #1a2332 0%, #2d3e50 100%)',
       minHeight: '100vh'
     }}>
-      <div className="container" style={{ maxWidth: '1200px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         
-        {/* Back to Cart Link */}
         <Link to="/cart" style={{
           display: 'inline-flex',
           alignItems: 'center',
           gap: '8px',
           fontFamily: "'Cormorant Garamond', serif",
           fontSize: '14px',
-          color: 'var(--text-secondary)',
-          marginBottom: '32px',
-          transition: 'color 0.3s ease',
+          color: '#8ca89d',
+          marginBottom: '24px',
           textDecoration: 'none'
-        }}
-        onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent-coral)'}
-        onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
-        >
-          <ArrowLeft size={18} />
+        }}>
+          <ArrowLeft size={16} />
           Back to Cart
         </Link>
 
         <h1 style={{
           fontFamily: "'Cormorant Garamond', serif",
-          fontSize: 'clamp(32px, 5vw, 48px)',
-          fontWeight: 300,
-          marginBottom: '16px',
-          fontStyle: 'italic',
-          letterSpacing: '0.03em'
+          fontSize: 'clamp(28px, 5vw, 42px)',
+          fontWeight: 400,
+          marginBottom: '32px',
+          letterSpacing: '0.02em',
+          color: 'var(--text-primary)'
         }}>
           Checkout
         </h1>
 
-        {/* Guest Checkout Notice */}
         {!user && (
           <div style={{
             padding: '16px 20px',
-            background: 'rgba(90, 141, 142, 0.1)',
-            border: '1px solid rgba(90, 141, 142, 0.3)',
-            borderRadius: '4px',
+            background: 'rgba(90, 141, 142, 0.08)',
+            border: '1px solid rgba(90, 141, 142, 0.2)',
+            borderRadius: '6px',
             marginBottom: '32px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             flexWrap: 'wrap',
-            gap: '16px'
+            gap: '12px'
           }}>
-            <div>
-              <p style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: '15px',
-                color: 'var(--accent-teal)',
-                marginBottom: '4px',
-                fontWeight: 500
-              }}>
-                Checking out as guest
-              </p>
-              <p style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: '13px',
-                color: 'var(--text-secondary)'
-              }}>
-                You can create an account after checkout to track your order
-              </p>
-            </div>
-            <Link 
-              to="/login"
-              className="btn btn-outline"
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: '13px',
-                padding: '10px 24px',
-                letterSpacing: '0.05em',
-                textDecoration: 'none',
-                borderColor: 'var(--accent-teal)',
-                color: 'var(--accent-teal)'
-              }}
-            >
-              Sign In Instead
-            </Link>
+            <p style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: '14px',
+              color: '#8ca89d',
+              margin: 0
+            }}>
+              Checkout as guest or <Link to="/login" style={{ color: '#5a8d8e', textDecoration: 'underline' }}>sign in</Link>
+            </p>
           </div>
         )}
 
         <form onSubmit={handleSubmit}>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: '1fr 400px',
-            gap: '40px',
-            alignItems: 'start'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 400px), 1fr))',
+            gap: '32px'
           }}>
             
-            {/* Form Section */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               
-              {/* Contact Information */}
-              <div className="card" style={{ padding: '40px', background: 'var(--bg-card)' }}>
+              {/* Contact */}
+              <div style={{ 
+                padding: '28px', 
+                background: 'rgba(42, 58, 74, 0.4)',
+                borderRadius: '8px',
+                border: '1px solid rgba(212, 165, 116, 0.15)'
+              }}>
                 <h2 style={{
                   fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: '24px',
-                  fontWeight: 400,
-                  marginBottom: '24px',
-                  letterSpacing: '0.03em'
+                  fontSize: '20px',
+                  fontWeight: 500,
+                  marginBottom: '20px',
+                  color: 'var(--text-primary)'
                 }}>
-                  Contact Information
+                  Contact
                 </h2>
-                <div style={{ display: 'grid', gap: '20px' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div style={{ display: 'grid', gap: '16px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                     <div>
-                      <label style={{ 
-                        display: 'block', 
-                        fontFamily: "'Cormorant Garamond', serif",
-                        fontSize: '14px', 
-                        marginBottom: '8px',
-                        color: 'var(--text-primary)'
-                      }}>
-                        First Name *
-                      </label>
                       <input
                         type="text"
                         name="firstName"
-                        className="input"
+                        placeholder="First name"
                         value={formData.firstName}
                         onChange={handleChange}
                         style={{
+                          width: '100%',
+                          padding: '12px 14px',
+                          background: 'rgba(26, 35, 50, 0.6)',
+                          border: errors.firstName ? '1px solid #ff6b5a' : '1px solid rgba(212, 165, 116, 0.2)',
+                          borderRadius: '4px',
+                          color: 'white',
                           fontFamily: "'Cormorant Garamond', serif",
-                          borderColor: errors.firstName ? 'var(--accent-coral)' : undefined
+                          fontSize: '15px'
                         }}
                       />
-                      {errors.firstName && <span style={{ fontSize: '12px', color: 'var(--accent-coral)', marginTop: '4px', display: 'block' }}>{errors.firstName}</span>}
                     </div>
                     <div>
-                      <label style={{ 
-                        display: 'block', 
-                        fontFamily: "'Cormorant Garamond', serif",
-                        fontSize: '14px', 
-                        marginBottom: '8px',
-                        color: 'var(--text-primary)'
-                      }}>
-                        Last Name *
-                      </label>
                       <input
                         type="text"
                         name="lastName"
-                        className="input"
+                        placeholder="Last name"
                         value={formData.lastName}
                         onChange={handleChange}
                         style={{
+                          width: '100%',
+                          padding: '12px 14px',
+                          background: 'rgba(26, 35, 50, 0.6)',
+                          border: errors.lastName ? '1px solid #ff6b5a' : '1px solid rgba(212, 165, 116, 0.2)',
+                          borderRadius: '4px',
+                          color: 'white',
                           fontFamily: "'Cormorant Garamond', serif",
-                          borderColor: errors.lastName ? 'var(--accent-coral)' : undefined
+                          fontSize: '15px'
                         }}
                       />
-                      {errors.lastName && <span style={{ fontSize: '12px', color: 'var(--accent-coral)', marginTop: '4px', display: 'block' }}>{errors.lastName}</span>}
                     </div>
                   </div>
-                  <div>
-                    <label style={{ 
-                      display: 'block', 
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    style={{
+                      width: '100%',
+                      padding: '12px 14px',
+                      background: 'rgba(26, 35, 50, 0.6)',
+                      border: errors.email ? '1px solid #ff6b5a' : '1px solid rgba(212, 165, 116, 0.2)',
+                      borderRadius: '4px',
+                      color: 'white',
                       fontFamily: "'Cormorant Garamond', serif",
-                      fontSize: '14px', 
-                      marginBottom: '8px',
-                      color: 'var(--text-primary)'
-                    }}>
-                      Email *
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      className="input"
-                      value={formData.email}
-                      onChange={handleChange}
-                      style={{
-                        fontFamily: "'Cormorant Garamond', serif",
-                        borderColor: errors.email ? 'var(--accent-coral)' : undefined
-                      }}
-                    />
-                    {errors.email && <span style={{ fontSize: '12px', color: 'var(--accent-coral)', marginTop: '4px', display: 'block' }}>{errors.email}</span>}
-                  </div>
-                  <div>
-                    <label style={{ 
-                      display: 'block', 
+                      fontSize: '15px'
+                    }}
+                  />
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="Phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    style={{
+                      width: '100%',
+                      padding: '12px 14px',
+                      background: 'rgba(26, 35, 50, 0.6)',
+                      border: errors.phone ? '1px solid #ff6b5a' : '1px solid rgba(212, 165, 116, 0.2)',
+                      borderRadius: '4px',
+                      color: 'white',
                       fontFamily: "'Cormorant Garamond', serif",
-                      fontSize: '14px', 
-                      marginBottom: '8px',
-                      color: 'var(--text-primary)'
-                    }}>
-                      Phone *
-                    </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      className="input"
-                      placeholder="(555) 123-4567"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      style={{
-                        fontFamily: "'Cormorant Garamond', serif",
-                        borderColor: errors.phone ? 'var(--accent-coral)' : undefined
-                      }}
-                    />
-                    {errors.phone && <span style={{ fontSize: '12px', color: 'var(--accent-coral)', marginTop: '4px', display: 'block' }}>{errors.phone}</span>}
-                  </div>
+                      fontSize: '15px'
+                    }}
+                  />
                 </div>
               </div>
 
-              {/* Shipping Address */}
-              <div className="card" style={{ padding: '40px', background: 'var(--bg-card)' }}>
+              {/* Shipping */}
+              <div style={{ 
+                padding: '28px', 
+                background: 'rgba(42, 58, 74, 0.4)',
+                borderRadius: '8px',
+                border: '1px solid rgba(212, 165, 116, 0.15)'
+              }}>
                 <h2 style={{
                   fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: '24px',
-                  fontWeight: 400,
-                  marginBottom: '24px',
-                  letterSpacing: '0.03em'
+                  fontSize: '20px',
+                  fontWeight: 500,
+                  marginBottom: '20px',
+                  color: 'var(--text-primary)'
                 }}>
-                  Shipping Address
+                  Shipping
                 </h2>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  <div>
-                    <label style={{ 
-                      display: 'block', 
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <input
+                    type="text"
+                    name="address"
+                    placeholder="Address"
+                    value={formData.address}
+                    onChange={handleChange}
+                    style={{
+                      width: '100%',
+                      padding: '12px 14px',
+                      background: 'rgba(26, 35, 50, 0.6)',
+                      border: errors.address ? '1px solid #ff6b5a' : '1px solid rgba(212, 165, 116, 0.2)',
+                      borderRadius: '4px',
+                      color: 'white',
                       fontFamily: "'Cormorant Garamond', serif",
-                      fontSize: '14px', 
-                      marginBottom: '8px',
-                      color: 'var(--text-primary)'
-                    }}>
-                      Street Address *
-                    </label>
+                      fontSize: '15px'
+                    }}
+                  />
+                  <input
+                    type="text"
+                    name="apartment"
+                    placeholder="Apartment, suite, etc. (optional)"
+                    value={formData.apartment}
+                    onChange={handleChange}
+                    style={{
+                      width: '100%',
+                      padding: '12px 14px',
+                      background: 'rgba(26, 35, 50, 0.6)',
+                      border: '1px solid rgba(212, 165, 116, 0.2)',
+                      borderRadius: '4px',
+                      color: 'white',
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontSize: '15px'
+                    }}
+                  />
+                  <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: '12px' }}>
                     <input
                       type="text"
-                      name="address"
-                      className="input"
-                      placeholder="123 Main Street"
-                      value={formData.address}
+                      name="city"
+                      placeholder="City"
+                      value={formData.city}
                       onChange={handleChange}
                       style={{
+                        width: '100%',
+                        padding: '12px 14px',
+                        background: 'rgba(26, 35, 50, 0.6)',
+                        border: errors.city ? '1px solid #ff6b5a' : '1px solid rgba(212, 165, 116, 0.2)',
+                        borderRadius: '4px',
+                        color: 'white',
                         fontFamily: "'Cormorant Garamond', serif",
-                        borderColor: errors.address ? 'var(--accent-coral)' : undefined
+                        fontSize: '15px'
                       }}
                     />
-                    {errors.address && <span style={{ fontSize: '12px', color: 'var(--accent-coral)', marginTop: '4px', display: 'block' }}>{errors.address}</span>}
-                  </div>
-                  <div>
-                    <label style={{ 
-                      display: 'block', 
-                      fontFamily: "'Cormorant Garamond', serif",
-                      fontSize: '14px', 
-                      marginBottom: '8px',
-                      color: 'var(--text-primary)'
-                    }}>
-                      Apartment, Suite (Optional)
-                    </label>
                     <input
                       type="text"
-                      name="apartment"
-                      className="input"
-                      placeholder="Apt 4B"
-                      value={formData.apartment}
+                      name="state"
+                      placeholder="State"
+                      value={formData.state}
                       onChange={handleChange}
-                      style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                      style={{
+                        width: '100%',
+                        padding: '12px 14px',
+                        background: 'rgba(26, 35, 50, 0.6)',
+                        border: errors.state ? '1px solid #ff6b5a' : '1px solid rgba(212, 165, 116, 0.2)',
+                        borderRadius: '4px',
+                        color: 'white',
+                        fontFamily: "'Cormorant Garamond', serif",
+                        fontSize: '15px'
+                      }}
                     />
-                  </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: '16px' }}>
-                    <div>
-                      <label style={{ 
-                        display: 'block', 
+                    <input
+                      type="text"
+                      name="zipCode"
+                      placeholder="ZIP"
+                      value={formData.zipCode}
+                      onChange={handleChange}
+                      style={{
+                        width: '100%',
+                        padding: '12px 14px',
+                        background: 'rgba(26, 35, 50, 0.6)',
+                        border: errors.zipCode ? '1px solid #ff6b5a' : '1px solid rgba(212, 165, 116, 0.2)',
+                        borderRadius: '4px',
+                        color: 'white',
                         fontFamily: "'Cormorant Garamond', serif",
-                        fontSize: '14px', 
-                        marginBottom: '8px',
-                        color: 'var(--text-primary)'
-                      }}>
-                        City *
-                      </label>
-                      <input
-                        type="text"
-                        name="city"
-                        className="input"
-                        value={formData.city}
-                        onChange={handleChange}
-                        style={{
-                          fontFamily: "'Cormorant Garamond', serif",
-                          borderColor: errors.city ? 'var(--accent-coral)' : undefined
-                        }}
-                      />
-                      {errors.city && <span style={{ fontSize: '11px', color: 'var(--accent-coral)', marginTop: '4px', display: 'block' }}>{errors.city}</span>}
-                    </div>
-                    <div>
-                      <label style={{ 
-                        display: 'block', 
-                        fontFamily: "'Cormorant Garamond', serif",
-                        fontSize: '14px', 
-                        marginBottom: '8px',
-                        color: 'var(--text-primary)'
-                      }}>
-                        State *
-                      </label>
-                      <input
-                        type="text"
-                        name="state"
-                        className="input"
-                        placeholder="CA"
-                        value={formData.state}
-                        onChange={handleChange}
-                        style={{
-                          fontFamily: "'Cormorant Garamond', serif",
-                          borderColor: errors.state ? 'var(--accent-coral)' : undefined
-                        }}
-                      />
-                      {errors.state && <span style={{ fontSize: '11px', color: 'var(--accent-coral)', marginTop: '4px', display: 'block' }}>{errors.state}</span>}
-                    </div>
-                    <div>
-                      <label style={{ 
-                        display: 'block', 
-                        fontFamily: "'Cormorant Garamond', serif",
-                        fontSize: '14px', 
-                        marginBottom: '8px',
-                        color: 'var(--text-primary)'
-                      }}>
-                        ZIP *
-                      </label>
-                      <input
-                        type="text"
-                        name="zipCode"
-                        className="input"
-                        placeholder="90210"
-                        value={formData.zipCode}
-                        onChange={handleChange}
-                        style={{
-                          fontFamily: "'Cormorant Garamond', serif",
-                          borderColor: errors.zipCode ? 'var(--accent-coral)' : undefined
-                        }}
-                      />
-                      {errors.zipCode && <span style={{ fontSize: '11px', color: 'var(--accent-coral)', marginTop: '4px', display: 'block' }}>{errors.zipCode}</span>}
-                    </div>
+                        fontSize: '15px'
+                      }}
+                    />
                   </div>
                 </div>
               </div>
 
               {/* Payment */}
-              <div className="card" style={{ padding: '40px', background: 'var(--bg-card)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
-                  <Lock size={22} color="var(--accent-gold)" />
+              <div style={{ 
+                padding: '28px', 
+                background: 'rgba(42, 58, 74, 0.4)',
+                borderRadius: '8px',
+                border: '1px solid rgba(212, 165, 116, 0.15)'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
+                  <Lock size={18} color="#d4a574" />
                   <h2 style={{
                     fontFamily: "'Cormorant Garamond', serif",
-                    fontSize: '24px',
-                    fontWeight: 400,
-                    letterSpacing: '0.03em',
-                    margin: 0
+                    fontSize: '20px',
+                    fontWeight: 500,
+                    margin: 0,
+                    color: 'var(--text-primary)'
                   }}>
-                    Payment Details
+                    Payment
                   </h2>
                 </div>
                 
-                <div style={{
-                  padding: '14px',
-                  background: 'rgba(90, 141, 142, 0.1)',
-                  borderRadius: '4px',
-                  border: '1px solid rgba(90, 141, 142, 0.3)',
-                  marginBottom: '24px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px'
-                }}>
-                  <Shield size={18} color="var(--accent-teal)" />
-                  <p style={{
-                    fontFamily: "'Cormorant Garamond', serif",
-                    fontSize: '13px',
-                    margin: 0,
-                    color: 'var(--accent-teal)'
-                  }}>
-                    Secure SSL encrypted payment
-                  </p>
-                </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  <div>
-                    <label style={{ 
-                      display: 'block', 
-                      fontFamily: "'Cormorant Garamond', serif",
-                      fontSize: '14px', 
-                      marginBottom: '8px',
-                      color: 'var(--text-primary)'
-                    }}>
-                      Card Number *
-                    </label>
-                    <div style={{ position: 'relative' }}>
-                      <input
-                        type="text"
-                        name="cardNumber"
-                        className="input"
-                        placeholder="1234 5678 9012 3456"
-                        value={formData.cardNumber}
-                        onChange={handleChange}
-                        style={{
-                          fontFamily: "'Cormorant Garamond', serif",
-                          borderColor: errors.cardNumber ? 'var(--accent-coral)' : undefined,
-                          paddingRight: '48px'
-                        }}
-                      />
-                      <CreditCard size={20} style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-                    </div>
-                    {errors.cardNumber && <span style={{ fontSize: '12px', color: 'var(--accent-coral)', marginTop: '4px', display: 'block' }}>{errors.cardNumber}</span>}
-                  </div>
-                  
-                  <div>
-                    <label style={{ 
-                      display: 'block', 
-                      fontFamily: "'Cormorant Garamond', serif",
-                      fontSize: '14px', 
-                      marginBottom: '8px',
-                      color: 'var(--text-primary)'
-                    }}>
-                      Cardholder Name *
-                    </label>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div style={{ position: 'relative' }}>
                     <input
                       type="text"
-                      name="cardName"
-                      className="input"
-                      placeholder="John Doe"
-                      value={formData.cardName}
+                      name="cardNumber"
+                      placeholder="Card number"
+                      value={formData.cardNumber}
                       onChange={handleChange}
                       style={{
+                        width: '100%',
+                        padding: '12px 14px',
+                        paddingRight: '45px',
+                        background: 'rgba(26, 35, 50, 0.6)',
+                        border: errors.cardNumber ? '1px solid #ff6b5a' : '1px solid rgba(212, 165, 116, 0.2)',
+                        borderRadius: '4px',
+                        color: 'white',
                         fontFamily: "'Cormorant Garamond', serif",
-                        borderColor: errors.cardName ? 'var(--accent-coral)' : undefined
+                        fontSize: '15px'
                       }}
                     />
-                    {errors.cardName && <span style={{ fontSize: '12px', color: 'var(--accent-coral)', marginTop: '4px', display: 'block' }}>{errors.cardName}</span>}
+                    <CreditCard size={18} style={{ 
+                      position: 'absolute', 
+                      right: '14px', 
+                      top: '50%', 
+                      transform: 'translateY(-50%)', 
+                      color: '#8ca89d',
+                      pointerEvents: 'none'
+                    }} />
                   </div>
                   
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                    <div>
-                      <label style={{ 
-                        display: 'block', 
+                  <input
+                    type="text"
+                    name="cardName"
+                    placeholder="Cardholder name"
+                    value={formData.cardName}
+                    onChange={handleChange}
+                    style={{
+                      width: '100%',
+                      padding: '12px 14px',
+                      background: 'rgba(26, 35, 50, 0.6)',
+                      border: errors.cardName ? '1px solid #ff6b5a' : '1px solid rgba(212, 165, 116, 0.2)',
+                      borderRadius: '4px',
+                      color: 'white',
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontSize: '15px'
+                    }}
+                  />
+                  
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                    <input
+                      type="text"
+                      name="expiryDate"
+                      placeholder="MM/YY"
+                      value={formData.expiryDate}
+                      onChange={handleChange}
+                      style={{
+                        width: '100%',
+                        padding: '12px 14px',
+                        background: 'rgba(26, 35, 50, 0.6)',
+                        border: errors.expiryDate ? '1px solid #ff6b5a' : '1px solid rgba(212, 165, 116, 0.2)',
+                        borderRadius: '4px',
+                        color: 'white',
                         fontFamily: "'Cormorant Garamond', serif",
-                        fontSize: '14px', 
-                        marginBottom: '8px',
-                        color: 'var(--text-primary)'
-                      }}>
-                        Expiry Date *
-                      </label>
-                      <input
-                        type="text"
-                        name="expiryDate"
-                        className="input"
-                        placeholder="MM/YY"
-                        value={formData.expiryDate}
-                        onChange={handleChange}
-                        style={{
-                          fontFamily: "'Cormorant Garamond', serif",
-                          borderColor: errors.expiryDate ? 'var(--accent-coral)' : undefined
-                        }}
-                      />
-                      {errors.expiryDate && <span style={{ fontSize: '12px', color: 'var(--accent-coral)', marginTop: '4px', display: 'block' }}>{errors.expiryDate}</span>}
-                    </div>
-                    <div>
-                      <label style={{ 
-                        display: 'block', 
+                        fontSize: '15px'
+                      }}
+                    />
+                    <input
+                      type="text"
+                      name="cvv"
+                      placeholder="CVV"
+                      value={formData.cvv}
+                      onChange={handleChange}
+                      style={{
+                        width: '100%',
+                        padding: '12px 14px',
+                        background: 'rgba(26, 35, 50, 0.6)',
+                        border: errors.cvv ? '1px solid #ff6b5a' : '1px solid rgba(212, 165, 116, 0.2)',
+                        borderRadius: '4px',
+                        color: 'white',
                         fontFamily: "'Cormorant Garamond', serif",
-                        fontSize: '14px', 
-                        marginBottom: '8px',
-                        color: 'var(--text-primary)'
-                      }}>
-                        CVV *
-                      </label>
-                      <input
-                        type="text"
-                        name="cvv"
-                        className="input"
-                        placeholder="123"
-                        value={formData.cvv}
-                        onChange={handleChange}
-                        style={{
-                          fontFamily: "'Cormorant Garamond', serif",
-                          borderColor: errors.cvv ? 'var(--accent-coral)' : undefined
-                        }}
-                      />
-                      {errors.cvv && <span style={{ fontSize: '12px', color: 'var(--accent-coral)', marginTop: '4px', display: 'block' }}>{errors.cvv}</span>}
-                    </div>
+                        fontSize: '15px'
+                      }}
+                    />
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="btn btn-primary"
                   disabled={loading}
                   style={{ 
                     width: '100%',
-                    marginTop: '32px',
+                    marginTop: '24px',
+                    padding: '16px',
+                    background: loading ? '#4a7d7e' : 'linear-gradient(135deg, #5a8d8e 0%, #4a7d7e 100%)',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '6px',
                     fontFamily: "'Cormorant Garamond', serif",
-                    fontSize: '15px',
-                    padding: '18px',
-                    letterSpacing: '0.05em'
+                    fontSize: '16px',
+                    fontWeight: 500,
+                    cursor: loading ? 'not-allowed' : 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '10px',
+                    letterSpacing: '0.03em',
+                    transition: 'all 0.3s ease'
                   }}
                 >
                   {loading ? (
                     <>
-                      <div className="spinner" style={{ width: '18px', height: '18px', borderWidth: '2px' }} />
+                      <div style={{
+                        width: '16px',
+                        height: '16px',
+                        border: '2px solid rgba(255,255,255,0.3)',
+                        borderTopColor: 'white',
+                        borderRadius: '50%',
+                        animation: 'spin 0.8s linear infinite'
+                      }} />
                       Processing...
                     </>
                   ) : (
@@ -748,34 +625,41 @@ const Checkout = () => {
               </div>
             </div>
 
-            {/* Order Summary - Sticky */}
-            <div style={{ position: 'sticky', top: '100px' }}>
-              <div className="card" style={{ padding: '32px', background: 'var(--bg-card)' }}>
+            {/* Summary */}
+            <div>
+              <div style={{ 
+                padding: '28px', 
+                background: 'rgba(42, 58, 74, 0.4)',
+                borderRadius: '8px',
+                border: '1px solid rgba(212, 165, 116, 0.15)',
+                position: 'sticky',
+                top: '20px'
+              }}>
                 <h2 style={{
                   fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: '22px',
-                  fontWeight: 400,
-                  marginBottom: '24px',
-                  letterSpacing: '0.03em'
+                  fontSize: '20px',
+                  fontWeight: 500,
+                  marginBottom: '20px',
+                  color: 'var(--text-primary)'
                 }}>
                   Order Summary
                 </h2>
 
-                <div style={{ marginBottom: '24px', maxHeight: '300px', overflowY: 'auto' }}>
+                <div style={{ marginBottom: '20px', maxHeight: '300px', overflowY: 'auto' }}>
                   {cart.map((item) => (
                     <div key={item._id} style={{
                       display: 'flex',
-                      gap: '16px',
-                      marginBottom: '20px',
-                      paddingBottom: '20px',
-                      borderBottom: '1px solid var(--border)'
+                      gap: '12px',
+                      marginBottom: '16px',
+                      paddingBottom: '16px',
+                      borderBottom: '1px solid rgba(212, 165, 116, 0.1)'
                     }}>
                       <img
                         src={item.product.images?.[0] || '/placeholder.png'}
                         alt={item.product.name}
                         style={{
-                          width: '64px',
-                          height: '80px',
+                          width: '60px',
+                          height: '75px',
                           objectFit: 'cover',
                           borderRadius: '4px'
                         }}
@@ -783,19 +667,21 @@ const Checkout = () => {
                       <div style={{ flex: 1 }}>
                         <p style={{ 
                           fontFamily: "'Cormorant Garamond', serif",
-                          fontSize: '15px', 
+                          fontSize: '14px', 
                           fontWeight: 500, 
-                          marginBottom: '6px'
+                          marginBottom: '4px',
+                          color: 'var(--text-primary)'
                         }}>
                           {item.product.name}
                         </p>
-                        <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                        <p style={{ fontSize: '12px', color: '#8ca89d', marginBottom: '6px' }}>
                           Qty: {item.quantity} {item.size && `• ${item.size}`}
                         </p>
                         <p style={{ 
                           fontFamily: "'Cormorant Garamond', serif",
                           fontSize: '15px', 
-                          fontWeight: 600
+                          fontWeight: 600,
+                          color: 'var(--text-primary)'
                         }}>
                           ${(item.product.price * item.quantity).toFixed(2)}
                         </p>
@@ -804,47 +690,47 @@ const Checkout = () => {
                   ))}
                 </div>
 
-                <div style={{ marginBottom: '24px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px', fontSize: '15px' }}>
-                    <span style={{ fontFamily: "'Cormorant Garamond', serif" }}>Subtotal</span>
-                    <span style={{ fontFamily: "'Cormorant Garamond', serif" }}>${subtotal.toFixed(2)}</span>
+                <div style={{ marginBottom: '20px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', fontSize: '14px' }}>
+                    <span style={{ fontFamily: "'Cormorant Garamond', serif", color: '#8ca89d' }}>Subtotal</span>
+                    <span style={{ fontFamily: "'Cormorant Garamond', serif", color: 'var(--text-primary)' }}>${subtotal.toFixed(2)}</span>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px', fontSize: '15px' }}>
-                    <span style={{ fontFamily: "'Cormorant Garamond', serif" }}>Shipping</span>
-                    <span style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', fontSize: '14px' }}>
+                    <span style={{ fontFamily: "'Cormorant Garamond', serif", color: '#8ca89d' }}>Shipping</span>
+                    <span style={{ fontFamily: "'Cormorant Garamond', serif", color: shipping === 0 ? '#5a8d8e' : 'var(--text-primary)' }}>
                       {shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`}
                     </span>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px', fontSize: '15px', color: 'var(--text-secondary)' }}>
-                    <span style={{ fontFamily: "'Cormorant Garamond', serif" }}>Tax</span>
-                    <span style={{ fontFamily: "'Cormorant Garamond', serif" }}>${tax.toFixed(2)}</span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', fontSize: '14px' }}>
+                    <span style={{ fontFamily: "'Cormorant Garamond', serif", color: '#8ca89d' }}>Tax</span>
+                    <span style={{ fontFamily: "'Cormorant Garamond', serif", color: 'var(--text-primary)' }}>${tax.toFixed(2)}</span>
                   </div>
 
-                  <div className="divider" style={{ margin: '20px 0' }} />
+                  <div style={{ height: '1px', background: 'rgba(212, 165, 116, 0.2)', margin: '16px 0' }} />
 
                   <div style={{
                     display: 'flex',
                     justifyContent: 'space-between',
-                    fontSize: '22px',
+                    fontSize: '20px',
                     fontWeight: 600
                   }}>
-                    <span style={{ fontFamily: "'Cormorant Garamond', serif" }}>Total</span>
-                    <span style={{ fontFamily: "'Cormorant Garamond', serif" }}>${total.toFixed(2)}</span>
+                    <span style={{ fontFamily: "'Cormorant Garamond', serif", color: 'var(--text-primary)' }}>Total</span>
+                    <span style={{ fontFamily: "'Cormorant Garamond', serif", color: 'var(--text-primary)' }}>${total.toFixed(2)}</span>
                   </div>
                 </div>
 
                 {shipping > 0 && subtotal < 100 && (
                   <div style={{
-                    padding: '12px',
-                    background: 'rgba(212, 165, 116, 0.1)',
-                    border: '1px solid rgba(212, 165, 116, 0.3)',
+                    padding: '10px',
+                    background: 'rgba(212, 165, 116, 0.08)',
+                    border: '1px solid rgba(212, 165, 116, 0.2)',
                     borderRadius: '4px',
-                    fontSize: '13px',
+                    fontSize: '12px',
                     textAlign: 'center',
-                    marginBottom: '16px',
-                    fontFamily: "'Cormorant Garamond', serif"
+                    fontFamily: "'Cormorant Garamond', serif",
+                    color: '#d4a574'
                   }}>
-                    Add ${(100 - subtotal).toFixed(2)} for free shipping
+                    Add ${(100 - subtotal).toFixed(2)} more for free shipping
                   </div>
                 )}
               </div>
@@ -860,10 +746,18 @@ const Checkout = () => {
             to { opacity: 1; transform: translateX(0); }
           }
           
-          @media (max-width: 968px) {
-            form > div > div[style*="grid-template-columns: 1fr 400px"] {
-              grid-template-columns: 1fr !important;
-            }
+          @keyframes spin {
+            to { transform: rotate(360deg); }
+          }
+          
+          input::placeholder {
+            color: #8ca89d;
+            opacity: 0.6;
+          }
+          
+          input:focus {
+            outline: none;
+            border-color: #5a8d8e !important;
           }
         `}</style>
       </div>
