@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, ShoppingBag, Heart, User, Menu, X, LogOut, Sparkles } from 'lucide-react';
+import { Search, ShoppingBag, User, Menu, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 
@@ -21,472 +21,377 @@ const Navbar = () => {
     }
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
-
-  // Navigation items with proper links
   const navItems = [
-    { 
-      to: '/shop?sort=newest', 
-      label: 'New Arrivals',
-      special: false 
-    },
-    { 
-      to: '/shop?sort=popular', 
-      label: 'Most Popular',
-      special: false 
-    },
-    { 
-      to: '/shop?category=accessories', 
-      label: 'Accessories',
-      special: false 
-    },
-    { 
-      to: '/shop', 
-      label: 'Collection',
-      special: true 
-    }
+    { to: '/shop', label: 'ALL PRODUCTS' },
+    { to: '/shop?sort=newest', label: 'NEW ARRIVALS' },
+    { to: '/shop?sort=popular', label: 'BEST SELLERS' },
+    { to: '/shop?category=accessories', label: 'ACCESSORIES' },
   ];
 
   return (
     <nav style={{
       position: 'sticky',
       top: 0,
-      background: 'linear-gradient(180deg, rgba(26, 35, 50, 0.98) 0%, rgba(45, 62, 80, 0.96) 100%)',
-      backdropFilter: 'blur(20px)',
-      borderBottom: '1px solid rgba(212, 165, 116, 0.15)',
-      boxShadow: '0 4px 24px rgba(0, 0, 0, 0.5)',
+      background: '#0a0e12',
+      borderBottom: '1px solid #1f2429',
       zIndex: 1000
     }}>
-      {/* Elegant Top Banner */}
-      <div style={{
-        background: 'linear-gradient(90deg, rgba(255, 107, 90, 0.15) 0%, rgba(90, 141, 142, 0.15) 50%, rgba(212, 165, 116, 0.15) 100%)',
-        color: 'var(--text-primary)',
-        textAlign: 'center',
-        padding: '8px',
-        fontSize: '11px',
-        fontWeight: 500,
-        letterSpacing: '0.15em',
-        position: 'relative',
-        overflow: 'hidden',
-        borderBottom: '1px solid rgba(212, 165, 116, 0.2)'
-      }}>
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '8px'
-        }}>
-          <span style={{ opacity: 0.7 }}>✦</span>
-          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: '12px' }}>
-            Complimentary delivery on orders above $100
-          </span>
-          <span style={{ opacity: 0.7 }}>✦</span>
-        </div>
-      </div>
-
-      {/* Main Navigation */}
       <div className="container">
         <div style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '22px 0',
-          gap: '48px'
+          height: '70px',
+          gap: '32px'
         }}>
-          {/* Logo - Elegant Script */}
+          
+          {/* Logo */}
           <Link to="/" style={{
-            fontFamily: "'Cormorant Garamond', 'Playfair Display', serif",
-            fontSize: '52px',
-            fontWeight: 300,
-            letterSpacing: '0.08em',
-            background: 'linear-gradient(135deg, #ff8c75 0%, #d4a574 50%, #8ca89d 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            filter: 'drop-shadow(0 2px 8px rgba(255, 107, 90, 0.3))',
-            transition: 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
-            position: 'relative',
-            fontStyle: 'italic',
-            textDecoration: 'none'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.02)';
-            e.currentTarget.style.filter = 'drop-shadow(0 4px 16px rgba(255, 107, 90, 0.5))';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.filter = 'drop-shadow(0 2px 8px rgba(255, 107, 90, 0.3))';
-          }}
-          >
-            Isoté
+            fontSize: '20px',
+            fontWeight: 600,
+            letterSpacing: '1.5px',
+            color: '#d4a65c',
+            textTransform: 'uppercase'
+          }}>
+            ISOTÉ
           </Link>
 
-          {/* Desktop Navigation - Proper Links */}
+          {/* Desktop Navigation */}
           <div style={{
             display: 'flex',
-            gap: '48px',
+            gap: '40px',
             flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
+            justifyContent: 'center'
           }}
-          className="desktop-nav"
+          className="desktop-only"
           >
             {navItems.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
                 style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: '15px',
-                  fontWeight: 400,
-                  letterSpacing: '0.05em',
-                  color: item.special ? 'var(--accent-coral)' : 'var(--text-primary)',
+                  fontSize: '12px',
+                  fontWeight: 500,
+                  letterSpacing: '1px',
+                  color: '#e8e8e8',
+                  textTransform: 'uppercase',
                   position: 'relative',
-                  padding: '8px 0',
-                  transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
-                  textDecoration: 'none',
-                  display: 'inline-block'
+                  transition: 'color 0.3s ease',
+                  whiteSpace: 'nowrap'
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = item.special ? 'var(--accent-coral-light)' : 'var(--accent-gold)';
-                  e.currentTarget.style.transform = 'translateY(-1px)';
-                  const underline = e.currentTarget.querySelector('.nav-underline');
-                  if (underline) {
-                    underline.style.transform = 'scaleX(1)';
-                    underline.style.transformOrigin = 'left';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = item.special ? 'var(--accent-coral)' : 'var(--text-primary)';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  const underline = e.currentTarget.querySelector('.nav-underline');
-                  if (underline) {
-                    underline.style.transform = 'scaleX(0)';
-                    underline.style.transformOrigin = 'right';
-                  }
-                }}
+                className="nav-link"
               >
                 {item.label}
-                <span 
-                  className="nav-underline"
-                  style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '1px',
-                    background: item.special ? 'var(--accent-coral)' : 'var(--accent-gold)',
-                    transform: 'scaleX(0)',
-                    transformOrigin: 'right',
-                    transition: 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)'
-                  }}
-                />
               </Link>
             ))}
           </div>
 
-          {/* Action Icons */}
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          {/* Icons */}
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+            
             {/* Search */}
             <button
-              className="btn-icon"
               onClick={() => setIsSearchOpen(!isSearchOpen)}
-              aria-label="Search"
               style={{
-                background: isSearchOpen ? 'rgba(255, 107, 90, 0.15)' : 'transparent',
-                color: isSearchOpen ? 'var(--accent-coral)' : 'var(--text-primary)',
-                border: `1px solid ${isSearchOpen ? 'var(--accent-coral)' : 'transparent'}`,
                 width: '40px',
                 height: '40px',
-                borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease'
-              }}
-            >
-              <Search size={18} />
-            </button>
-
-            {/* Wishlist */}
-            <Link 
-              to="/wishlist"
-              className="btn-icon" 
-              aria-label="Wishlist"
-              style={{
                 background: 'transparent',
-                color: 'var(--text-primary)',
-                border: '1px solid transparent',
-                width: '40px',
-                height: '40px',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                textDecoration: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                color: '#e8e8e8',
                 transition: 'all 0.3s ease'
               }}
+              className="icon-btn"
             >
-              <Heart size={18} />
-            </Link>
+              <Search size={20} />
+            </button>
 
             {/* Cart */}
             <Link 
               to="/cart" 
-              style={{ position: 'relative', textDecoration: 'none' }}
+              style={{ position: 'relative', display: 'flex' }}
             >
-              <button className="btn-icon" style={{
-                background: 'transparent',
-                color: 'var(--text-primary)',
-                border: '1px solid transparent',
+              <button style={{
                 width: '40px',
                 height: '40px',
-                borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                background: 'transparent',
+                border: 'none',
                 cursor: 'pointer',
+                color: '#e8e8e8',
                 transition: 'all 0.3s ease'
-              }}>
-                <ShoppingBag size={18} />
+              }}
+              className="icon-btn"
+              >
+                <ShoppingBag size={20} />
               </button>
               {getCartCount() > 0 && (
                 <span style={{
                   position: 'absolute',
-                  top: '-6px',
-                  right: '-6px',
-                  background: 'var(--gradient-sunset)',
-                  color: 'white',
+                  top: '8px',
+                  right: '8px',
+                  background: '#d4a65c',
+                  color: '#0a0e12',
                   fontSize: '10px',
                   fontWeight: 700,
-                  minWidth: '18px',
-                  height: '18px',
+                  minWidth: '16px',
+                  height: '16px',
                   borderRadius: '50%',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  boxShadow: '0 2px 8px rgba(255, 107, 90, 0.4)',
-                  border: '1px solid var(--bg-card)'
+                  padding: '0 4px'
                 }}>
                   {getCartCount()}
                 </span>
               )}
             </Link>
 
-            {/* User Menu */}
+            {/* Account */}
             {user ? (
               <div className="user-menu" style={{ position: 'relative' }}>
-                <button className="btn-icon" aria-label="Account" style={{
-                  background: 'transparent',
-                  color: 'var(--text-primary)',
-                  border: '1px solid transparent',
+                <button style={{
                   width: '40px',
                   height: '40px',
-                  borderRadius: '50%',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  background: 'transparent',
+                  border: 'none',
                   cursor: 'pointer',
+                  color: '#e8e8e8',
                   transition: 'all 0.3s ease'
-                }}>
-                  <User size={18} />
+                }}
+                className="icon-btn"
+                >
+                  <User size={20} />
                 </button>
                 <div className="dropdown" style={{
                   position: 'absolute',
-                  top: 'calc(100% + 12px)',
+                  top: 'calc(100% + 8px)',
                   right: 0,
-                  background: 'rgba(42, 58, 74, 0.98)',
-                  backdropFilter: 'blur(20px)',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.6)',
-                  borderRadius: '4px',
-                  minWidth: '240px',
+                  background: '#1a1f26',
+                  border: '1px solid #2a3038',
+                  minWidth: '220px',
                   opacity: 0,
                   visibility: 'hidden',
                   transform: 'translateY(-8px)',
-                  transition: 'all 0.3s cubic-bezier(0.23, 1, 0.32, 1)',
-                  overflow: 'hidden',
-                  border: '1px solid rgba(212, 165, 116, 0.2)'
+                  transition: 'all 0.2s ease',
+                  boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)'
                 }}>
                   <div style={{
-                    padding: '20px',
-                    background: 'linear-gradient(135deg, rgba(255, 107, 90, 0.1) 0%, rgba(90, 141, 142, 0.1) 100%)',
-                    borderBottom: '1px solid rgba(212, 165, 116, 0.2)'
+                    padding: '16px',
+                    borderBottom: '1px solid #2a3038'
                   }}>
                     <p style={{ 
-                      fontFamily: "'Cormorant Garamond', serif",
-                      fontWeight: 500, 
-                      marginBottom: '4px', 
-                      fontSize: '16px', 
-                      letterSpacing: '0.03em' 
+                      fontSize: '13px',
+                      fontWeight: 600,
+                      marginBottom: '4px',
+                      color: '#e8e8e8'
                     }}>
                       {user?.firstName} {user?.lastName}
                     </p>
-                    <p style={{ fontSize: '12px', opacity: 0.7, letterSpacing: '0.02em' }}>
+                    <p style={{ fontSize: '12px', color: '#6b7280' }}>
                       {user?.email}
                     </p>
                   </div>
                   <Link to="/account" style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '12px',
-                    padding: '16px 20px',
-                    fontSize: '13px',
-                    fontWeight: 500,
-                    borderBottom: '1px solid rgba(212, 165, 116, 0.1)',
-                    transition: 'all 0.3s ease',
-                    letterSpacing: '0.03em',
-                    fontFamily: "'Cormorant Garamond', serif",
-                    textDecoration: 'none',
-                    color: 'inherit'
+                    display: 'block',
+                    padding: '12px 16px',
+                    fontSize: '12px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                    borderBottom: '1px solid #2a3038',
+                    color: '#e8e8e8',
+                    transition: 'all 0.2s ease'
                   }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 107, 90, 0.08)';
-                    e.currentTarget.style.paddingLeft = '28px';
-                    e.currentTarget.style.color = 'var(--accent-coral)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'transparent';
-                    e.currentTarget.style.paddingLeft = '20px';
-                    e.currentTarget.style.color = 'inherit';
-                  }}
+                  className="dropdown-link"
                   >
-                    <User size={14} /> My Account
+                    My Account
                   </Link>
                   {isAdmin && (
                     <Link to="/admin" style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      padding: '16px 20px',
-                      fontSize: '13px',
-                      fontWeight: 600,
-                      borderBottom: '1px solid rgba(212, 165, 116, 0.1)',
-                      background: 'rgba(90, 141, 142, 0.1)',
-                      color: 'var(--accent-teal)',
-                      transition: 'all 0.3s ease',
-                      letterSpacing: '0.05em',
-                      fontFamily: "'Cormorant Garamond', serif",
-                      textDecoration: 'none'
+                      display: 'block',
+                      padding: '12px 16px',
+                      fontSize: '12px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px',
+                      borderBottom: '1px solid #2a3038',
+                      color: '#d4a65c',
+                      fontWeight: 500,
+                      transition: 'all 0.2s ease'
                     }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'rgba(90, 141, 142, 0.2)';
-                      e.currentTarget.style.paddingLeft = '28px';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'rgba(90, 141, 142, 0.1)';
-                      e.currentTarget.style.paddingLeft = '20px';
-                    }}
+                    className="dropdown-link"
                     >
-                      <Sparkles size={14} /> Admin Panel
+                      Admin Panel
                     </Link>
                   )}
-                  <button onClick={handleLogout} style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '12px',
+                  <button onClick={() => { logout(); navigate('/'); }} style={{
                     width: '100%',
-                    padding: '16px 20px',
-                    fontSize: '13px',
-                    fontWeight: 500,
                     textAlign: 'left',
+                    padding: '12px 16px',
+                    fontSize: '12px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
                     background: 'transparent',
-                    color: 'var(--text-primary)',
-                    transition: 'all 0.3s ease',
-                    letterSpacing: '0.03em',
-                    fontFamily: "'Cormorant Garamond', serif",
                     border: 'none',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    color: '#e8e8e8',
+                    transition: 'all 0.2s ease'
                   }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 107, 90, 0.12)';
-                    e.currentTarget.style.color = 'var(--accent-coral)';
-                    e.currentTarget.style.paddingLeft = '28px';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'transparent';
-                    e.currentTarget.style.color = 'var(--text-primary)';
-                    e.currentTarget.style.paddingLeft = '20px';
-                  }}
+                  className="dropdown-link"
                   >
-                    <LogOut size={14} />
                     Sign Out
                   </button>
                 </div>
               </div>
             ) : (
-              <Link to="/login" className="btn btn-outline" style={{ 
-                padding: '10px 28px',
+              <Link to="/login" style={{
                 fontSize: '12px',
-                fontFamily: "'Cormorant Garamond', serif",
-                letterSpacing: '0.08em',
-                borderColor: 'var(--accent-gold)',
-                color: 'var(--accent-gold)',
-                textDecoration: 'none'
-              }}>
-                Sign In
+                fontWeight: 500,
+                letterSpacing: '1px',
+                color: '#e8e8e8',
+                textTransform: 'uppercase',
+                padding: '8px 20px',
+                border: '1px solid #2a3038',
+                whiteSpace: 'nowrap',
+                transition: 'all 0.3s ease'
+              }}
+              className="sign-in-btn"
+              >
+                SIGN IN
               </Link>
             )}
+
+            {/* Mobile Menu Toggle */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="mobile-only"
+              style={{
+                width: '40px',
+                height: '40px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                color: '#e8e8e8',
+                marginLeft: '8px'
+              }}
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
         </div>
 
-        {/* Elegant Search Bar */}
+        {/* Search Bar */}
         {isSearchOpen && (
           <div style={{
-            padding: '0 0 28px 0',
-            animation: 'fadeIn 0.4s ease'
+            padding: '0 0 20px 0',
+            animation: 'fadeIn 0.2s ease'
           }}>
             <form onSubmit={handleSearch} style={{
               display: 'flex',
-              gap: '16px',
-              maxWidth: '600px',
+              gap: '12px',
+              maxWidth: '500px',
               margin: '0 auto'
             }}>
-              <div style={{ position: 'relative', flex: 1 }}>
-                <input
-                  type="text"
-                  className="input"
-                  placeholder="Search our collection..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  autoFocus
-                  style={{
-                    background: 'rgba(42, 58, 74, 0.6)',
-                    border: '1px solid rgba(212, 165, 116, 0.3)',
-                    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)',
-                    fontSize: '14px',
-                    fontWeight: 400,
-                    fontFamily: "'Cormorant Garamond', serif",
-                    letterSpacing: '0.02em',
-                    padding: '14px 16px',
-                    width: '100%',
-                    color: 'var(--text-primary)',
-                    borderRadius: '4px'
-                  }}
-                />
-              </div>
-              <button type="submit" className="btn btn-primary" style={{ 
-                padding: '12px 32px',
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: '13px',
-                letterSpacing: '0.05em'
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                autoFocus
+                style={{
+                  flex: 1,
+                  padding: '12px 16px',
+                  background: '#151a20',
+                  border: '1px solid #2a3038',
+                  color: '#e8e8e8',
+                  fontSize: '14px'
+                }}
+              />
+              <button type="submit" className="btn btn-primary" style={{
+                padding: '12px 24px',
+                fontSize: '12px'
               }}>
-                Search
+                SEARCH
               </button>
             </form>
           </div>
         )}
       </div>
 
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="mobile-only" style={{
+          background: '#0a0e12',
+          borderTop: '1px solid #1f2429',
+          padding: '20px 0'
+        }}>
+          <div className="container">
+            {navItems.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                onClick={() => setIsMenuOpen(false)}
+                style={{
+                  display: 'block',
+                  padding: '14px 0',
+                  fontSize: '12px',
+                  fontWeight: 500,
+                  letterSpacing: '1px',
+                  color: '#e8e8e8',
+                  textTransform: 'uppercase',
+                  borderBottom: '1px solid #1f2429'
+                }}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
         
-        @media (max-width: 968px) {
-          .desktop-nav {
-            display: none;
-          }
+        .nav-link::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 0;
+          height: 1px;
+          background: #d4a65c;
+          transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover {
+          color: #d4a65c;
+        }
+        
+        .nav-link:hover::after {
+          width: 100%;
+        }
+        
+        .icon-btn:hover {
+          color: #d4a65c;
+        }
+        
+        .sign-in-btn:hover {
+          background: #151a20;
+          border-color: #d4a65c;
+          color: #d4a65c;
         }
         
         .user-menu:hover .dropdown {
@@ -494,10 +399,10 @@ const Navbar = () => {
           visibility: visible;
           transform: translateY(0);
         }
-
-        .btn-icon:hover {
-          background: rgba(212, 165, 116, 0.1) !important;
-          border-color: rgba(212, 165, 116, 0.3) !important;
+        
+        .dropdown-link:hover {
+          background: #242a32;
+          color: #d4a65c !important;
         }
       `}</style>
     </nav>
