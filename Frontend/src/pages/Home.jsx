@@ -1,508 +1,426 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, Star, Truck, Award, Shield } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { productsAPI } from '../services/api';
 import ProductCard from '../components/ProductCard';
 
 const Home = () => {
-  const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchFeaturedProducts();
+    fetchProducts();
   }, []);
 
-  const fetchFeaturedProducts = async () => {
+  const fetchProducts = async () => {
     try {
-      const response = await productsAPI.getAll({ limit: 8, featured: true });
-      const productsData = response.data.products || response.data.data || response.data || [];
-      setFeaturedProducts(productsData);
+      const response = await productsAPI.getAll({ limit: 8 });
+      setProducts(response.data.products || response.data.data || response.data || []);
     } catch (error) {
-      console.error('Failed to fetch products:', error);
-      setFeaturedProducts([]);
+      console.error('Error fetching products:', error);
+      setProducts([]);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={{ background: 'var(--bg-primary)', position: 'relative', overflow: 'hidden' }}>
-      
-      {/* Hero Section with Mt. Fuji Background */}
+    <div>
+      {/* ========================================
+          HERO SECTION - IMAGE 1 (Panther/Snake)
+          ======================================== */}
       <section style={{
         position: 'relative',
-        minHeight: '92vh',
+        minHeight: '85vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden'
       }}>
-        {/* Background Image - Mt. Fuji Sunset */}
+        {/* Background Image */}
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: 'url(https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=1920&q=80)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          background: `url(/images/hero1.jpg) center/cover no-repeat`,
           filter: 'brightness(0.4)',
-          transform: 'scale(1.05)'
-        }} />
-        
-        {/* Elegant Overlay */}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(to bottom, rgba(26, 35, 50, 0.4) 0%, rgba(26, 35, 50, 0.8) 100%)'
+          zIndex: 0
         }} />
 
-        <div className="container" style={{
+        {/* Hero Content */}
+        <div style={{
           position: 'relative',
-          zIndex: 2,
-          textAlign: 'center'
+          zIndex: 1,
+          textAlign: 'center',
+          maxWidth: '900px',
+          padding: '0 20px'
         }}>
-          {/* Elegant Badge */}
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '12px',
-            padding: '12px 32px',
-            background: 'rgba(255, 255, 255, 0.08)',
-            backdropFilter: 'blur(20px)',
-            borderRadius: '2px',
-            marginBottom: '40px',
-            border: '1px solid rgba(212, 165, 116, 0.3)',
-            animation: 'fadeIn 1s ease'
-          }}>
-            <span style={{ opacity: 0.7 }}>✦</span>
-            <span style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: '13px',
-              fontWeight: 400,
-              letterSpacing: '0.12em',
-              fontStyle: 'italic',
-              color: 'var(--accent-gold)'
-            }}>
-              Curated for the Discerning
-            </span>
-            <span style={{ opacity: 0.7 }}>✦</span>
-          </div>
-
-          {/* Hero Title - Elegant Script */}
           <h1 style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 'clamp(56px, 10vw, 110px)',
-            fontWeight: 300,
-            letterSpacing: '0.05em',
-            marginBottom: '28px',
-            lineHeight: 1.1,
-            color: 'white',
-            textShadow: '2px 4px 12px rgba(0, 0, 0, 0.8)',
-            animation: 'fadeIn 1.2s ease 0.2s backwards',
-            fontStyle: 'italic'
+            fontSize: 'clamp(42px, 8vw, 80px)',
+            fontWeight: 600,
+            color: '#e8e8e8',
+            marginBottom: '24px',
+            letterSpacing: '-0.02em',
+            lineHeight: 1.1
           }}>
-            Where Art Meets
-            <br />
-            <span style={{
-              background: 'linear-gradient(135deg, #ff8c75 0%, #d4a574 50%, #8ca89d 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              fontWeight: 400
-            }}>
-              Elegance
-            </span>
+            TIMELESS ELEGANCE
           </h1>
-
           <p style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 'clamp(18px, 3vw, 26px)',
-            color: 'rgba(255, 255, 255, 0.9)',
-            marginBottom: '48px',
-            maxWidth: '700px',
-            margin: '0 auto 48px',
-            lineHeight: 1.7,
-            animation: 'fadeIn 1.4s ease 0.4s backwards',
-            fontWeight: 300,
-            letterSpacing: '0.03em'
+            fontSize: '18px',
+            color: '#a8adb5',
+            marginBottom: '40px',
+            maxWidth: '600px',
+            margin: '0 auto 40px',
+            lineHeight: 1.7
           }}>
-            Timeless pieces inspired by nature's beauty,
-            <br />
-            crafted for those who appreciate the extraordinary
+            Discover our curated collection inspired by Japanese artistry and modern design
           </p>
-
-          {/* CTA Buttons */}
           <div style={{
             display: 'flex',
-            gap: '20px',
+            gap: '16px',
             justifyContent: 'center',
-            flexWrap: 'wrap',
-            animation: 'fadeIn 1.6s ease 0.6s backwards'
+            flexWrap: 'wrap'
           }}>
-            <Link to="/shop" className="btn btn-primary" style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: '15px',
-              padding: '18px 48px',
-              letterSpacing: '0.08em',
-              fontWeight: 400
-            }}>
-              Explore Collection
+            <Link to="/shop" className="btn btn-primary">
+              EXPLORE COLLECTION
             </Link>
-            <Link to="/shop?featured=new" className="btn btn-outline" style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: '15px',
-              padding: '18px 48px',
-              letterSpacing: '0.08em',
-              fontWeight: 400,
-              borderColor: 'rgba(255, 255, 255, 0.4)',
-              color: 'white'
-            }}>
-              New Arrivals
+            <Link to="/shop?sort=newest" className="btn btn-outline">
+              NEW ARRIVALS
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Featured Section with Artistic Background */}
-      <section style={{
-        padding: '0',
-        position: 'relative'
-      }}>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
-          minHeight: '70vh'
-        }}>
-          {/* Image Side - Artistic Pattern */}
-          <div style={{
-            position: 'relative',
-            overflow: 'hidden',
-            minHeight: '500px'
-          }}>
-            <div style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'url(https://images.unsplash.com/photo-1604076947776-794f4f156540?w=1200&q=80)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              transition: 'transform 0.8s ease'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-            onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-            />
-            <div style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'linear-gradient(to right, transparent 0%, rgba(26, 35, 50, 0.6) 100%)'
-            }} />
-          </div>
-
-          {/* Content Side */}
-          <div style={{
-            padding: '80px 60px',
-            background: 'linear-gradient(135deg, #2d3e50 0%, #1a2332 100%)',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center'
-          }}>
-            <span style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: '13px',
-              fontWeight: 500,
-              letterSpacing: '0.15em',
-              color: 'var(--accent-gold)',
-              marginBottom: '20px',
-              fontStyle: 'italic'
-            }}>
-              ✦ The Philosophy ✦
-            </span>
-            <h2 style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 'clamp(36px, 5vw, 52px)',
-              fontWeight: 300,
-              letterSpacing: '0.03em',
-              marginBottom: '28px',
-              lineHeight: 1.2,
-              fontStyle: 'italic'
-            }}>
-              Inspired by
-              <br />
-              <span className="nature-text" style={{ fontWeight: 400 }}>
-                Timeless Beauty
-              </span>
-            </h2>
-            <p style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: '17px',
-              color: 'var(--text-secondary)',
-              lineHeight: 1.8,
-              marginBottom: '32px',
-              letterSpacing: '0.02em'
-            }}>
-              Each piece in our collection tells a story of craftsmanship and attention to detail. 
-              We curate only the finest designs that blend contemporary elegance with timeless appeal, 
-              ensuring every item becomes a cherished part of your wardrobe.
-            </p>
-            <Link to="/shop" className="btn btn-outline" style={{
-              width: 'fit-content',
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: '14px',
-              padding: '14px 40px',
-              letterSpacing: '0.08em'
-            }}>
-              Discover More
-              <ArrowRight size={18} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section */}
-      <section style={{
-        padding: '100px 0',
-        background: 'linear-gradient(180deg, #1a2332 0%, #2d3e50 100%)',
-        borderTop: '1px solid rgba(212, 165, 116, 0.15)',
-        borderBottom: '1px solid rgba(212, 165, 116, 0.15)'
-      }}>
+      {/* ========================================
+          FEATURED PRODUCTS GRID
+          ======================================== */}
+      <section style={{ padding: '100px 0', background: '#0a0e12' }}>
         <div className="container">
           <div style={{
             textAlign: 'center',
-            marginBottom: '70px'
+            marginBottom: '60px'
           }}>
             <h2 style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 'clamp(38px, 6vw, 58px)',
-              fontWeight: 300,
-              marginBottom: '20px',
-              fontStyle: 'italic',
-              letterSpacing: '0.03em'
+              fontSize: 'clamp(32px, 5vw, 48px)',
+              fontWeight: 600,
+              marginBottom: '16px',
+              color: '#e8e8e8'
             }}>
-              The <span className="nature-text" style={{ fontWeight: 400 }}>Isoté</span> Promise
+              FEATURED PIECES
             </h2>
             <p style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: '17px',
-              color: 'var(--text-secondary)',
-              maxWidth: '600px',
-              margin: '0 auto',
-              letterSpacing: '0.02em'
+              fontSize: '16px',
+              color: '#a8adb5'
             }}>
-              Excellence in every detail
+              Hand-selected items for the discerning
             </p>
-          </div>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '48px'
-          }}>
-            {[
-              { 
-                icon: Truck, 
-                title: 'Complimentary Delivery', 
-                desc: 'Enjoy free shipping on all orders above $100',
-                color: 'var(--accent-coral)' 
-              },
-              { 
-                icon: Award, 
-                title: 'Artisan Quality', 
-                desc: 'Each piece carefully selected for exceptional craftsmanship',
-                color: 'var(--accent-gold)' 
-              },
-              { 
-                icon: Shield, 
-                title: 'Secure Shopping', 
-                desc: 'Your privacy and security are our highest priority',
-                color: 'var(--accent-teal)' 
-              }
-            ].map((feature, idx) => {
-              const Icon = feature.icon;
-              return (
-                <div key={idx} className="card" style={{
-                  padding: '48px 36px',
-                  textAlign: 'center',
-                  background: 'rgba(42, 58, 74, 0.5)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(212, 165, 116, 0.15)',
-                  transition: 'all 0.5s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-8px)';
-                  e.currentTarget.style.borderColor = feature.color;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.borderColor = 'rgba(212, 165, 116, 0.15)';
-                }}
-                >
-                  <div style={{
-                    width: '64px',
-                    height: '64px',
-                    margin: '0 auto 24px',
-                    borderRadius: '50%',
-                    background: `linear-gradient(135deg, ${feature.color}20 0%, ${feature.color}10 100%)`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    border: `1px solid ${feature.color}40`
-                  }}>
-                    <Icon size={28} color={feature.color} />
-                  </div>
-                  <h3 style={{
-                    fontFamily: "'Cormorant Garamond', serif",
-                    fontSize: '20px',
-                    fontWeight: 500,
-                    marginBottom: '16px',
-                    letterSpacing: '0.03em',
-                    color: feature.color
-                  }}>
-                    {feature.title}
-                  </h3>
-                  <p style={{
-                    fontFamily: "'Cormorant Garamond', serif",
-                    fontSize: '15px',
-                    color: 'var(--text-secondary)',
-                    lineHeight: 1.7,
-                    letterSpacing: '0.01em'
-                  }}>
-                    {feature.desc}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Collection */}
-      <section style={{
-        padding: '100px 0',
-        background: 'linear-gradient(180deg, #2d3e50 0%, #1a2332 100%)'
-      }}>
-        <div className="container">
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '60px',
-            flexWrap: 'wrap',
-            gap: '24px'
-          }}>
-            <div>
-              <h2 style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: 'clamp(38px, 6vw, 58px)',
-                fontWeight: 300,
-                letterSpacing: '0.03em',
-                marginBottom: '12px',
-                fontStyle: 'italic'
-              }}>
-                <span className="nature-text" style={{ fontWeight: 400 }}>Featured</span> Collection
-              </h2>
-              <p style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: '16px',
-                color: 'var(--text-secondary)',
-                letterSpacing: '0.02em'
-              }}>
-                Handpicked for you
-              </p>
-            </div>
-            <Link to="/shop" className="btn btn-outline" style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: '14px',
-              padding: '12px 36px',
-              letterSpacing: '0.08em'
-            }}>
-              View All
-              <ArrowRight size={18} />
-            </Link>
           </div>
 
           {loading ? (
             <div className="loading">
               <div className="spinner" />
             </div>
+          ) : products.length > 0 ? (
+            <>
+              <div className="grid grid-4">
+                {products.slice(0, 8).map((product) => (
+                  <ProductCard key={product._id} product={product} />
+                ))}
+              </div>
+              <div style={{ textAlign: 'center', marginTop: '60px' }}>
+                <Link to="/shop" className="btn btn-outline">
+                  VIEW ALL PRODUCTS
+                </Link>
+              </div>
+            </>
           ) : (
-            <div className="grid grid-4">
-              {featuredProducts.map((product) => (
-                <ProductCard key={product._id} product={product} />
-              ))}
+            <div style={{
+              textAlign: 'center',
+              padding: '60px 20px',
+              color: '#a8adb5'
+            }}>
+              <p style={{ fontSize: '16px', marginBottom: '20px' }}>
+                No products available yet
+              </p>
+              <Link to="/shop" className="btn btn-outline">
+                Browse Shop
+              </Link>
             </div>
           )}
         </div>
       </section>
 
-      {/* Newsletter Section */}
-      <section style={{
-        padding: '80px 0',
-        background: 'linear-gradient(135deg, rgba(255, 107, 90, 0.12) 0%, rgba(90, 141, 142, 0.12) 100%)',
-        borderTop: '1px solid rgba(212, 165, 116, 0.2)',
-        borderBottom: '1px solid rgba(212, 165, 116, 0.2)',
-        position: 'relative',
-        overflow: 'hidden'
-      }}>
-        <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
-          <Sparkles size={48} color="var(--accent-gold)" style={{ 
-            margin: '0 auto 24px',
-            opacity: 0.8
-          }} />
-          <h2 style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 'clamp(32px, 5vw, 48px)',
-            fontWeight: 300,
-            marginBottom: '20px',
-            fontStyle: 'italic',
-            letterSpacing: '0.03em'
+      {/* ========================================
+          CATEGORY CARDS - IMAGES 1 & 2
+          ======================================== */}
+      <section style={{ padding: '100px 0', background: '#151a20' }}>
+        <div className="container">
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '32px'
           }}>
-            Join Our Community
+            
+            {/* Card 1 - New Arrivals (Image 2 - Fuji) */}
+            <Link to="/shop?sort=newest" style={{
+              position: 'relative',
+              height: '500px',
+              overflow: 'hidden',
+              display: 'block',
+              background: '#1a1f26'
+            }}>
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: `url(/images/hero2.jpg) center/cover no-repeat`,
+                transition: 'transform 0.6s ease',
+                filter: 'brightness(0.7)'
+              }}
+              className="hover-scale"
+              />
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)',
+                display: 'flex',
+                alignItems: 'flex-end',
+                padding: '40px'
+              }}>
+                <div>
+                  <p style={{
+                    fontSize: '12px',
+                    letterSpacing: '2px',
+                    color: '#d4a65c',
+                    marginBottom: '8px',
+                    fontWeight: 600
+                  }}>
+                    NEW ARRIVALS
+                  </p>
+                  <h3 style={{
+                    fontSize: '28px',
+                    fontWeight: 600,
+                    color: '#e8e8e8',
+                    marginBottom: '12px'
+                  }}>
+                    Fresh Collection
+                  </h3>
+                  <p style={{
+                    color: '#a8adb5',
+                    fontSize: '14px',
+                    marginBottom: '16px'
+                  }}>
+                    Discover the latest pieces
+                  </p>
+                  <span style={{
+                    color: '#d4a65c',
+                    fontSize: '14px',
+                    letterSpacing: '1px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    SHOP NOW <ArrowRight size={16} />
+                  </span>
+                </div>
+              </div>
+            </Link>
+
+            {/* Card 2 - Best Sellers (Image 1 - Panther) */}
+            <Link to="/shop?sort=popular" style={{
+              position: 'relative',
+              height: '500px',
+              overflow: 'hidden',
+              display: 'block',
+              background: '#1a1f26'
+            }}>
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: `url(/images/hero1.jpg) center/cover no-repeat`,
+                transition: 'transform 0.6s ease',
+                filter: 'brightness(0.7)'
+              }}
+              className="hover-scale"
+              />
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)',
+                display: 'flex',
+                alignItems: 'flex-end',
+                padding: '40px'
+              }}>
+                <div>
+                  <p style={{
+                    fontSize: '12px',
+                    letterSpacing: '2px',
+                    color: '#d4a65c',
+                    marginBottom: '8px',
+                    fontWeight: 600
+                  }}>
+                    BEST SELLERS
+                  </p>
+                  <h3 style={{
+                    fontSize: '28px',
+                    fontWeight: 600,
+                    color: '#e8e8e8',
+                    marginBottom: '12px'
+                  }}>
+                    Most Loved
+                  </h3>
+                  <p style={{
+                    color: '#a8adb5',
+                    fontSize: '14px',
+                    marginBottom: '16px'
+                  }}>
+                    Customer favorites
+                  </p>
+                  <span style={{
+                    color: '#d4a65c',
+                    fontSize: '14px',
+                    letterSpacing: '1px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    SHOP NOW <ArrowRight size={16} />
+                  </span>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================
+          LARGE BANNER - IMAGE 2 (Mt. Fuji)
+          ======================================== */}
+      <section style={{
+        position: 'relative',
+        padding: '140px 0',
+        background: '#1a1f26'
+      }}>
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: `url(/images/hero2.jpg) center/cover no-repeat`,
+          filter: 'brightness(0.5)',
+          backgroundAttachment: 'fixed' // Parallax effect
+        }} />
+        
+        <div className="container" style={{
+          position: 'relative',
+          zIndex: 1,
+          textAlign: 'center'
+        }}>
+          <div style={{
+            maxWidth: '700px',
+            margin: '0 auto',
+            background: 'rgba(10, 14, 18, 0.8)',
+            backdropFilter: 'blur(10px)',
+            padding: '60px 40px',
+            border: '1px solid rgba(212, 166, 92, 0.2)'
+          }}>
+            <h2 style={{
+              fontSize: 'clamp(32px, 5vw, 48px)',
+              fontWeight: 600,
+              marginBottom: '20px',
+              color: '#e8e8e8'
+            }}>
+              ARTISAN CRAFTED
+            </h2>
+            <p style={{
+              fontSize: '16px',
+              color: '#a8adb5',
+              marginBottom: '40px',
+              lineHeight: 1.7
+            }}>
+              Each piece tells a story of tradition, excellence, and timeless beauty. 
+              Discover collections inspired by centuries of craftsmanship.
+            </p>
+            <Link to="/shop?featured=true" className="btn btn-primary">
+              VIEW COLLECTION
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================
+          NEWSLETTER - IMAGE 1 SUBTLE BACKGROUND
+          ======================================== */}
+      <section style={{
+        position: 'relative',
+        padding: '100px 0',
+        background: '#0a0e12'
+      }}>
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: `url(/images/hero1.jpg) center/cover no-repeat`,
+          opacity: 0.1
+        }} />
+        
+        <div className="container" style={{
+          position: 'relative',
+          zIndex: 1,
+          maxWidth: '600px',
+          margin: '0 auto',
+          textAlign: 'center'
+        }}>
+          <Sparkles size={40} color="#d4a65c" style={{ margin: '0 auto 24px' }} />
+          <h2 style={{
+            fontSize: '36px',
+            fontWeight: 600,
+            marginBottom: '16px',
+            color: '#e8e8e8'
+          }}>
+            JOIN OUR COMMUNITY
           </h2>
           <p style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: '17px',
-            color: 'var(--text-secondary)',
-            marginBottom: '40px',
-            maxWidth: '600px',
-            margin: '0 auto 40px',
-            lineHeight: 1.7,
-            letterSpacing: '0.02em'
+            fontSize: '16px',
+            color: '#a8adb5',
+            marginBottom: '40px'
           }}>
-            Subscribe for exclusive access to new arrivals, special offers,
-            <br />
-            and curated style inspiration
+            Subscribe for exclusive offers, new arrivals, and style inspiration
           </p>
           <form style={{
             display: 'flex',
-            maxWidth: '600px',
+            gap: '12px',
+            maxWidth: '500px',
             margin: '0 auto',
-            gap: '16px',
-            flexWrap: 'wrap',
-            justifyContent: 'center'
-          }}>
+            flexWrap: 'wrap'
+          }}
+          onSubmit={(e) => {
+            e.preventDefault();
+            alert('Thank you for subscribing!');
+          }}
+          >
             <input
               type="email"
               placeholder="Your email address"
-              className="input"
+              required
               style={{
                 flex: 1,
-                minWidth: '280px',
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: '15px',
-                letterSpacing: '0.02em'
+                minWidth: '250px',
+                padding: '16px 20px',
+                background: '#151a20',
+                border: '1px solid #2a3038',
+                color: '#e8e8e8',
+                fontSize: '14px'
               }}
             />
-            <button className="btn btn-primary" style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: '14px',
-              padding: '16px 40px',
-              letterSpacing: '0.08em'
+            <button type="submit" className="btn btn-primary" style={{
+              padding: '16px 32px'
             }}>
-              Subscribe
+              SUBSCRIBE
             </button>
           </form>
         </div>
       </section>
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+        .hover-scale:hover {
+          transform: scale(1.05);
+        }
       `}</style>
     </div>
   );
