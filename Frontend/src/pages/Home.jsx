@@ -41,7 +41,7 @@ const Home = () => {
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: `url(/images/hero1.jpg) center/cover no-repeat`,
+          background: `url(/images/efe4.jpg) center/cover no-repeat`,
           filter: 'brightness(0.4)',
           zIndex: 0
         }} />
@@ -171,7 +171,7 @@ const Home = () => {
               <div style={{
                 position: 'absolute',
                 inset: 0,
-                background: `url(/images/hero2.jpg) center/cover no-repeat`,
+                background: `url(/images/efe2.jpg) center/cover no-repeat`,
                 transition: 'transform 0.6s ease',
                 filter: 'brightness(0.7)'
               }}
@@ -235,7 +235,7 @@ const Home = () => {
               <div style={{
                 position: 'absolute',
                 inset: 0,
-                background: `url(/images/hero1.jpg) center/cover no-repeat`,
+                background: `url(/images/efe1.jpg) center/cover no-repeat`,
                 transition: 'transform 0.6s ease',
                 filter: 'brightness(0.7)'
               }}
@@ -302,7 +302,7 @@ const Home = () => {
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: `url(/images/hero2.jpg) center/cover no-repeat`,
+          background: `url(/images/efe2.jpg) center/cover no-repeat`,
           filter: 'brightness(0.5)',
           backgroundAttachment: 'fixed' // Parallax effect
         }} />
@@ -355,7 +355,7 @@ const Home = () => {
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: `url(/images/hero1.jpg) center/cover no-repeat`,
+          background: `url(/images/efe3.jpg) center/cover no-repeat`,
           opacity: 0.1
         }} />
         
