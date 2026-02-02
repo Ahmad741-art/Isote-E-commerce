@@ -97,13 +97,15 @@ const Footer = () => (
       }}>
         <div>
           <h3 style={{ 
-            fontSize: '20px',
-            fontWeight: 600,
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: '32px',
+            fontWeight: 300,
             marginBottom: '16px',
             color: '#d4a65c',
-            letterSpacing: '1px'
+            letterSpacing: '4px',
+            fontStyle: 'italic'
           }}>
-            ISOTÉ
+            Isoté
           </h3>
           <p style={{ 
             color: '#a8adb5',
