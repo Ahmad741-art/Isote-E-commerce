@@ -54,8 +54,21 @@ const Home = () => {
           maxWidth: '900px',
           padding: '0 20px'
         }}>
+          {/* Fancy Isoté Logo */}
+          <div style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: 'clamp(48px, 8vw, 72px)',
+            fontWeight: 300,
+            color: '#d4a65c',
+            letterSpacing: '6px',
+            fontStyle: 'italic',
+            marginBottom: '32px'
+          }}>
+            Isoté
+          </div>
+          
           <h1 style={{
-            fontSize: 'clamp(42px, 8vw, 80px)',
+            fontSize: 'clamp(32px, 6vw, 56px)',
             fontWeight: 600,
             color: '#e8e8e8',
             marginBottom: '24px',
@@ -345,7 +358,7 @@ const Home = () => {
       </section>
 
       {/* ========================================
-          NEWSLETTER - IMAGE 1 SUBTLE BACKGROUND
+          NEWSLETTER - WITH FANCY ISOTÉ BRANDING
           ======================================== */}
       <section style={{
         position: 'relative',
@@ -366,7 +379,20 @@ const Home = () => {
           margin: '0 auto',
           textAlign: 'center'
         }}>
-          <Sparkles size={40} color="#d4a65c" style={{ margin: '0 auto 24px' }} />
+          {/* Fancy Isoté Logo */}
+          <div style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: '40px',
+            fontWeight: 300,
+            color: '#d4a65c',
+            letterSpacing: '5px',
+            fontStyle: 'italic',
+            marginBottom: '24px'
+          }}>
+            Isoté
+          </div>
+          
+          <Sparkles size={32} color="#d4a65c" style={{ margin: '0 auto 24px' }} />
           <h2 style={{
             fontSize: '36px',
             fontWeight: 600,
@@ -418,6 +444,8 @@ const Home = () => {
       </section>
 
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+        
         .hover-scale:hover {
           transform: scale(1.05);
         }
