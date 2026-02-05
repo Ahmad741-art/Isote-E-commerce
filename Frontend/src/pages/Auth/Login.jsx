@@ -267,15 +267,7 @@ const Login = () => {
               marginBottom: '8px',
               fontWeight: 700
             }}>
-              🛡️ DEFAULT CREDENTIALS:
-            </p>
-            <p style={{
-              fontSize: '12px',
-              color: 'var(--accent)',
-              fontFamily: 'monospace'
-            }}>
-              Email: admin@isote.com<br />
-              Password: Admin123!
+              
             </p>
           </div>
         </div>
