@@ -1,6 +1,6 @@
 /* ============================================
-   ISOTÉ - COMPREHENSIVE BRANDING CSS
-   Elegant, Luxury Fashion E-Commerce Styling
+   ISOTÉ - COMPLETE STYLES
+   Pure CSS Update - No HTML Changes Required
    ============================================ */
 
 /* ============================================
@@ -46,115 +46,113 @@
   /* Fonts */
   --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-display: 'Cormorant Garamond', serif;
-  
-  /* Gradients */
-  --gradient-1: linear-gradient(135deg, #c9a961 0%, #d4a65c 100%);
-  --gradient-2: linear-gradient(135deg, #ff6b5a 0%, #ff8a7a 100%);
-  --gradient-3: linear-gradient(135deg, #5a8d8e 0%, #4a7d7e 100%);
-  --gradient-dark: linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #1a1a2e 100%);
 }
 
 /* ============================================
-   ISOTÉ LOGO STYLES
+   NAVBAR LOGO - SIMPLE & FANCY
+   Automatically styles any link containing "Isoté" in navbar
    ============================================ */
 
-/* Default Isoté Logo - Medium Size */
-.isote-logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 32px;
-  font-weight: 300;
-  color: var(--accent-gold);
-  letter-spacing: 4px;
-  font-style: italic;
-  text-transform: none;
-  line-height: 1;
-  display: inline-block;
-  transition: var(--transition);
+/* Target navbar links that contain the brand name */
+nav a[href="/"],
+nav a[href="#"],
+.navbar a[href="/"],
+.navbar a[href="#"],
+header nav a:first-child,
+.nav a:first-child,
+.navigation a:first-child {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 28px !important;
+  font-weight: 300 !important;
+  color: #d4a65c !important;
+  letter-spacing: 2px !important;
+  font-style: italic !important;
+  text-transform: none !important;
+  text-decoration: none !important;
+  transition: all 0.3s ease !important;
 }
 
-.isote-logo:hover {
-  color: var(--accent);
-  letter-spacing: 5px;
+nav a[href="/"]:hover,
+nav a[href="#"]:hover,
+.navbar a[href="/"]:hover,
+.navbar a[href="#"]:hover,
+header nav a:first-child:hover,
+.nav a:first-child:hover,
+.navigation a:first-child:hover {
+  color: #c9a961 !important;
+  letter-spacing: 3px !important;
 }
 
-/* Small Logo (Navbar/Header) */
-.isote-logo-small {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 24px;
-  font-weight: 300;
-  color: var(--accent-gold);
-  letter-spacing: 3px;
-  font-style: italic;
-  text-transform: none;
-  line-height: 1;
-  display: inline-block;
-  transition: var(--transition);
-}
-
-.isote-logo-small:hover {
-  color: var(--accent);
-  letter-spacing: 4px;
-}
-
-/* Large Logo (Hero/Banner) */
-.isote-logo-large {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 48px;
-  font-weight: 300;
-  color: var(--accent-gold);
-  letter-spacing: 6px;
-  font-style: italic;
-  text-transform: none;
-  line-height: 1;
-  display: inline-block;
-  transition: var(--transition);
-}
-
-.isote-logo-large:hover {
-  color: var(--accent);
-  letter-spacing: 7px;
-}
-
-/* Extra Large Logo (Main Hero) */
-.isote-logo-xl {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(48px, 8vw, 72px);
-  font-weight: 300;
-  color: var(--accent-gold);
-  letter-spacing: clamp(5px, 1.5vw, 8px);
-  font-style: italic;
-  text-transform: none;
-  line-height: 1;
-  display: inline-block;
-  transition: var(--transition);
-}
-
-.isote-logo-xl:hover {
-  color: var(--accent);
-  text-shadow: 0 0 30px rgba(201, 169, 97, 0.4);
-}
-
-/* Logo with Glow Effect */
-.isote-logo-glow {
-  text-shadow: 0 0 20px rgba(201, 169, 97, 0.3),
-               0 0 40px rgba(201, 169, 97, 0.2);
-}
-
-/* Logo Responsive */
+/* Responsive navbar logo */
 @media (max-width: 768px) {
-  .isote-logo {
-    font-size: 28px;
-    letter-spacing: 3px;
+  nav a[href="/"],
+  nav a[href="#"],
+  .navbar a[href="/"],
+  .navbar a[href="#"],
+  header nav a:first-child,
+  .nav a:first-child,
+  .navigation a:first-child {
+    font-size: 24px !important;
+    letter-spacing: 1.5px !important;
   }
   
-  .isote-logo-small {
-    font-size: 20px;
-    letter-spacing: 2px;
+  nav a[href="/"]:hover,
+  nav a[href="#"]:hover,
+  .navbar a[href="/"]:hover,
+  .navbar a[href="#"]:hover,
+  header nav a:first-child:hover,
+  .nav a:first-child:hover,
+  .navigation a:first-child:hover {
+    letter-spacing: 2px !important;
+  }
+}
+
+/* ============================================
+   ALTERNATIVE: Class-based approach
+   Add class="brand-logo" to your navbar link for more control
+   ============================================ */
+
+.brand-logo,
+.logo,
+.site-logo,
+.navbar-brand,
+.isote-logo-nav {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 28px !important;
+  font-weight: 300 !important;
+  color: #d4a65c !important;
+  letter-spacing: 2px !important;
+  font-style: italic !important;
+  text-transform: none !important;
+  text-decoration: none !important;
+  transition: all 0.3s ease !important;
+}
+
+.brand-logo:hover,
+.logo:hover,
+.site-logo:hover,
+.navbar-brand:hover,
+.isote-logo-nav:hover {
+  color: #c9a961 !important;
+  letter-spacing: 3px !important;
+}
+
+@media (max-width: 768px) {
+  .brand-logo,
+  .logo,
+  .site-logo,
+  .navbar-brand,
+  .isote-logo-nav {
+    font-size: 24px !important;
+    letter-spacing: 1.5px !important;
   }
   
-  .isote-logo-large {
-    font-size: 36px;
-    letter-spacing: 4px;
+  .brand-logo:hover,
+  .logo:hover,
+  .site-logo:hover,
+  .navbar-brand:hover,
+  .isote-logo-nav:hover {
+    letter-spacing: 2px !important;
   }
 }
 
@@ -255,26 +253,34 @@ p {
   line-height: 1.8;
 }
 
-.text-display {
-  font-family: var(--font-display);
-  font-style: italic;
+/* ============================================
+   FOOTER LOGO - FANCY STYLE
+   Automatically styles footer brand links
+   ============================================ */
+
+footer a[href="/"],
+footer a[href="#"],
+.footer a[href="/"],
+.footer a[href="#"],
+footer h3:first-child,
+.footer h3:first-child {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 32px !important;
+  font-weight: 300 !important;
+  color: #d4a65c !important;
+  letter-spacing: 4px !important;
+  font-style: italic !important;
+  text-transform: none !important;
+  text-decoration: none !important;
+  transition: all 0.3s ease !important;
 }
 
-.text-uppercase {
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-.text-gold {
-  color: var(--accent-gold);
-}
-
-.text-coral {
-  color: var(--accent-coral);
-}
-
-.text-teal {
-  color: var(--accent-teal);
+footer a[href="/"]:hover,
+footer a[href="#"]:hover,
+.footer a[href="/"]:hover,
+.footer a[href="#"]:hover {
+  color: #c9a961 !important;
+  letter-spacing: 5px !important;
 }
 
 /* ============================================
@@ -385,7 +391,7 @@ p {
 }
 
 .btn-primary {
-  background: var(--gradient-1);
+  background: linear-gradient(135deg, #c9a961 0%, #d4a65c 100%);
   color: var(--text-dark);
   border: 2px solid transparent;
 }
@@ -397,7 +403,7 @@ p {
 }
 
 .btn-secondary {
-  background: var(--gradient-3);
+  background: linear-gradient(135deg, #5a8d8e 0%, #4a7d7e 100%);
   color: white;
   border: 2px solid transparent;
 }
@@ -409,7 +415,7 @@ p {
 }
 
 .btn-accent {
-  background: var(--gradient-3);
+  background: linear-gradient(135deg, #5a8d8e 0%, #4a7d7e 100%);
   color: white;
   border: 2px solid transparent;
 }
@@ -463,7 +469,6 @@ p {
   transform: scale(1.1);
 }
 
-/* Button Special Effects */
 .forge-glow {
   position: relative;
   overflow: hidden;
@@ -572,12 +577,6 @@ label {
   margin: 32px 0;
 }
 
-.divider-vertical {
-  width: 1px;
-  background: rgba(212, 165, 116, 0.2);
-  height: 100%;
-}
-
 /* ============================================
    LOADING STATES
    ============================================ */
@@ -656,28 +655,6 @@ label {
   }
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
 @keyframes battleFloat {
   0%, 100% {
     transform: translate(0, 0) scale(1);
@@ -693,14 +670,6 @@ label {
 
 .slide-up {
   animation: slideUp 0.6s ease;
-}
-
-.slide-down {
-  animation: slideDown 0.6s ease;
-}
-
-.scale-in {
-  animation: scaleIn 0.4s ease;
 }
 
 /* ============================================
@@ -746,13 +715,9 @@ label {
 .d-none { display: none; }
 
 .flex-column { flex-direction: column; }
-.flex-row { flex-direction: row; }
 .justify-center { justify-content: center; }
 .justify-between { justify-content: space-between; }
-.justify-end { justify-content: flex-end; }
 .align-center { align-items: center; }
-.align-start { align-items: flex-start; }
-.align-end { align-items: flex-end; }
 
 .gap-8 { gap: 8px; }
 .gap-12 { gap: 12px; }
@@ -760,19 +725,11 @@ label {
 .gap-24 { gap: 24px; }
 .gap-32 { gap: 32px; }
 
-.m-0 { margin: 0; }
-.m-auto { margin: auto; }
-.mt-8 { margin-top: 8px; }
-.mt-16 { margin-top: 16px; }
-.mt-24 { margin-top: 24px; }
-.mt-32 { margin-top: 32px; }
 .mb-8 { margin-bottom: 8px; }
 .mb-16 { margin-bottom: 16px; }
 .mb-24 { margin-bottom: 24px; }
 .mb-32 { margin-bottom: 32px; }
 
-.p-0 { padding: 0; }
-.p-8 { padding: 8px; }
 .p-16 { padding: 16px; }
 .p-24 { padding: 24px; }
 .p-32 { padding: 32px; }
@@ -780,33 +737,12 @@ label {
 .w-100 { width: 100%; }
 .h-100 { height: 100%; }
 
-.relative { position: relative; }
-.absolute { position: absolute; }
-.fixed { position: fixed; }
-
-.z-1 { z-index: 1; }
-.z-10 { z-index: 10; }
-.z-100 { z-index: 100; }
-.z-1000 { z-index: 1000; }
-
-.overflow-hidden { overflow: hidden; }
-.overflow-auto { overflow: auto; }
-
-.cursor-pointer { cursor: pointer; }
-
 .rounded { border-radius: 4px; }
 .rounded-lg { border-radius: 8px; }
-.rounded-full { border-radius: 9999px; }
 
 /* ============================================
    RESPONSIVE UTILITIES
    ============================================ */
-
-@media (max-width: 1200px) {
-  .container {
-    padding: 0 20px;
-  }
-}
 
 @media (max-width: 968px) {
   .section {
@@ -833,28 +769,9 @@ label {
   }
 }
 
-@media (min-width: 769px) {
-  .show-mobile {
-    display: none !important;
-  }
-}
-
-/* 
-print styles
-    */
-
-@media print {
-  .no-print {
-    display: none !important;
-  }
-  
-  body {
-    background: white;
-    color: black;
-  }
-}
-
-/* accesibility */
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
 
 .sr-only {
   position: absolute;
@@ -868,13 +785,11 @@ print styles
   border-width: 0;
 }
 
-/* Focus Visible */
 *:focus-visible {
   outline: 2px solid var(--accent-gold);
   outline-offset: 2px;
 }
 
-/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
