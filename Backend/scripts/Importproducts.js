@@ -6,9 +6,9 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const Product = require('../models/Product');
 
-// ============================================
+// 
 // EDIT THIS SECTION WITH YOUR REAL PRODUCTS
-// ============================================
+//
 
 const realProducts = [
   {
