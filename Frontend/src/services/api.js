@@ -2,21 +2,15 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-console.log('API URL:', API_URL);
-
 const api = axios.create({
   baseURL: API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  headers: { 'Content-Type': 'application/json' },
 });
 
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
   (error) => Promise.reject(error)
@@ -35,38 +29,40 @@ api.interceptors.response.use(
 );
 
 export const authAPI = {
-  register: (data) => api.post('/auth/register', data),
-  login: (data) => api.post('/auth/login', data),
-  getProfile: () => api.get('/auth/profile'),
-  updateProfile: (data) => api.put('/auth/profile', data),
+  register:      (data) => api.post('/auth/register', data),
+  login:         (data) => api.post('/auth/login', data),
+  // Backend route is GET /auth/me (not /auth/profile)
+  getProfile:    ()     => api.get('/auth/me'),
+  // Backend route is PUT /auth/update-profile (not /auth/profile)
+  updateProfile: (data) => api.put('/auth/update-profile', data),
 };
 
 export const productsAPI = {
-  getAll: (params) => api.get('/products', { params }),
-  getById: (id) => api.get(`/products/${id}`),
-  create: (data) => api.post('/products', data),
-  update: (id, data) => api.put(`/products/${id}`, data),
-  delete: (id) => api.delete(`/products/${id}`),
+  getAll:  (params) => api.get('/products', { params }),
+  getById: (id)     => api.get(`/products/${id}`),
+  create:  (data)   => api.post('/products', data),
+  update:  (id, data) => api.put(`/products/${id}`, data),
+  delete:  (id)     => api.delete(`/products/${id}`),
 };
 
 export const cartAPI = {
-  getCart: () => api.get('/cart'),
-  addItem: (data) => api.post('/cart', data),
-  updateItem: (itemId, data) => api.put(`/cart/${itemId}`, data),
-  removeItem: (itemId) => api.delete(`/cart/${itemId}`),
-  clearCart: () => api.delete('/cart'),
+  getCart:    ()              => api.get('/cart'),
+  addItem:    (data)          => api.post('/cart/add', data),
+  updateItem: (itemId, data)  => api.put(`/cart/item/${itemId}`, data),
+  removeItem: (itemId)        => api.delete(`/cart/item/${itemId}`),
+  clearCart:  ()              => api.delete('/cart/clear'),
 };
 
 export const ordersAPI = {
-  create: (data) => api.post('/orders', data),
-  getAll: () => api.get('/orders'),
-  getById: (id) => api.get(`/orders/${id}`),
+  create:  (data) => api.post('/orders', data),
+  getAll:  ()     => api.get('/orders/myorders'),
+  getById: (id)   => api.get(`/orders/${id}`),
 };
 
 export const wishlistAPI = {
-  getWishlist: () => api.get('/wishlist'),
-  addItem: (productId) => api.post('/wishlist', { productId }),
-  removeItem: (productId) => api.delete(`/wishlist/${productId}`),
+  getWishlist: ()          => api.get('/wishlist'),
+  addItem:     (productId) => api.post(`/wishlist/add/${productId}`),
+  removeItem:  (productId) => api.delete(`/wishlist/remove/${productId}`),
 };
 
 export default api;
