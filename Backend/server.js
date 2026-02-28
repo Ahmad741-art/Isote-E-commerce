@@ -27,9 +27,20 @@ app.use(morgan('dev'));
 
 // CORS Configuration - UPDATED FOR FRONTEND
 app.use(cors({
-  origin: 'http://localhost:5173', // Your Vite frontend URL
+  origin: function (origin, callback) {
+    const allowed = [
+      process.env.CLIENT_URL,
+      'http://localhost:5173',
+      'http://localhost:3000'
+    ].filter(Boolean);
+    if (!origin || allowed.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
