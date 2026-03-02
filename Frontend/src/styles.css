@@ -21,28 +21,28 @@
   --accent-coral: #ff6b5a;
   --accent-teal: #5a8d8e;
   --accent-red: #8b0000;
-  
+
   /* Background Colors */
   --bg-primary: #0f0f1e;
   --bg-secondary: #f5f5f5;
   --bg-card: rgba(42, 58, 74, 0.4);
   --bg-dark: #0a0e12;
-  
+
   /* Text Colors */
   --text-primary: #e8e8e8;
   --text-secondary: #a8adb5;
   --text-muted: #6b7280;
   --text-light: #8ca89d;
   --text-dark: #0a0e12;
-  
+
   /* Border & Effects */
   --border: #2a3038;
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.3);
-  
+
   /* Transitions */
   --transition: all 0.3s ease;
-  
+
   /* Fonts */
   --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-display: 'Cormorant Garamond', serif;
@@ -50,10 +50,8 @@
 
 /* ============================================
    NAVBAR LOGO - SIMPLE & FANCY
-   Automatically styles any link containing "Isoté" in navbar
    ============================================ */
 
-/* Target navbar links that contain the brand name */
 nav a[href="/"],
 nav a[href="#"],
 .navbar a[href="/"],
@@ -83,7 +81,6 @@ header nav a:first-child:hover,
   letter-spacing: 3px !important;
 }
 
-/* Responsive navbar logo */
 @media (max-width: 768px) {
   nav a[href="/"],
   nav a[href="#"],
@@ -95,21 +92,10 @@ header nav a:first-child:hover,
     font-size: 24px !important;
     letter-spacing: 1.5px !important;
   }
-  
-  nav a[href="/"]:hover,
-  nav a[href="#"]:hover,
-  .navbar a[href="/"]:hover,
-  .navbar a[href="#"]:hover,
-  header nav a:first-child:hover,
-  .nav a:first-child:hover,
-  .navigation a:first-child:hover {
-    letter-spacing: 2px !important;
-  }
 }
 
 /* ============================================
-   ALTERNATIVE: Class-based approach
-   Add class="brand-logo" to your navbar link for more control
+   BRAND / LOGO CLASSES
    ============================================ */
 
 .brand-logo,
@@ -145,14 +131,6 @@ header nav a:first-child:hover,
   .isote-logo-nav {
     font-size: 24px !important;
     letter-spacing: 1.5px !important;
-  }
-  
-  .brand-logo:hover,
-  .logo:hover,
-  .site-logo:hover,
-  .navbar-brand:hover,
-  .isote-logo-nav:hover {
-    letter-spacing: 2px !important;
   }
 }
 
@@ -254,8 +232,7 @@ p {
 }
 
 /* ============================================
-   FOOTER LOGO - FANCY STYLE
-   Automatically styles footer brand links
+   FOOTER LOGO
    ============================================ */
 
 footer a[href="/"],
@@ -326,18 +303,6 @@ footer a[href="#"]:hover,
 
 .grid-4 {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
-
-@media (max-width: 768px) {
-  .grid {
-    gap: 20px;
-  }
-  
-  .grid-2,
-  .grid-3,
-  .grid-4 {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* ============================================
@@ -741,35 +706,6 @@ label {
 .rounded-lg { border-radius: 8px; }
 
 /* ============================================
-   RESPONSIVE UTILITIES
-   ============================================ */
-
-@media (max-width: 968px) {
-  .section {
-    padding: 60px 0;
-  }
-  
-  .section-lg {
-    padding: 80px 0;
-  }
-  
-  .hide-tablet {
-    display: none !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .hide-mobile {
-    display: none !important;
-  }
-  
-  .btn {
-    padding: 12px 24px;
-    font-size: 13px;
-  }
-}
-
-/* ============================================
    ACCESSIBILITY
    ============================================ */
 
@@ -835,4 +771,140 @@ label {
 ::-moz-selection {
   background: var(--accent-gold);
   color: var(--text-dark);
+}
+
+/* ============================================
+   RESPONSIVE VISIBILITY
+   ============================================ */
+
+.desktop-only {
+  display: flex;
+}
+
+.mobile-only {
+  display: none;
+}
+
+/* ============================================
+   TABLET (max 968px)
+   ============================================ */
+
+@media (max-width: 968px) {
+  .section {
+    padding: 60px 0;
+  }
+
+  .section-lg {
+    padding: 80px 0;
+  }
+
+  .hide-tablet {
+    display: none !important;
+  }
+
+  .grid.grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ============================================
+   MOBILE (max 768px)
+   ============================================ */
+
+@media (max-width: 768px) {
+
+  /* Visibility */
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: flex !important;
+  }
+
+  .hide-mobile {
+    display: none !important;
+  }
+
+  /* Container */
+  .container,
+  .container-narrow {
+    padding: 0 16px;
+  }
+
+  /* Sections */
+  .section {
+    padding: 48px 0;
+  }
+
+  .section-lg {
+    padding: 64px 0;
+  }
+
+  /* Grid */
+  .grid {
+    gap: 16px;
+  }
+
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Product grid - 2 columns on mobile */
+  .grid.grid-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px;
+  }
+
+  /* Buttons */
+  .btn {
+    padding: 12px 20px;
+    font-size: 12px;
+  }
+
+  /* Hero buttons stack */
+  .hero-buttons {
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100%;
+  }
+
+  .hero-buttons a,
+  .hero-buttons .btn {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+
+  /* Category cards stack */
+  .category-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Banner content padding */
+  .banner-content {
+    padding: 40px 24px !important;
+  }
+
+  /* Newsletter form stacks */
+  .newsletter-form {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .newsletter-form input,
+  .newsletter-form button {
+    width: 100% !important;
+    min-width: unset !important;
+  }
+
+  /* Typography adjustments */
+  h1 {
+    letter-spacing: 1px;
+  }
+
+  h2 {
+    letter-spacing: 1px;
+  }
 }
