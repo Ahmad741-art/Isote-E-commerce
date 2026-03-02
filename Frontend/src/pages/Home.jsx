@@ -27,7 +27,7 @@ const Home = () => {
   return (
     <div>
       {/* ========================================
-          HERO SECTION - IMAGE 1 (Panther/Snake)
+          HERO SECTION
           ======================================== */}
       <section style={{
         position: 'relative',
@@ -52,9 +52,9 @@ const Home = () => {
           zIndex: 1,
           textAlign: 'center',
           maxWidth: '900px',
-          padding: '0 20px'
+          padding: '0 20px',
+          width: '100%'
         }}>
-          {/* Fancy Isoté Logo */}
           <div style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontSize: 'clamp(48px, 8vw, 72px)',
@@ -68,7 +68,7 @@ const Home = () => {
           </div>
           
           <h1 style={{
-            fontSize: 'clamp(32px, 6vw, 56px)',
+            fontSize: 'clamp(28px, 6vw, 56px)',
             fontWeight: 600,
             color: '#e8e8e8',
             marginBottom: '24px',
@@ -78,21 +78,26 @@ const Home = () => {
             TIMELESS ELEGANCE
           </h1>
           <p style={{
-            fontSize: '18px',
+            fontSize: 'clamp(14px, 2vw, 18px)',
             color: '#a8adb5',
             marginBottom: '40px',
             maxWidth: '600px',
             margin: '0 auto 40px',
-            lineHeight: 1.7
+            lineHeight: 1.7,
+            padding: '0 16px'
           }}>
             Discover our curated collection inspired by Japanese artistry and modern design
           </p>
-          <div style={{
-            display: 'flex',
-            gap: '16px',
-            justifyContent: 'center',
-            flexWrap: 'wrap'
-          }}>
+          <div
+            className="hero-buttons"
+            style={{
+              display: 'flex',
+              gap: '16px',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              padding: '0 16px'
+            }}
+          >
             <Link to="/shop" className="btn btn-primary">
               EXPLORE COLLECTION
             </Link>
@@ -106,14 +111,14 @@ const Home = () => {
       {/* ========================================
           FEATURED PRODUCTS GRID
           ======================================== */}
-      <section style={{ padding: '100px 0', background: '#0a0e12' }}>
+      <section style={{ padding: 'clamp(48px, 8vw, 100px) 0', background: '#0a0e12' }}>
         <div className="container">
           <div style={{
             textAlign: 'center',
             marginBottom: '60px'
           }}>
             <h2 style={{
-              fontSize: 'clamp(32px, 5vw, 48px)',
+              fontSize: 'clamp(24px, 5vw, 48px)',
               fontWeight: 600,
               marginBottom: '16px',
               color: '#e8e8e8'
@@ -163,20 +168,23 @@ const Home = () => {
       </section>
 
       {/* ========================================
-          CATEGORY CARDS - IMAGES 1 & 2
+          CATEGORY CARDS
           ======================================== */}
-      <section style={{ padding: '100px 0', background: '#151a20' }}>
+      <section style={{ padding: 'clamp(48px, 8vw, 100px) 0', background: '#151a20' }}>
         <div className="container">
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '32px'
-          }}>
+          <div
+            className="category-grid"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '32px'
+            }}
+          >
             
-            {/* Card 1 - New Arrivals (Image 2 - Fuji) */}
+            {/* Card 1 - New Arrivals */}
             <Link to="/shop?sort=newest" style={{
               position: 'relative',
-              height: '500px',
+              height: 'clamp(300px, 50vw, 500px)',
               overflow: 'hidden',
               display: 'block',
               background: '#1a1f26'
@@ -196,7 +204,7 @@ const Home = () => {
                 background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)',
                 display: 'flex',
                 alignItems: 'flex-end',
-                padding: '40px'
+                padding: 'clamp(24px, 4vw, 40px)'
               }}>
                 <div>
                   <p style={{
@@ -209,7 +217,7 @@ const Home = () => {
                     NEW ARRIVALS
                   </p>
                   <h3 style={{
-                    fontSize: '28px',
+                    fontSize: 'clamp(20px, 3vw, 28px)',
                     fontWeight: 600,
                     color: '#e8e8e8',
                     marginBottom: '12px'
@@ -237,10 +245,10 @@ const Home = () => {
               </div>
             </Link>
 
-            {/* Card 2 - Best Sellers (Image 1 - Panther) */}
+            {/* Card 2 - Best Sellers */}
             <Link to="/shop?sort=popular" style={{
               position: 'relative',
-              height: '500px',
+              height: 'clamp(300px, 50vw, 500px)',
               overflow: 'hidden',
               display: 'block',
               background: '#1a1f26'
@@ -260,7 +268,7 @@ const Home = () => {
                 background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)',
                 display: 'flex',
                 alignItems: 'flex-end',
-                padding: '40px'
+                padding: 'clamp(24px, 4vw, 40px)'
               }}>
                 <div>
                   <p style={{
@@ -273,7 +281,7 @@ const Home = () => {
                     BEST SELLERS
                   </p>
                   <h3 style={{
-                    fontSize: '28px',
+                    fontSize: 'clamp(20px, 3vw, 28px)',
                     fontWeight: 600,
                     color: '#e8e8e8',
                     marginBottom: '12px'
@@ -305,19 +313,19 @@ const Home = () => {
       </section>
 
       {/* ========================================
-          LARGE BANNER - IMAGE 2 (Mt. Fuji)
+          LARGE BANNER
           ======================================== */}
       <section style={{
         position: 'relative',
-        padding: '140px 0',
+        padding: 'clamp(80px, 12vw, 140px) 0',
         background: '#1a1f26'
       }}>
         <div style={{
           position: 'absolute',
           inset: 0,
           background: `url(/images/efe2.jpg) center/cover no-repeat`,
-          filter: 'brightness(0.5)',
-          backgroundAttachment: 'fixed' // Parallax effect
+          filter: 'brightness(0.5)'
+          /* backgroundAttachment: 'fixed' removed — breaks on iOS */
         }} />
         
         <div className="container" style={{
@@ -325,16 +333,19 @@ const Home = () => {
           zIndex: 1,
           textAlign: 'center'
         }}>
-          <div style={{
-            maxWidth: '700px',
-            margin: '0 auto',
-            background: 'rgba(10, 14, 18, 0.8)',
-            backdropFilter: 'blur(10px)',
-            padding: '60px 40px',
-            border: '1px solid rgba(212, 166, 92, 0.2)'
-          }}>
+          <div
+            className="banner-content"
+            style={{
+              maxWidth: '700px',
+              margin: '0 auto',
+              background: 'rgba(10, 14, 18, 0.8)',
+              backdropFilter: 'blur(10px)',
+              padding: 'clamp(32px, 5vw, 60px) clamp(20px, 5vw, 40px)',
+              border: '1px solid rgba(212, 166, 92, 0.2)'
+            }}
+          >
             <h2 style={{
-              fontSize: 'clamp(32px, 5vw, 48px)',
+              fontSize: 'clamp(24px, 5vw, 48px)',
               fontWeight: 600,
               marginBottom: '20px',
               color: '#e8e8e8'
@@ -342,7 +353,7 @@ const Home = () => {
               ARTISAN CRAFTED
             </h2>
             <p style={{
-              fontSize: '16px',
+              fontSize: 'clamp(14px, 2vw, 16px)',
               color: '#a8adb5',
               marginBottom: '40px',
               lineHeight: 1.7
@@ -358,11 +369,11 @@ const Home = () => {
       </section>
 
       {/* ========================================
-          NEWSLETTER - WITH FANCY ISOTÉ BRANDING
+          NEWSLETTER
           ======================================== */}
       <section style={{
         position: 'relative',
-        padding: '100px 0',
+        padding: 'clamp(48px, 8vw, 100px) 0',
         background: '#0a0e12'
       }}>
         <div style={{
@@ -377,12 +388,12 @@ const Home = () => {
           zIndex: 1,
           maxWidth: '600px',
           margin: '0 auto',
-          textAlign: 'center'
+          textAlign: 'center',
+          padding: '0 16px'
         }}>
-          {/* Fancy Isoté Logo */}
           <div style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: '40px',
+            fontSize: 'clamp(32px, 6vw, 40px)',
             fontWeight: 300,
             color: '#d4a65c',
             letterSpacing: '5px',
@@ -394,7 +405,7 @@ const Home = () => {
           
           <Sparkles size={32} color="#d4a65c" style={{ margin: '0 auto 24px' }} />
           <h2 style={{
-            fontSize: '36px',
+            fontSize: 'clamp(24px, 5vw, 36px)',
             fontWeight: 600,
             marginBottom: '16px',
             color: '#e8e8e8'
@@ -408,17 +419,19 @@ const Home = () => {
           }}>
             Subscribe for exclusive offers, new arrivals, and style inspiration
           </p>
-          <form style={{
-            display: 'flex',
-            gap: '12px',
-            maxWidth: '500px',
-            margin: '0 auto',
-            flexWrap: 'wrap'
-          }}
-          onSubmit={(e) => {
-            e.preventDefault();
-            alert('Thank you for subscribing!');
-          }}
+          <form
+            className="newsletter-form"
+            style={{
+              display: 'flex',
+              gap: '12px',
+              maxWidth: '500px',
+              margin: '0 auto',
+              flexWrap: 'wrap'
+            }}
+            onSubmit={(e) => {
+              e.preventDefault();
+              alert('Thank you for subscribing!');
+            }}
           >
             <input
               type="email"
@@ -426,7 +439,7 @@ const Home = () => {
               required
               style={{
                 flex: 1,
-                minWidth: '250px',
+                minWidth: '200px',
                 padding: '16px 20px',
                 background: '#151a20',
                 border: '1px solid #2a3038',
