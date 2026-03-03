@@ -7,7 +7,6 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
 const rateLimit = require('express-rate-limit');
-
 const connectDB = require('./config/database');
 const errorHandler = require('./middleware/errorHandler');
 
@@ -25,20 +24,13 @@ app.use(compression());
 app.use(helmet());
 app.use(morgan('dev'));
 
-// CORS Configuration - UPDATED FOR FRONTEND
+// CORS Configuration
 app.use(cors({
-  origin: function (origin, callback) {
-    const allowed = [
-      process.env.CLIENT_URL,
-      'http://localhost:5173',
-      'http://localhost:3000'
-    ].filter(Boolean);
-    if (!origin || allowed.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: [
+    'https://isote-e-commerce-jkmm.vercel.app',
+    'http://localhost:5173',
+    'http://localhost:3000'
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -46,8 +38,8 @@ app.use(cors({
 
 // Rate limiting
 const limiter = rateLimit({
-  windowMs: 10 * 60 * 1000, // 10 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  windowMs: 10 * 60 * 1000,
+  max: 100,
 });
 app.use('/api', limiter);
 
@@ -83,12 +75,6 @@ if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`\n🚀 Isoté Backend Server running on port ${PORT}`);
     console.log(`📱 Environment: ${process.env.NODE_ENV || 'development'}`);
-    console.log(`🌐 Client URL: http://localhost:5173\n`);
+    console.log(`🌐 Client URL: ${process.env.CLIENT_URL || 'not set'}`);
   });
 }
-
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (err, promise) => {
-  console.log(`Error: ${err.message}`);
-  process.exit(1);
-});
