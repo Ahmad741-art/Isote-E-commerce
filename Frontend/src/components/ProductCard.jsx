@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, ShoppingCart } from 'lucide-react';
+import { Heart } from 'lucide-react';
+
+const getImageSrc = (images) => {
+  if (!images || images.length === 0) return '/placeholder.png';
+  const first = images[0];
+  if (typeof first === 'string') return first;
+  if (first?.url) return first.url;
+  return '/placeholder.png';
+};
 
 const ProductCard = ({ product }) => {
   const [isWishlisted, setIsWishlisted] = useState(false);
 
-  // Check if product is in wishlist on mount
   useEffect(() => {
     const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
     const isInWishlist = wishlist.some(item => item._id === product._id);
@@ -13,18 +20,16 @@ const ProductCard = ({ product }) => {
   }, [product._id]);
 
   const toggleWishlist = (e) => {
-    e.preventDefault(); // Prevent navigation when clicking heart
-    e.stopPropagation(); // Prevent event bubbling
-    
+    e.preventDefault();
+    e.stopPropagation();
+
     const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
-    
+
     if (isWishlisted) {
-      // Remove from wishlist
       const updated = wishlist.filter(item => item._id !== product._id);
       localStorage.setItem('wishlist', JSON.stringify(updated));
       setIsWishlisted(false);
     } else {
-      // Add to wishlist
       wishlist.push(product);
       localStorage.setItem('wishlist', JSON.stringify(wishlist));
       setIsWishlisted(true);
@@ -32,20 +37,21 @@ const ProductCard = ({ product }) => {
   };
 
   const discountedPrice = product.price * (1 - (product.discount || 0) / 100);
+  const imageSrc = getImageSrc(product.images);
 
   return (
-    <Link 
+    <Link
       to={`/product/${product._id}`}
-      style={{ 
-        textDecoration: 'none', 
+      style={{
+        textDecoration: 'none',
         color: 'inherit',
         display: 'block',
         position: 'relative'
       }}
     >
-      <div 
-        className="card hover-lift" 
-        style={{ 
+      <div
+        className="card hover-lift"
+        style={{
           overflow: 'hidden',
           background: 'var(--bg-card)',
           borderRadius: '8px',
@@ -74,16 +80,12 @@ const ProductCard = ({ product }) => {
             zIndex: 10,
             boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'
           }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.1)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
-          }}
+          onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.1)'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
           aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
         >
-          <Heart 
-            size={20} 
+          <Heart
+            size={20}
             fill={isWishlisted ? 'white' : 'none'}
             color={isWishlisted ? 'white' : '#ff6b5a'}
             strokeWidth={2}
@@ -133,11 +135,11 @@ const ProductCard = ({ product }) => {
         <div style={{
           paddingBottom: '133%',
           position: 'relative',
-          backgroundColor: '#f5f5f5',
+          backgroundColor: '#1a1f26',
           overflow: 'hidden'
         }}>
           <img
-            src={product.images?.[0] || '/placeholder.png'}
+            src={imageSrc}
             alt={product.name}
             style={{
               position: 'absolute',
@@ -154,14 +156,14 @@ const ProductCard = ({ product }) => {
         </div>
 
         {/* Product Info */}
-        <div style={{ padding: '20px' }}>
+        <div style={{ padding: '16px' }}>
           {/* Category */}
           <p style={{
             fontSize: '11px',
             color: 'var(--text-secondary)',
             textTransform: 'uppercase',
             letterSpacing: '1px',
-            marginBottom: '8px',
+            marginBottom: '6px',
             fontWeight: 600
           }}>
             {product.category}
@@ -169,12 +171,12 @@ const ProductCard = ({ product }) => {
 
           {/* Product Name */}
           <h3 style={{
-            fontSize: '18px',
+            fontSize: 'clamp(14px, 2vw, 18px)',
             fontWeight: 600,
-            marginBottom: '12px',
+            marginBottom: '10px',
             color: 'var(--text-primary)',
             lineHeight: 1.3,
-            minHeight: '48px'
+            minHeight: '40px'
           }}>
             {product.name}
           </h3>
@@ -184,10 +186,11 @@ const ProductCard = ({ product }) => {
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            marginBottom: '16px'
+            marginBottom: '12px',
+            flexWrap: 'wrap'
           }}>
             <span style={{
-              fontSize: '22px',
+              fontSize: 'clamp(16px, 2vw, 22px)',
               fontWeight: 700,
               color: product.discount > 0 ? 'var(--accent-coral)' : 'var(--text-primary)'
             }}>
@@ -195,7 +198,7 @@ const ProductCard = ({ product }) => {
             </span>
             {product.discount > 0 && (
               <span style={{
-                fontSize: '16px',
+                fontSize: 'clamp(13px, 1.5vw, 16px)',
                 color: 'var(--text-secondary)',
                 textDecoration: 'line-through'
               }}>
@@ -206,20 +209,12 @@ const ProductCard = ({ product }) => {
 
           {/* Stock Status */}
           {product.stock <= 5 && product.stock > 0 && (
-            <p style={{
-              fontSize: '12px',
-              color: 'var(--accent-coral)',
-              fontWeight: 600
-            }}>
-              Only {product.stock} left in stock!
+            <p style={{ fontSize: '12px', color: 'var(--accent-coral)', fontWeight: 600 }}>
+              Only {product.stock} left!
             </p>
           )}
           {product.stock === 0 && (
-            <p style={{
-              fontSize: '12px',
-              color: 'var(--text-secondary)',
-              fontWeight: 600
-            }}>
+            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', fontWeight: 600 }}>
               Out of stock
             </p>
           )}
