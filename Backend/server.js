@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -10,11 +9,32 @@ const rateLimit = require('express-rate-limit');
 const connectDB = require('./config/database');
 const errorHandler = require('./middleware/errorHandler');
 
-// Initialize app
 const app = express();
 
-// Connect to database
 connectDB();
+
+// CORS — must be first, before all middleware and routes
+const corsOptions = {
+  origin: function (origin, callback) {
+    const allowed = [
+      'https://isote-e-commerce-jkmm.vercel.app',
+      'http://localhost:5173',
+      'http://localhost:3000',
+    ];
+    if (!origin || allowed.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 200,
+};
+
+app.options('*', cors(corsOptions));
+app.use(cors(corsOptions));
 
 // Middleware
 app.use(express.json());
@@ -23,18 +43,6 @@ app.use(cookieParser());
 app.use(compression());
 app.use(helmet());
 app.use(morgan('dev'));
-
-// CORS Configuration
-app.use(cors({
-  origin: [
-    'https://isote-e-commerce-jkmm.vercel.app',
-    'http://localhost:5173',
-    'http://localhost:3000'
-  ],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
 
 // Rate limiting
 const limiter = rateLimit({
@@ -69,7 +77,7 @@ app.use(errorHandler);
 // Export app for tests
 module.exports = app;
 
-// Start server only if this file is run directly
+// Start server only if run directly
 if (require.main === module) {
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => {
