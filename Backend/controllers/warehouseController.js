@@ -1,11 +1,38 @@
-const mongoose = require('mongoose');
+const Warehouse = require('../models/Warehouse');
 
-const adminLogSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  action: { type: String, required: true },
-  entity: { type: String }, // e.g. "Product", "Warehouse"
-  entityId: { type: mongoose.Schema.Types.ObjectId },
-  diff: { type: mongoose.Schema.Types.Mixed },
-}, { timestamps: true });
+exports.createWarehouse = async (req, res) => {
+  try {
+    const w = await Warehouse.create(req.body);
+    res.status(201).json({ success: true, data: w });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
 
-module.exports = mongoose.model('AdminLog', adminLogSchema);
+exports.listWarehouses = async (req, res) => {
+  try {
+    const list = await Warehouse.find({ isActive: true });
+    res.json({ success: true, data: list });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+exports.updateWarehouse = async (req, res) => {
+  try {
+    const w = await Warehouse.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!w) return res.status(404).json({ success: false, message: 'Not found' });
+    res.json({ success: true, data: w });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+exports.deleteWarehouse = async (req, res) => {
+  try {
+    await Warehouse.findByIdAndUpdate(req.params.id, { isActive: false });
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
