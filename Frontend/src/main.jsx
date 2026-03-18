@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import './styles.css';
 
-const BACKEND_URL = import.meta.env.VITE_API_URL || 'https://isote-backend.onrender.com';
-const ping = () => fetch(`${BACKEND_URL}/health`, { mode: 'no-cors' }).catch(() => {});
+const BACKEND_BASE = 'https://isote-e-commerce-1.onrender.com';
+const ping = () => fetch(`${BACKEND_BASE}/health`, { mode: 'no-cors' }).catch(() => {});
 ping();
 setInterval(ping, 14 * 60 * 1000);
 
